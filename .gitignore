@@ -1,0 +1,12 @@
+# # Debug log from npm
+logs
+*.log
+
+# production
+/build
+
+# dependencies
+/node_modules
+
+# WebStorm
+.idea/
