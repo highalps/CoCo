@@ -1,14 +1,15 @@
 var path = require('path');
 var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 var config = {
     entry: [
         'webpack-dev-server/client?http://localhost:4001',
         'webpack/hot/only-dev-server',
-        './src/main.js'
+        path.resolve(__dirname, 'src', 'main.js'),
     ],
     output: {
-        path: __dirname + '/build',
+        path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
     },
     devServer: {
@@ -30,9 +31,31 @@ var config = {
                 }
             },
             {
-                test: /\.scss/,
-                exclude: /node_modules/,
-                use: [ 'style-loader', 'css-loader' ]
+                test: /\.scss$/,
+                exclude: '/node_modules/',
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                localIdentName: '[name]__[local]--[hash:base64:5]'
+                            }
+                        },
+                        {
+                            loader: 'sass-loader'
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: (loader) => [
+                                    require('autoprefixer')()
+                                ]
+                            }
+                        }
+                    ]
+                })
             },
             {
                 test: /\.json$/,
