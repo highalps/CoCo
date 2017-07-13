@@ -1,6 +1,6 @@
 var path = require('path');
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var config = {
     entry: [
@@ -9,17 +9,13 @@ var config = {
         path.resolve(__dirname, 'src', 'main.js'),
     ],
     output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'build')
     },
     devServer: {
         inline: true,
         port: 4001,
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
-    ],
     module: {
         rules: [
             {
@@ -33,7 +29,7 @@ var config = {
             {
                 test: /\.scss$/,
                 exclude: '/node_modules/',
-                loader: ExtractTextPlugin.extract({
+                use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
                         {
@@ -63,7 +59,15 @@ var config = {
                 loader: 'json-loader'
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
+        new ExtractTextPlugin({
+            filename: 'styles.scss',
+            allChunks: true,
+        })
+    ]
 }
 
 module.exports = config

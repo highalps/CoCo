@@ -3,10 +3,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 /* */
-import App from './container/App/App.js'
+import Routes from './Routes'
+
+require('./global.scss')
 
 /* Render */
 ReactDOM.render(
-    <App />,
+    <Routes />,
     window.document.getElementById('main')
 )
