@@ -1,6 +1,6 @@
 var path = require('path');
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var config = {
     entry: [
@@ -9,17 +9,13 @@ var config = {
         path.resolve(__dirname, 'src', 'main.js'),
     ],
     output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'build')
     },
     devServer: {
         inline: true,
         port: 4001,
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
-    ],
     module: {
         rules: [
             {
@@ -27,13 +23,25 @@ var config = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'stage-0', 'react'],
+                    plugins: ['transform-decorators-legacy'],
                 }
+            },
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader'
+                        },
+                    ]
+                }),
             },
             {
                 test: /\.scss$/,
                 exclude: '/node_modules/',
-                loader: ExtractTextPlugin.extract({
+                use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
                         {
@@ -62,8 +70,16 @@ var config = {
                 exclude: /node_modules/,
                 loader: 'json-loader'
             }
-        ]
-    }
+        ],
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
+        new ExtractTextPlugin({
+            filename: 'styles.scss',
+            allChunks: true,
+        })
+    ]
 }
 
 module.exports = config
