@@ -1,46 +1,73 @@
 var path = require('path');
-var webpack = require('webpack')
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var config = {
     entry: [
         'webpack-dev-server/client?http://localhost:4001',
         'webpack/hot/only-dev-server',
-        './src/main.js'
+        path.resolve(__dirname, 'src', 'main.js'),
     ],
     output: {
-        path: __dirname + '/build',
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'build')
     },
-    devServer: {
-        inline: true,
-        port: 4001,
-    },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
-    ],
     module: {
         rules: [
             {
                 test: /\.jsx?$/,
-                loader: 'babel-loader',
                 exclude: /node_modules/,
-                query: {
-                    presets: ['es2015', 'react']
-                }
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015', 'stage-0', 'react'],
+                        plugins: ['transform-decorators-legacy'],
+                    }
+                },
             },
             {
-                test: /\.scss/,
-                exclude: /node_modules/,
-                use: [ 'style-loader', 'css-loader' ]
+                test: /\.(css|sass|scss)$/,
+                exclude: '/node_modules/',
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                localIdentName: '[name]__[local]--[hash:base64:5]'
+                            }
+                        },
+                        {
+                            loader: 'sass-loader'
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: (loader) => [
+                                    require('autoprefixer')()
+                                ]
+                            }
+                        }
+                    ]
+                })
             },
             {
                 test: /\.json$/,
                 exclude: /node_modules/,
-                loader: 'json-loader'
+                use: ['json-loader'],
             }
-        ]
-    }
+        ],
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
+        new ExtractTextPlugin('style.css'),
+    ],
+    devServer: {
+        compress: true,
+        port: 4001,
+    },
 }
 
 module.exports = config

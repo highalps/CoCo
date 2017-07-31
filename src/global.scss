@@ -1,0 +1,14 @@
+:global {
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  * {
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
