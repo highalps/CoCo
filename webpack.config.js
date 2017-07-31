@@ -12,34 +12,21 @@ var config = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'build')
     },
-    devServer: {
-        inline: true,
-        port: 4001,
-    },
     module: {
         rules: [
             {
                 test: /\.jsx?$/,
-                loader: 'babel-loader',
                 exclude: /node_modules/,
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                    plugins: ['transform-decorators-legacy'],
-                }
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015', 'stage-0', 'react'],
+                        plugins: ['transform-decorators-legacy'],
+                    }
+                },
             },
             {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader'
-                        },
-                    ]
-                }),
-            },
-            {
-                test: /\.scss$/,
+                test: /\.(css|sass|scss)$/,
                 exclude: '/node_modules/',
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -68,18 +55,19 @@ var config = {
             {
                 test: /\.json$/,
                 exclude: /node_modules/,
-                loader: 'json-loader'
+                use: ['json-loader'],
             }
         ],
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.UglifyJsPlugin(),
-        new ExtractTextPlugin({
-            filename: 'styles.scss',
-            allChunks: true,
-        })
-    ]
+        new ExtractTextPlugin('style.css'),
+    ],
+    devServer: {
+        compress: true,
+        port: 4001,
+    },
 }
 
 module.exports = config
