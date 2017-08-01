@@ -4,6 +4,7 @@ import React from 'react'
 /* */
 import Directory from '../../component/Directory/Directory'
 import Editor from '../../component/Editor/Editor'
+import Terminal from '../../component/Terminal/Terminal'
 import styles from './App.scss'
 
 class App extends React.Component {
@@ -13,6 +14,7 @@ class App extends React.Component {
             <div className={styles.wrapper}>
                <Directory />
                <Editor />
+               <Terminal />
             </div>
         )
     }
