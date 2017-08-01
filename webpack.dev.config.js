@@ -4,11 +4,13 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var config = {
     entry: [
+        'webpack-dev-server/client?http://localhost:4001',
+        'webpack/hot/only-dev-server',
         path.resolve(__dirname, 'src', 'index.js'),
     ],
     output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'build')
+        path: '/',
+        filename: 'bundle.js'
     },
     module: {
         rules: [
@@ -61,7 +63,13 @@ var config = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.UglifyJsPlugin(),
         new ExtractTextPlugin('style.css'),
-    ]
+    ],
+    devServer: {
+        compress: true,
+        proxy:{
+            "**": "http://localhost:3000"
+        }
+    },
 }
 
 module.exports = config
