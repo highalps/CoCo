@@ -2,17 +2,19 @@
 import React from 'react'
 
 /* */
-import Directory from '../../component/Directory/Directory'
-import Editor from '../../component/Editor/Editor'
-import styles from './App.scss'
+import styles from './Directory.scss'
 
 class App extends React.Component {
+    constructor() {
+        super()
+        this._refs = {}
+    }
 
     render() {
         return (
             <div className={styles.wrapper}>
-               <Directory />
-               <Editor />
+                하이하이
+                <i className="fa fa-chevron-right" />
             </div>
         )
     }

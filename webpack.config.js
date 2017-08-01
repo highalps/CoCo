@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var config = {
     entry: [
+        "font-awesome-webpack!./src/styles/font-awesome.config.js",
         path.resolve(__dirname, 'src', 'index.js'),
     ],
     output: {
@@ -53,7 +54,31 @@ var config = {
             {
                 test: /\.json$/,
                 exclude: /node_modules/,
-                use: ['json-loader'],
+                use: [
+                    {
+                        loader: 'json-loader'
+                    }
+                ],
+            },
+            {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: [
+                    {
+                        loader: 'file-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'application/font-woff'
+                        }
+                    }
+                ]
             }
         ],
     },

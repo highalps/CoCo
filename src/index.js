@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 /* */
 import Routes from './Routes'
 
-require('./global.scss')
+require('./styles/global.scss')
 
 /* Render */
 ReactDOM.render(
