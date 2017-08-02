@@ -3,10 +3,20 @@ logs
 *.log
 
 # production
-/build
+/build/*.eot
+/build/*.svg
+/build/*.woff2
+/build/*.woff
+/build/*.ttf
+/build/bundle.js
+/build/main.js
+/build/style.css
 
 # dependencies
 /node_modules
 
 # WebStorm
 .idea/
+
+# exclude
+!build/index.html
