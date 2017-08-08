@@ -1,28 +1,30 @@
+'use strict';
+
 var express = require('express');
 var webpackDevServer = require('webpack-dev-server');
 var webpack = require('webpack');
 
-const app = express();
-const port = 3000;
-const devPort = 4001;
+var app = express();
+var port = 3000;
+var devPort = 4001;
 
-if(process.env.NODE_ENV == 'development'){
+if (process.env.NODE_ENV == 'development') {
     console.log('Server is running on development mode');
 
-    const config = require('../webpack.dev.config');
-    let compiler = webpack(config);
-    let devServer = new webpackDevServer(compiler, config.devServer);
-    devServer.listen(devPort, () => {
+    var config = require('../webpack.dev.config');
+    var compiler = webpack(config);
+    var devServer = new webpackDevServer(compiler, config.devServer);
+    devServer.listen(devPort, function () {
         console.log('webpack-dev-server is listening on port', devPort);
     });
 }
 
 app.use('/', express.static(__dirname + '/../build'));
 
-app.get('/hello', (req, res) => {
+app.get('/hello', function (req, res) {
     return res.send('Can you hear me?');
 });
 
-const server = app.listen(port, () => {
+var server = app.listen(port, function () {
     console.log('Express listening on port', port);
 });

@@ -9,7 +9,6 @@ logs
 /build/*.woff
 /build/*.ttf
 /build/bundle.js
-/build/main.js
 /build/style.css
 
 # dependencies
