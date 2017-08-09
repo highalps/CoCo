@@ -1,19 +1,17 @@
 /* */
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 
 /* */
 import App from './container/App/App'
 
-export default () => {
-    return (
-        <Router>
-            <div>
-                <Route path="/" component={App} />
-            </div>
-        </Router>
-    )
-}
+export default () => (
+    <Router>
+        <Switch>
+            <Route exact path="/" component={App} />
+        </Switch>
+    </Router>
+)
 
 
 

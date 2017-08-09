@@ -1,3 +1,4 @@
+
 /* */
 import React from 'react'
 import { autobind } from 'core-decorators'
@@ -24,13 +25,11 @@ class Editor extends React.Component {
     }
 
     componentDidMount() {
-        // TODO: setTimeout 제거하기
-        this.setState({ isLoading: true })
-        setTimeout(this.init, 2000)
+        window.addEventListener('load', this.handleLoad)
     }
 
     @autobind
-    init() {
+    handleLoad() {
         this.setState({ isLoading: false })
         window.firebase.initializeApp(firebaseConfig);
 
