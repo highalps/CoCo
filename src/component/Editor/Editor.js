@@ -31,25 +31,16 @@ class Editor extends React.Component {
     handleLoad() {
         this.setState({ isLoading: false })
 
-        // Create CodeMirror (with lineWrapping on).
-        console.log("A",this._refs)
-        console.log("B",this._refs.wrapper)
-
         const codeMirror = CodeMirror(this._refs.wrapper, {
             lineNumbers: true,
             lineWrapping: true,
             mode: "javascript"
         });
 
-        console.log ("A",shareDBCodeMirror.valueOf())
-        console.log ("B",doc.type)
-
         shareDBCodeMirror.attachDocToCodeMirror(doc, codeMirror, {
             key: 'content',
             verbose: true
         });
-
-        console.log ("C",shareDBCodeMirror.valueOf())
 
         codeMirror.setValue("var test = ();")
     }
