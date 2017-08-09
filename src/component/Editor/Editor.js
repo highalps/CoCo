@@ -1,19 +1,17 @@
-
 /* */
 import React from 'react'
-import { autobind } from 'core-decorators'
-import OtText from 'ot-text'
-import ShareDB from 'sharedb/lib/client'
-import ShareDBCodeMirror from 'sharedb-codemirror'
+import otText from 'ot-text'
+import shareDB from 'sharedb/lib/client'
+import shareDBCodeMirror from 'sharedb-codemirror'
+import CodeMirror from 'codemirror'
+
 /* */
 import styles from './Editor.scss'
 
-ShareDB.types.map['json0'].registerSubtype(OtText.type);
-
-const socket = new WebSocket("ws://" + window.location.host);
-var shareConnection = new ShareDB.Connection(socket);
-
-var doc = shareConnection.get('users', 'jane');
+shareDB.types.map['json0'].registerSubtype(otText.type)
+const socket = new WebSocket("ws://" + window.location.host)
+const shareConnection = new shareDB.Connection(socket)
+const doc = shareConnection.get('users', 'jane')
 
 class Editor extends React.Component {
     constructor() {
@@ -25,29 +23,28 @@ class Editor extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('load', this.handleLoad)
+        this.init()
     }
 
-    @autobind
-    handleLoad() {
-        this.setState({ isLoading: false });
+    init() {
+        this.setState({ isLoading: false })
 
         // Create CodeMirror (with lineWrapping on).
-        const codeMirror = window.CodeMirror(this._refs.wrapper, {
+        const codeMirror = CodeMirror(this._refs.wrapper, {
             lineNumbers: true,
             lineWrapping: true,
             mode: "javascript"
         });
 
-        console.log (ShareDBCodeMirror.valueOf());
-        console.log (doc.type);
+        console.log ("A",shareDBCodeMirror.valueOf())
+        console.log ("B",doc.type)
 
-        ShareDBCodeMirror.attachDocToCodeMirror(doc, codeMirror, {
+        shareDBCodeMirror.attachDocToCodeMirror(doc, codeMirror, {
             key: 'content',
             verbose: true
         });
 
-        console.log (ShareDBCodeMirror.valueOf());
+        console.log ("C",shareDBCodeMirror.valueOf())
 
         codeMirror.setValue("var test = ();")
     }

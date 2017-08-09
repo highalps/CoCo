@@ -45,7 +45,7 @@ function WebsocketJSONOnWriteStream(socket) {
     });
 
     this.on("error", function(msg) {
-        console.warn('WebsocketJSONOnWriteStream error', msg);
+        console.warn('WebsocketJnONOnWriteStream error', msg);
         socket.close();
     });
 
