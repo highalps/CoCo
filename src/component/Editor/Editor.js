@@ -1,6 +1,7 @@
 /* */
 import React from 'react'
 import otText from 'ot-text'
+import { autobind } from 'core-decorators'
 import shareDB from 'sharedb/lib/client'
 import shareDBCodeMirror from 'sharedb-codemirror'
 import CodeMirror from 'codemirror'
@@ -23,13 +24,17 @@ class Editor extends React.Component {
     }
 
     componentDidMount() {
-        this.init()
+        window.addEventListener('load', this.handleLoad)
     }
 
-    init() {
+    @autobind
+    handleLoad() {
         this.setState({ isLoading: false })
 
         // Create CodeMirror (with lineWrapping on).
+        console.log("A",this._refs)
+        console.log("B",this._refs.wrapper)
+
         const codeMirror = CodeMirror(this._refs.wrapper, {
             lineNumbers: true,
             lineWrapping: true,
@@ -51,11 +56,9 @@ class Editor extends React.Component {
 
     render() {
         return (
-            this.state.isLoading
-                ? <div className={styles.wrapper}>로딩 중...</div>
-                : (<div
-                    ref={e => this._refs.wrapper = e}
-                    className={styles.wrapper} />)
+           <div
+               ref={e => this._refs.wrapper = e}
+               className={styles.wrapper} />
         )
     }
 }
