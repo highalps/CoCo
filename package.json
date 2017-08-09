@@ -11,16 +11,15 @@
     "codemirror": "^5.28.0",
     "core-decorators": "^0.19.0",
     "express": "^4.15.3",
-    "firebase": "^4.1.3",
-    "firebase-admin": "^5.1.0",
-    "firepad": "^1.4.0",
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
     "node-sass": "^4.5.3",
+    "ot-text": "^1.0.1",
     "react": "^15.6.1",
     "react-bash": "^1.5.3",
     "react-dom": "^15.6.1",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "sharedb-codemirror": "^0.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -36,14 +35,21 @@
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "font-awesome-webpack": "0.0.5-beta.2",
+    "istanbul": "^0.4.5",
+    "jsdom": "11.1.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
+    "mocha": "3.5.0",
+    "mongodb": "^2.2.31",
     "path": "^0.12.7",
     "postcss-loader": "^2.0.6",
     "sass-loader": "^6.0.6",
+    "sharedb": "^1.0.0-beta.7",
+    "sharedb-mongo": "^1.0.0-beta.4",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "webpack": "^2.7.0",
-    "webpack-dev-server": "^2.5.1"
+    "webpack-dev-server": "^2.5.1",
+    "ws": "^3.1.0"
   }
 }

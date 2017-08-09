@@ -2,18 +2,18 @@
 /* */
 import React from 'react'
 import { autobind } from 'core-decorators'
-
+import OtText from 'ot-text'
+import ShareDB from 'sharedb/lib/client'
+import ShareDBCodeMirror from 'sharedb-codemirror'
 /* */
 import styles from './Editor.scss'
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDWo8PmzDdnCMFar1925uzfgOryRHY80gM",
-    authDomain: "test-aeb4a.firebaseapp.com",
-    databaseURL: "https://test-aeb4a.firebaseio.com",
-    projectId: "test-aeb4a",
-    storageBucket: "test-aeb4a.appspot.com",
-    messagingSenderId: "1013150211378"
-};
+ShareDB.types.map['json0'].registerSubtype(OtText.type);
+
+const socket = new WebSocket("ws://" + window.location.host);
+const shareConnection = new ShareDB.Connection(socket);
+
+const doc = shareConnection.get('users', 'jane');
 
 class Editor extends React.Component {
     constructor() {
@@ -30,22 +30,25 @@ class Editor extends React.Component {
 
     @autobind
     handleLoad() {
-        this.setState({ isLoading: false })
-        window.firebase.initializeApp(firebaseConfig);
+        this.setState({ isLoading: false });
 
-        // Get Firebase Database reference.
-        const firepadRef = window.firebase.database().ref();
+        doc.subscribe(this.initCodeMirror());
+    }
+
+    @autobind
+    initCodeMirror(){
 
         // Create CodeMirror (with lineWrapping on).
         const codeMirror = window.CodeMirror(this._refs.wrapper, {
+            lineNumbers: true,
+            lineWrapping: true,
             theme: "blackboard",
-            mode: "javascript",
-            lineWrapping: true
+            mode: "javascript"
         });
 
-        // Create Firepad (with rich text toolbar and shortcuts enabled).
-        window.Firepad.fromCodeMirror(firepadRef, codeMirror, {
-            defaultText: 'Hello, World!'
+        ShareDBCodeMirror.attachDocToCodeMirror(doc, codeMirror, {
+            key: 'content',
+            verbose: true
         });
     }
 
