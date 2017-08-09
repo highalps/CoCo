@@ -11,9 +11,9 @@ import styles from './Editor.scss'
 ShareDB.types.map['json0'].registerSubtype(OtText.type);
 
 const socket = new WebSocket("ws://" + window.location.host);
-const shareConnection = new ShareDB.Connection(socket);
+var shareConnection = new ShareDB.Connection(socket);
 
-const doc = shareConnection.get('users', 'jane');
+var doc = shareConnection.get('users', 'jane');
 
 class Editor extends React.Component {
     constructor() {
@@ -32,24 +32,24 @@ class Editor extends React.Component {
     handleLoad() {
         this.setState({ isLoading: false });
 
-        doc.subscribe(this.initCodeMirror());
-    }
-
-    @autobind
-    initCodeMirror(){
-
         // Create CodeMirror (with lineWrapping on).
         const codeMirror = window.CodeMirror(this._refs.wrapper, {
             lineNumbers: true,
             lineWrapping: true,
-            theme: "blackboard",
             mode: "javascript"
         });
+
+        console.log (ShareDBCodeMirror.valueOf());
+        console.log (doc.type);
 
         ShareDBCodeMirror.attachDocToCodeMirror(doc, codeMirror, {
             key: 'content',
             verbose: true
         });
+
+        console.log (ShareDBCodeMirror.valueOf());
+
+        codeMirror.setValue("var test = ();")
     }
 
     render() {

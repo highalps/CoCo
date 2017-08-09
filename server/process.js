@@ -40,6 +40,7 @@ function WebsocketJSONOnWriteStream(socket) {
     });
 
     socket.on("close", function() {
+        console.log('?????');
         stream.push(null);
     });
 
