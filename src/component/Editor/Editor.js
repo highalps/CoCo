@@ -31,12 +31,6 @@ class Editor extends React.Component {
     handleLoad() {
         this.setState({ isLoading: false })
 
-        console.log(socket.valueOf());
-        console.log(shareConnection.valueOf());
-        console.log(doc.valueOf());
-
-        // Create CodeMirror (with lineWrapping on).
-
         const codeMirror = CodeMirror(this._refs.wrapper, {
             lineNumbers: true,
             lineWrapping: true,
@@ -47,8 +41,6 @@ class Editor extends React.Component {
             key: 'content',
             verbose: true
         });
-
-        console.log(doc.data);
 
         codeMirror.setValue("var test = ();")
     }
