@@ -9,10 +9,10 @@ import CodeMirror from 'codemirror'
 /* */
 import styles from './Editor.scss'
 
-shareDB.types.map['json0'].registerSubtype(otText.type)
-const socket = new WebSocket("ws://" + window.location.host)
-const shareConnection = new shareDB.Connection(socket)
-const doc = shareConnection.get('users', 'jane')
+shareDB.types.map['json0'].registerSubtype(otText.type);
+const socket = new WebSocket("ws://" + window.location.host);
+const shareConnection = new shareDB.Connection(socket);
+const doc = shareConnection.get('users', 'jane');
 
 class Editor extends React.Component {
     constructor() {
@@ -31,9 +31,11 @@ class Editor extends React.Component {
     handleLoad() {
         this.setState({ isLoading: false })
 
+        console.log(socket.valueOf());
+        console.log(shareConnection.valueOf());
+        console.log(doc.valueOf());
+
         // Create CodeMirror (with lineWrapping on).
-        console.log("A",this._refs)
-        console.log("B",this._refs.wrapper)
 
         const codeMirror = CodeMirror(this._refs.wrapper, {
             lineNumbers: true,
@@ -41,15 +43,12 @@ class Editor extends React.Component {
             mode: "javascript"
         });
 
-        console.log ("A",shareDBCodeMirror.valueOf())
-        console.log ("B",doc.type)
-
         shareDBCodeMirror.attachDocToCodeMirror(doc, codeMirror, {
             key: 'content',
             verbose: true
         });
 
-        console.log ("C",shareDBCodeMirror.valueOf())
+        console.log(doc.data);
 
         codeMirror.setValue("var test = ();")
     }
