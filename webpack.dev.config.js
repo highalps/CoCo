@@ -94,7 +94,13 @@ var config = {
         compress: true,
         disableHostCheck: true,
         proxy: {
-            "**": "http://localhost:3000"
+            '/' : {
+                target:'http://localhost:3000'
+            },
+            '/api': {
+                target: 'ws://localhost:3000',
+                ws: true
+            }
         }
     },
 }

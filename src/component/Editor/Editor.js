@@ -10,7 +10,7 @@ import CodeMirror from 'codemirror'
 import styles from './Editor.scss'
 
 shareDB.types.map['json0'].registerSubtype(otText.type);
-const socket = new WebSocket("ws://" + window.location.host);
+const socket = new WebSocket("ws://" + window.location.host + '/api');
 const shareConnection = new shareDB.Connection(socket);
 const doc = shareConnection.get('users', 'jane');
 
