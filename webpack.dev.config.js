@@ -87,9 +87,10 @@ var config = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
         new ExtractTextPlugin('style.css'),
     ],
+    target: 'web',
+    devtool: 'cheap-module-eval-source-map',
     devServer: {
         compress: true,
         disableHostCheck: true,
