@@ -10,6 +10,7 @@ var devPort = 4001;
 
 var server = http.createServer(app);
 
+
 if(process.env.NODE_ENV === 'development'){
     console.log('Server is running on development mode');
 
