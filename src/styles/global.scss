@@ -1,14 +1,35 @@
 :global {
 
-  html, body {
-    height: 100%;
+  #main {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     overflow: hidden;
   }
 
-  * {
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
 
-    &:focus {
+  :before, :after {
+    box-sizing: border-box;
+  }
+
+  * {
+    box-sizing: border-box;
+
+    :focus {
       outline: none;
     }
+  }
+
+
+  // library overide
+  .CodeMirror {
+    height: 100% !important;
   }
 }
