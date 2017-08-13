@@ -16,10 +16,8 @@
     "firepad": "^1.4.0",
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
-    "node-sass": "^4.5.3",
     "ot-text": "^1.0.1",
     "react": "^15.6.1",
-    "react-bash": "^1.5.3",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.1"
   },
@@ -43,6 +41,7 @@
     "less-loader": "^4.0.5",
     "mocha": "3.5.0",
     "mongodb": "^2.2.31",
+    "node-sass": "^4.5.3",
     "path": "^0.12.7",
     "postcss-loader": "^2.0.6",
     "sass-loader": "^6.0.6",
