@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack",
-    "start": "set NODE_ENV=development&&node ./server/main.js"
+    "start": "cross-env NODE_ENV=development node ./server/main.js"
   },
   "dependencies": {
     "codemirror": "^5.28.0",
@@ -29,6 +29,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "cross-env": "^5.0.5",
     "css-loader": "^0.28.4",
     "eslint": "^4.2.0",
     "extract-text-webpack-plugin": "^2.1.2",

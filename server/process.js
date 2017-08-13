@@ -2,8 +2,6 @@
  * Reference: https://github.com/ejones/sharedb-codemirror
  */
 
-var Duplex = require('stream').Duplex;
-var inherits = require('util').inherits;
 var ShareDB = require('sharedb');
 var WebSocketServer = require('ws').Server;
 var otText = require('ot-text');
