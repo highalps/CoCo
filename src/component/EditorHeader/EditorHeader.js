@@ -2,9 +2,9 @@
 import React from 'react'
 
 /* */
-import styles from './Directory.scss'
+import styles from './EditorHeader.scss'
 
-class App extends React.Component {
+class EditorHeader extends React.Component {
     constructor() {
         super()
         this._refs = {}
@@ -13,11 +13,10 @@ class App extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                하이하이
-                <i className="fa fa-chevron-right" />
+                soPad
             </div>
         )
     }
 }
 
-export default App
+export default EditorHeader

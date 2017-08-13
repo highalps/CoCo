@@ -7,14 +7,14 @@ import shareDBCodeMirror from 'sharedb-codemirror'
 import CodeMirror from 'codemirror'
 
 /* */
-import styles from './Editor.scss'
+import styles from './TextEditor.scss'
 
 shareDB.types.map['json0'].registerSubtype(otText.type);
 const socket = new WebSocket("ws://" + window.location.host + '/api');
 const shareConnection = new shareDB.Connection(socket);
 const doc = shareConnection.get('users', 'jane');
 
-class Editor extends React.Component {
+class TextEditor extends React.Component {
     constructor() {
         super()
         this._refs = {}
@@ -45,11 +45,11 @@ class Editor extends React.Component {
 
     render() {
         return (
-           <div
-               ref={e => this._refs.wrapper = e}
-               className={styles.wrapper} />
+            <div
+                ref={e => this._refs.wrapper = e}
+                className={styles.wrapper} />
         )
     }
 }
 
-export default Editor
+export default TextEditor

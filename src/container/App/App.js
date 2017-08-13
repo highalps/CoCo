@@ -2,9 +2,9 @@
 import React from 'react'
 
 /* */
-import Directory from '../../component/Directory/Directory'
-import Editor from '../../component/Editor/Editor'
-import Terminal from '../../component/Terminal/Terminal'
+import EditorHeader from '../../component/EditorHeader'
+import EditorBody from '../../component/EditorBody/'
+import EditorFooter from '../../component/EditorFooter/'
 import styles from './App.scss'
 
 class App extends React.Component {
@@ -12,9 +12,9 @@ class App extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-               <Directory />
-               <Editor />
-               <Terminal />
+               <EditorHeader />
+               <EditorBody />
+               <EditorFooter />
             </div>
         )
     }

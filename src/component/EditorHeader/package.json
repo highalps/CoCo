@@ -1,0 +1,6 @@
+{
+  "name": "EditorHeader",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./EditorHeader.js"
+}
