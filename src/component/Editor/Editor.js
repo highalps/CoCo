@@ -41,8 +41,6 @@ class Editor extends React.Component {
             key: 'content',
             verbose: true
         });
-
-        codeMirror.setValue("var test = ();")
     }
 
     render() {

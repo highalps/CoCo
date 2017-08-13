@@ -1,0 +1,111 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "sharedb-codemirror@^0.2.1",
+        "scope": null,
+        "escapedName": "sharedb-codemirror",
+        "name": "sharedb-codemirror",
+        "rawSpec": "^0.2.1",
+        "spec": ">=0.2.1 <0.3.0",
+        "type": "range"
+      },
+      "C:\\Users\\chu78\\Desktop\\soPad"
+    ]
+  ],
+  "_from": "sharedb-codemirror@>=0.2.1 <0.3.0",
+  "_id": "sharedb-codemirror@0.2.1",
+  "_inCache": true,
+  "_location": "/sharedb-codemirror",
+  "_nodeVersion": "0.12.13",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/sharedb-codemirror-0.2.1.tgz_1461033945339_0.47900347085669637"
+  },
+  "_npmUser": {
+    "name": "ejones",
+    "email": "evan.q.jones@gmail.com"
+  },
+  "_npmVersion": "2.15.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "sharedb-codemirror@^0.2.1",
+    "scope": null,
+    "escapedName": "sharedb-codemirror",
+    "name": "sharedb-codemirror",
+    "rawSpec": "^0.2.1",
+    "spec": ">=0.2.1 <0.3.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/sharedb-codemirror/-/sharedb-codemirror-0.2.1.tgz",
+  "_shasum": "f7de944faa34e33250f2c26a8be3476a9c5afdc4",
+  "_shrinkwrap": null,
+  "_spec": "sharedb-codemirror@^0.2.1",
+  "_where": "C:\\Users\\chu78\\Desktop\\soPad",
+  "author": {
+    "name": "Evan Jones"
+  },
+  "bugs": {
+    "url": "https://github.com/ejones/sharedb-codemirror/issues"
+  },
+  "contributors": [
+    {
+      "name": "Evan Jones",
+      "email": "evan.q.jones@gmail.com",
+      "url": "http://ejones.github.io/"
+    },
+    {
+      "name": "Aslak Hellesøy",
+      "email": "aslak.hellesoy@gmail.com",
+      "url": "http://aslakhellesoy.com"
+    }
+  ],
+  "dependencies": {},
+  "description": "CodeMirror bindings for ShareDB",
+  "devDependencies": {
+    "codemirror": "^5.13.4",
+    "express": "^4.13.4",
+    "istanbul": "^0.4.3",
+    "jsdom": "^3.1.2",
+    "mocha": "^2.4.5",
+    "ot-text": "^1.0.1",
+    "sharedb": "^0.11.35",
+    "webpack": "^1.12.14",
+    "ws": "^1.0.1"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "f7de944faa34e33250f2c26a8be3476a9c5afdc4",
+    "tarball": "https://registry.npmjs.org/sharedb-codemirror/-/sharedb-codemirror-0.2.1.tgz"
+  },
+  "gitHead": "ed8b32d9552031c4f33c9e561a8006dae89008b4",
+  "homepage": "https://github.com/ejones/sharedb-codemirror#readme",
+  "keywords": [
+    "codemirror",
+    "sharedb"
+  ],
+  "license": "MIT",
+  "main": "sharedb-codemirror.js",
+  "maintainers": [
+    {
+      "name": "ejones",
+      "email": "evan.q.jones@gmail.com"
+    }
+  ],
+  "name": "sharedb-codemirror",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ejones/sharedb-codemirror.git"
+  },
+  "scripts": {
+    "start": "cd examples && ../node_modules/.bin/webpack && node server.js",
+    "test": "mocha",
+    "test-cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha"
+  },
+  "version": "0.2.1"
+}
