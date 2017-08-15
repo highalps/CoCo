@@ -26,6 +26,6 @@ var db = require('sharedb-mongo')({
 
 ShareDB.types.map['json0'].registerSubtype(otText.type);
 
-var shareDB = ShareDB(db);
+var shareDB = ShareDB({db});
 
 module.exports = process;
