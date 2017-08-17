@@ -4,7 +4,7 @@ import React from 'react'
 /* */
 import styles from './Body.scss'
 import SideBar from './SideBar'
-import TextEditor from './MainEditor'
+import MainEditor from './MainEditor'
 
 class Body extends React.Component {
 
@@ -17,7 +17,7 @@ class Body extends React.Component {
         return (
             <div className={styles.wrapper}>
               <SideBar />
-              <TextEditor />
+              <MainEditor />
             </div>
         )
     }

@@ -1,10 +1,13 @@
 /* */
 import React from 'react'
 import otText from 'ot-text'
-import { autobind } from 'core-decorators'
 import shareDB from 'sharedb/lib/client'
 import shareDBCodeMirror from 'sharedb-codemirror'
 import CodeMirror from 'codemirror'
+import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/clike/clike.js'
+import 'codemirror/theme/panda-syntax.css'
+import 'codemirror/theme/isotope.css'
 
 /* */
 import styles from './TextEditor.scss'
@@ -24,17 +27,13 @@ class TextEditor extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('load', this.handleLoad)
-    }
-
-    @autobind
-    handleLoad() {
         this.setState({ isLoading: false })
 
         const codeMirror = CodeMirror(this._refs.wrapper, {
             lineNumbers: true,
             lineWrapping: true,
-            mode: "javascript"
+            mode: 'text/x-c++src',
+            theme: 'isotope'
         });
 
         shareDBCodeMirror.attachDocToCodeMirror(doc, codeMirror, {

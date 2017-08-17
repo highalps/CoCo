@@ -161,18 +161,18 @@ ShareDBCodeMirror.prototype.getValue = function() {
 ShareDBCodeMirror.prototype.assertValue = function(expectedValue) {
   var editorValue = this.codeMirror.getValue();
 
-  if (expectedValue !== editorValue) {
-    console.error(
-      "Value in CodeMirror doesn't match expected value:\n\n",
-      "Expected Value:\n", expectedValue,
-      "\n\nEditor Value:\n", editorValue);
-
-    this._suppressChange = true;
-    this.codeMirror.setValue(expectedValue);
-    this._suppressChange = false;
-
-    return false;
-  }
+  // if (expectedValue !== editorValue) {
+  //   console.error(
+  //     "Value in CodeMirror doesn't match expected value:\n\n",
+  //     "Expected Value:\n", expectedValue,
+  //     "\n\nEditor Value:\n", editorValue);
+  //
+  //   this._suppressChange = true;
+  //   this.codeMirror.setValue(expectedValue);
+  //   this._suppressChange = false;
+  //
+  //   return false;
+  // }
 
   return true;
 };

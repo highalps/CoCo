@@ -82,7 +82,13 @@ var config = {
                         }
                     }
                 ]
-            }
+            },
+            {
+                test: /\.js\.map$/,
+                use: {
+                    loader: 'file-loader'
+                },
+            },
         ],
     },
     plugins: [

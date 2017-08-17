@@ -5,10 +5,33 @@
   height: 30px;
   top: 0;
   align-items: center;
-  padding: 10px;
   background: #252525;
   box-shadow: 0 1px 0 0 #353535;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
   color: #d6d6d6;;
+
+  .title {
+    padding: 0 10px;
+    border-right: 1px solid black;
+  }
+
+  .option {
+
+    .runOption {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+
+      .runIcon {
+        color: #00af00;
+        margin-right: 5px;
+      }
+
+      .text {
+
+      }
+
+    }
+  }
 }
