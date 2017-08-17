@@ -2,9 +2,9 @@
 import React from 'react'
 
 /* */
-import styles from './EditorHeader.scss'
+import styles from './Header.scss'
 
-class EditorHeader extends React.Component {
+class Header extends React.Component {
     constructor() {
         super()
         this._refs = {}
@@ -19,4 +19,4 @@ class EditorHeader extends React.Component {
     }
 }
 
-export default EditorHeader
+export default Header

@@ -2,11 +2,11 @@
 import React from 'react'
 
 /* */
-import styles from './EditorBody.scss'
+import styles from './Body.scss'
 import SideBar from './SideBar'
 import TextEditor from './MainEditor'
 
-class EditorBody extends React.Component {
+class Body extends React.Component {
 
     constructor() {
         super()
@@ -23,4 +23,4 @@ class EditorBody extends React.Component {
     }
 }
 
-export default EditorBody
+export default Body

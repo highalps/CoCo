@@ -3,9 +3,9 @@ import React from 'react'
 
 
 /* */
-import styles from './EditorFooter.scss'
+import styles from './Footer.scss'
 
-class EditorFooter extends React.Component {
+class Footer extends React.Component {
     constructor() {
         super()
         this._refs = {}
@@ -20,4 +20,4 @@ class EditorFooter extends React.Component {
     }
 }
 
-export default EditorFooter
+export default Footer
