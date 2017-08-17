@@ -4,12 +4,6 @@ var MongoClient = require('mongodb').MongoClient
 // Connection URL
 var url = 'mongodb://www.sopad.ml:27017/sopad';
 
-var database = {};
-
-database.init = MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    console.log("MongoDB 연결");
-
-    db.close();
-});
-
+exports.init = function(callback) {
+    MongoClient.connect(url, callback);
+};

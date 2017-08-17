@@ -2,9 +2,9 @@
 import React from 'react'
 
 /* */
-import Header from '../../component/Header/Header'
-import Body from '../../component/Body/Body'
-import Footer from '../../component/Footer/Footer'
+import Header from '../../component/Header'
+import Body from '../../component/Body'
+import Footer from '../../component/Footer'
 import styles from './App.scss'
 
 class App extends React.Component {
