@@ -44,6 +44,8 @@ module.exports = ShareDBCodeMirror;
  *    is hooked up. The first argument will be the error that occurred, if any.
  * @return {ShareDBCodeMirror} the created ShareDBCodeMirror object
  */
+
+
 ShareDBCodeMirror.attachDocToCodeMirror = function(shareDoc, codeMirror, options, callback) {
   var key = options.key;
   var verbose = Boolean(options.verbose);
