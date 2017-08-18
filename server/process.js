@@ -7,9 +7,9 @@ var WebSocketServer = require('ws').Server;
 var otText = require('ot-text');
 var mongoDB = require('mongodb');
 var WebSocketJSONStream = require('websocket-json-stream');
+var database = require('./database');
 
-var process = {};
-process.init = function (server){
+exports.init = function (server){
     var webSocketServer = new WebSocketServer({server: server});
 
     webSocketServer.on('connection', function (socket) {
@@ -19,13 +19,11 @@ process.init = function (server){
 };
 
 var db = require('sharedb-mongo')({
-   mongo: function(callback){
-       mongoDB.connect("mongodb://www.sopad.ml:27017/test", callback);
+   mongo: function(callback) {
+       database.init(callback);
    }
 });
 
 ShareDB.types.map['json0'].registerSubtype(otText.type);
 
 var shareDB = ShareDB({db});
-
-module.exports = process;

@@ -1,6 +1,6 @@
 {
-  "name": "EditorBody",
+  "name": "Body",
   "version": "0.0.0",
   "private": true,
-  "main": "./EditorBody.js"
+  "main": "./Body.js"
 }
