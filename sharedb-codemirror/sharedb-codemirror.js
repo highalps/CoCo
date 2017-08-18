@@ -45,18 +45,21 @@ module.exports = ShareDBCodeMirror;
  * @return {ShareDBCodeMirror} the created ShareDBCodeMirror object
  */
 
+var instance = null;
 
 ShareDBCodeMirror.attachDocToCodeMirror = function(shareDoc, codeMirror, options, callback) {
   var key = options.key;
   var verbose = Boolean(options.verbose);
 
-  var shareDBCodeMirror = new ShareDBCodeMirror(codeMirror, {
+  if(instance) { instance.stop(); }
+
+  var shareDBCodeMirror = instance = new ShareDBCodeMirror(codeMirror, {
     verbose: verbose,
     onStart: function() {
       shareDoc.on('op', shareDBOpListener);
     },
     onStop: function() {
-      shareDoc.removeListener('op', shareDBOpListener);
+      shareDoc.destroy();
     },
     onOp: function(op, source) {
       var docOp = [{p: [key], t: 'text', o: op}];
