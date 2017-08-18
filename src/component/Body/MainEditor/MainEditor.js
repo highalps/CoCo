@@ -3,7 +3,7 @@ import React from 'react'
 
 /* */
 import styles from './MainEditor.scss'
-import TextEditor from './TextEditor'
+import EditorBox from './EditorBox'
 import Terminal from './Terminal'
 
 class MainEditor extends React.Component {
@@ -17,7 +17,7 @@ class MainEditor extends React.Component {
         return (
             <div
                 className={styles.wrapper}>
-                 <TextEditor />
+                 <EditorBox />
                  <Terminal />
             </div>
         )

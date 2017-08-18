@@ -1,15 +1,12 @@
 # # Debug log from npm
 logs
 *.log
+*.log.*
+tatu
 
 # production
-/build/*.eot
-/build/*.svg
-/build/*.woff2
-/build/*.woff
-/build/*.ttf
-/build/bundle.js
-/build/style.css
+/build
+!build/index.html
 
 # dependencies
 /node_modules
@@ -17,5 +14,5 @@ logs
 # WebStorm
 .idea/
 
-# exclude
-!build/index.html
+# etc
+

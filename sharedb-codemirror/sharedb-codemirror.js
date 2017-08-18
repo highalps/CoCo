@@ -44,17 +44,22 @@ module.exports = ShareDBCodeMirror;
  *    is hooked up. The first argument will be the error that occurred, if any.
  * @return {ShareDBCodeMirror} the created ShareDBCodeMirror object
  */
+
+var instance = null;
+
 ShareDBCodeMirror.attachDocToCodeMirror = function(shareDoc, codeMirror, options, callback) {
   var key = options.key;
   var verbose = Boolean(options.verbose);
 
-  var shareDBCodeMirror = new ShareDBCodeMirror(codeMirror, {
+  if(instance) { instance.stop(); }
+
+  var shareDBCodeMirror = instance = new ShareDBCodeMirror(codeMirror, {
     verbose: verbose,
     onStart: function() {
       shareDoc.on('op', shareDBOpListener);
     },
     onStop: function() {
-      shareDoc.removeListener('op', shareDBOpListener);
+      shareDoc.destroy();
     },
     onOp: function(op, source) {
       var docOp = [{p: [key], t: 'text', o: op}];
@@ -161,18 +166,18 @@ ShareDBCodeMirror.prototype.getValue = function() {
 ShareDBCodeMirror.prototype.assertValue = function(expectedValue) {
   var editorValue = this.codeMirror.getValue();
 
-  if (expectedValue !== editorValue) {
-    console.error(
-      "Value in CodeMirror doesn't match expected value:\n\n",
-      "Expected Value:\n", expectedValue,
-      "\n\nEditor Value:\n", editorValue);
-
-    this._suppressChange = true;
-    this.codeMirror.setValue(expectedValue);
-    this._suppressChange = false;
-
-    return false;
-  }
+  // if (expectedValue !== editorValue) {
+  //   console.error(
+  //     "Value in CodeMirror doesn't match expected value:\n\n",
+  //     "Expected Value:\n", expectedValue,
+  //     "\n\nEditor Value:\n", editorValue);
+  //
+  //   this._suppressChange = true;
+  //   this.codeMirror.setValue(expectedValue);
+  //   this._suppressChange = false;
+  //
+  //   return false;
+  // }
 
   return true;
 };
