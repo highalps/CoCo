@@ -8,12 +8,21 @@
 
   .tab {
     display: flex;
+    background-color: #252525;
     align-items: center;
     height: 24px;
 
     .item {
-      margin-right: 5px;
+      margin: 0 5px;
+      padding: 3px;
+      border: solid 1px;
+      border-bottom: none;
+      color: #adadad;
       cursor: pointer;
+
+      &.selected {
+        color: rgba(255, 255, 255, 0.85);
+      }
     }
   }
 }

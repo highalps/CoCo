@@ -1,9 +1,13 @@
 /* */
 import React from 'react'
+import classNames from 'classnames'
+import Immutable from 'immutable'
 
 /* */
 import styles from './EditorBox.scss'
 import TextEditor from '../TextEditor'
+
+const dummyTab = Immutable.List(['jane','chan'])
 
 class EditorBox extends React.Component {
     constructor() {
@@ -15,13 +19,24 @@ class EditorBox extends React.Component {
     }
 
     componentDidMount() {
+
+    }
+
+    handleTabClick(name) {
+        this.setState({ name })
     }
 
     renderTab() {
         return (
             <div className={styles.tab}>
-                <div className={styles.item} onClick={() => this.setState({ name: 'jane' })}>jane.cpp</div>
-                <div className={styles.item} onClick={() => this.setState({ name: 'chan' })}>chan.cpp</div>
+                {dummyTab.map(tap => (
+                    <div
+                        key={tap}
+                        className={classNames({ [styles.selected]: tap === this.state.name }, styles.item)}
+                        onClick={() => this.handleTabClick(tap)}>
+                        {`${tap}.cpp`}
+                    </div>
+                ))}
             </div>
         )
     }
