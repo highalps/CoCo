@@ -2,7 +2,8 @@ var http = require('http');
 var express = require('express');
 var webpackDevServer = require('webpack-dev-server');
 var webpack = require('webpack');
-var editProcess = require('./process');
+var share = require('./share');
+var database = require('./database')
 
 var app = express();
 var port = 3000;
@@ -22,13 +23,10 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 app.use('/', express.static(__dirname + '/../build'));
+app.db = database;
 
 // shareDB 처리기
-editProcess.init(server);
-
-app.get('/hello', (req, res) => {
-    return res.send('Can you hear me?');
-});
+share.init(server);
 
 server.listen(port, function (err) {
     if (err) {
