@@ -23,10 +23,12 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 app.use('/', express.static(__dirname + '/../build'));
-app.db = database;
 
 // shareDB 처리기
 share.init(server);
+app.db = database;
+
+console.log(app.db);
 
 server.listen(port, function (err) {
     if (err) {
