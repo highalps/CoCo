@@ -127,6 +127,9 @@ app.get('/login/confirm', function(req, res){
 
 //shareDB 처리기
 share.init(server);
+app.db = database;
+
+console.log(app.db);
 
 server.listen(port, function (err) {
     if (err) {
