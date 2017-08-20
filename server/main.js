@@ -23,9 +23,52 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 app.use('/', express.static(__dirname + '/../build'));
-app.db = database;
 
-// shareDB 처리기
+
+
+
+database.init(function(error, db){ // database init
+    if(error) {
+      console.log(error);
+    }
+    app.db = db;  //app.db 초기화
+});
+
+
+
+
+app.get('/project', function(req, res){  // 프로젝트의 파일 목록
+  //var query = { name:req.params.project };
+  var cursor = req.app.db.collection('project').find();
+  cursor.each(function(err,doc){
+    if(err){
+      console.log(err);
+    }else{
+      if(doc != null){
+        console.log(doc);  // doc 은 1개씩 읽어들이는 json
+      }
+    }
+  });
+});
+app.get('/login/confirm', function(req, res){
+  //var query = { email : req.params.email , password : req.params.password };
+  var cursor = req.app.db.collection('user').find();
+  cursor.each(function(err,doc){
+    if(err){
+      console.log(err);
+    }else{
+      if(doc != null){
+        console.log(doc); //로그인 가능한지 확인
+      }
+    }
+  });
+});
+
+
+
+
+
+//shareDB 처리기
 share.init(server);
 
 server.listen(port, function (err) {

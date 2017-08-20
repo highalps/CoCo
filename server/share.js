@@ -25,5 +25,4 @@ var db = new ShareDBMongo({
 });
 
 ShareDB.types.map['json0'].registerSubtype(otText.type);
-
 var shareDB = ShareDB({db});
