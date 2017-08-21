@@ -12,3 +12,7 @@ exports.init = function (callback) {
 exports.getInstance = function (emtpy, mongo, mongopoll) {
     db = mongo;
 };
+
+exports.getCursor = function (collectionName){
+    return db.collection(collectionName).find();
+};
