@@ -37,6 +37,6 @@ io.on('connection', function(socket){
 	});
 });
 
-server.listen(4000, function(){
-	console.log (' socket 3000 listen');
+server.listen(8080, function(){
+	console.log (' socket 4000 listen');
 });
