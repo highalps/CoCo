@@ -58,7 +58,6 @@ class TerminalComponent extends React.Component {
 
     @autobind
     handleKeyDown(e) {
-        console.log('a')
         webSocket.sendCommand('ls')
         this.term.write(e.target.value)
     }

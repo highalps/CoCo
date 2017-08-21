@@ -13,7 +13,7 @@ class WebSocketService {
         this._socket = io("ws://localhost:3000")
         this._socket.on('connect', this._onConnect.bind(this))
         this._socket.on('disconnect', this._onDisConnect.bind(this))
-        this._socket.on('data2', this._onData.bind(this))
+        this._socket.on('data', this._onData.bind(this))
     }
 
     getWebsocket() {
@@ -22,7 +22,7 @@ class WebSocketService {
 
     sendCommand(command) {
         console.log("hgahga")
-        this._socket.emit('data2', command)
+        this._socket.emit('data', command)
     }
 
     _onConnect(a) {

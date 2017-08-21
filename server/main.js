@@ -88,14 +88,11 @@ io.on('connection', function(socket) {
             socket.on('data', function(data) {
                 //TODO: data를 넘겨주는 방법? (stream.write로는 안된다)
 
-
-
             });
             stream.on('data', function(d) {
-                socket.emit('data2', d.toString('binary'));
+                socket.emit('data', d.toString('binary'));
             }).on('close', function() {
                 conn.end();
-                console.log("end~~~~")
             });
         });
     }).connect({
