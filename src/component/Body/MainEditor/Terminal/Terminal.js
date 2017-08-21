@@ -5,6 +5,7 @@ import autobind from 'core-decorators/lib/autobind'
 
 /* */
 import styles from './Terminal.scss'
+import webSocket from '../../../../service/webSocketService'
 
 const option = {
     cursorBlink: true,  // Do not blink the terminal's cursor
@@ -57,7 +58,8 @@ class TerminalComponent extends React.Component {
 
     @autobind
     handleKeyDown(e) {
-        console.log(e)
+        console.log('a')
+        webSocket.sendCommand('ls')
         this.term.write(e.target.value)
     }
 

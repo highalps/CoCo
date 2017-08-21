@@ -12,10 +12,10 @@ import 'codemirror/theme/isotope.css'
 
 /* */
 import styles from './TextEditor.scss'
+import webScoket from '../../../../service/webSocketService'
 
 shareDB.types.map['json0'].registerSubtype(otText.type)
-const socket = new WebSocket("ws://" + window.location.host + '/api')
-const shareConnection = new shareDB.Connection(socket)
+
 const option = {
     lineNumbers: true,
     lineWrapping: true,
@@ -42,12 +42,13 @@ class TextEditor extends React.Component {
 
     componentDidMount() {
         this.codeMirror = CodeMirror.fromTextArea(this._refs.textArea, option);
+        this.shareConnection = new shareDB.Connection(webScoket.getWebsocket())
         this.connect(this.props)
     }
 
     connect(props) {
         this.setState({ isLoading: false })
-        const doc = shareConnection.get('users', props.name)
+        const doc = this.shareConnection.get('users', props.name)
         shareDBCodeMirror.attachDocToCodeMirror(doc, this.codeMirror, {
             key: 'content',
             verbose: true

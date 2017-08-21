@@ -79,5 +79,29 @@ server.listen(port, function (err) {
 
 io.on('connection', function(socket) {
     var conn = new SSHClient();
-    socket.emit('data', '\r\n*** SSH CONNECTION ESTABLISHED ***\r\n');
-});
+    conn.on('ready', function() {
+        socket.emit('data', '\r\n*** SSH CONNECTION ESTABLISHED ***\r\n');
+
+        conn.shell(function(err, stream) {
+            if (err)
+                return socket.emit('data', '\r\n*** SSH SHELL ERROR: ' + err.message + ' ***\r\n');
+            socket.on('data', function(data) {
+                //TODO: data를 넘겨주는 방법? (stream.write로는 안된다)
+
+
+
+            });
+            stream.on('data', function(d) {
+                socket.emit('data2', d.toString('binary'));
+            }).on('close', function() {
+                conn.end();
+                console.log("end~~~~")
+            });
+        });
+    }).connect({
+        host: 'www.sopad.ml',
+        port: 8001,
+        username: 'root',
+        password: 'syspwd128'
+    });
+})
