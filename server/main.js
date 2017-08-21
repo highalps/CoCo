@@ -1,9 +1,9 @@
+var bodyParser = require('body-parser');
 var http = require('http');
 var express = require('express');
 var webpackDevServer = require('webpack-dev-server');
 var webpack = require('webpack');
 var share = require('./modules/share');
-var database = require('./modules/database');
 
 var app = express();
 var port = 3000;
@@ -24,11 +24,14 @@ if(process.env.NODE_ENV === 'development'){
     devServer.listen(devPort, () => {
         console.log('webpack-dev-server is listening on port', devPort);
     });
-}
+};
 
+// initialize custom module
+share.init(server, app);
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: '@#@$MYSIGN#@$#$',
     resave: false,
@@ -41,9 +44,9 @@ app.use(passport.session());
 app.use('/', express.static(__dirname + '/../build'));
 app.use('/login', require('./routes/login'));
 
-app.get('/project', function(req, res){  // 프로젝트의 파일 목록
+app.get('/project', function(req, res, next){  // 프로젝트의 파일 목록
     //var query = { name:req.params.project };
-    var cursor = req.app.db.getCursor('projects');
+    var cursor = req.app.db.collection('projects').find();
     cursor.each(function(err,doc){
         if(err){
             console.log(err);
@@ -54,10 +57,6 @@ app.get('/project', function(req, res){  // 프로젝트의 파일 목록
         }
     });
 });
-
-//shareDB 처리기
-share.init(server);
-app.db = database;
 
 server.listen(port, function (err) {
     if (err) {

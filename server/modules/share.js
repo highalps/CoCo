@@ -4,9 +4,11 @@ var otText = require('ot-text');
 var mongoDB = require('mongodb');
 var WebSocketJSONStream = require('websocket-json-stream');
 var ShareDBMongo = require('sharedb-mongo');
-var database = require('./database');
 
-exports.init = function (server){
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://www.sopad.ml:27017/sopad";
+
+exports.init = function (server, app){
     var webSocketServer = new WebSocketServer({server: server});
 
     webSocketServer.on('connection', function (socket) {
@@ -14,13 +16,15 @@ exports.init = function (server){
         shareDB.listen(stream);
     });
 
-    // connection을 새로 만들지 않기 위해 sharedb-mongo의 connection을 전달
-    db.getDbs(database.getInstance);
+    // sharedb-mongo의 connection을 전달
+    db.getDbs(function (emtpy, mongo, mongopoll) {
+        app.db = mongo;
+    });
 };
 
 var db = new ShareDBMongo({
     mongo: function(callback) {
-        database.init(callback);
+        MongoClient.connect(url, callback);
     }
 });
 
