@@ -15,6 +15,9 @@ var passport = require('./modules/passport');
 var flash = require('connect-flash'); // session 관련해서 사용됨. 로그인 실패시 session등 클리어하는 기능으로 보임.
 var session = require('express-session');
 
+var io = require('socket.io')(server);
+var SSHClient = require('ssh2').Client;
+
 if(process.env.NODE_ENV === 'development'){
     console.log('Server is running on development mode');
 
@@ -72,3 +75,9 @@ server.listen(port, function (err) {
 //     // 로그인이 안되어 있으면, login 페이지로 진행
 //     res.redirect('/login');
 // }
+
+
+io.on('connection', function(socket) {
+    var conn = new SSHClient();
+    socket.emit('data', '\r\n*** SSH CONNECTION ESTABLISHED ***\r\n');
+});

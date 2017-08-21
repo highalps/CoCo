@@ -19,6 +19,7 @@ class TerminalComponent extends React.Component {
         this.term = null
         this._refs = {}
         this.state = {
+            shellScript: 'unknown:~/workspace',
             bashText: '',
         }
     }
@@ -59,6 +60,7 @@ class TerminalComponent extends React.Component {
         console.log(e)
         this.term.write(e.target.value)
     }
+
     // @autobind
     // handleKeyDown(key, e) {
     //     const printable = !e.altKey && !e.altGraphKey && !e.ctrlKey && !e.metaKey
@@ -78,6 +80,9 @@ class TerminalComponent extends React.Component {
     render() {
         return(
             <div className={styles.wrapper}>
+                <div className={styles.sizeBar}>
+                    Terminal
+                </div>
                 <div
                     ref={e => this._refs.terminal = e}
                     className={styles.terminal}>

@@ -21,7 +21,8 @@ const option = {
     lineWrapping: true,
     smartIndent: true,
     mode: 'text/x-c++src',
-    theme: 'isotope'
+    theme: 'isotope',
+    scrollbarStyle: null,
 }
 
 class TextEditor extends React.Component {

@@ -150,7 +150,6 @@
     .xterm-viewport {
         /* On OS X this is required in order for the scroll bar to appear fully opaque */
         background-color: #000;
-        overflow-y: scroll;
     }
 
     .xterm-wide-char, .xterm-normal-char {
@@ -158,6 +157,7 @@
     }
 
     .xterm-rows {
+        padding: 5px 0 10px 5px;
         position: absolute;
         left: 0;
         top: 0;

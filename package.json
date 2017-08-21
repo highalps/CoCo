@@ -28,6 +28,8 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.2",
+    "socket.io": "^2.0.3",
+    "socket.io-client": "^2.0.3",
     "ssh2": "^0.5.5",
     "xterm": "^2.9.2"
   },
