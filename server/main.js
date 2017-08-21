@@ -86,8 +86,7 @@ io.on('connection', function(socket) {
             if (err)
                 return socket.emit('data', '\r\n*** SSH SHELL ERROR: ' + err.message + ' ***\r\n');
             socket.on('data', function(data) {
-                //TODO: data를 넘겨주는 방법? (stream.write로는 안된다)
-
+                stream.write(data);
             });
             stream.on('data', function(d) {
                 socket.emit('data', d.toString('binary'));
