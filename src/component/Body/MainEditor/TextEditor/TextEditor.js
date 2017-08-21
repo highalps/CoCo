@@ -46,7 +46,9 @@ class TextEditor extends React.Component {
 
     connect(props) {
         this.setState({ isLoading: false })
-        const doc = shareConnection.get('users', props.name)
+
+        var fileName = 'tobechange/' + props.name
+        const doc = shareConnection.get('files', fileName)
         shareDBCodeMirror.attachDocToCodeMirror(doc, this.codeMirror, {
             key: 'content',
             verbose: true
