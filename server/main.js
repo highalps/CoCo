@@ -88,7 +88,7 @@ io.on('connection', function(socket) {
             socket.on('command', function(data) {
                 stream.write(data + '\n')
             });
-            stream.on('datan', function(d) {
+            stream.on('data', function(d) {
                 socket.emit('data', d.toString('binary'));
             }).on('close', function() {
                 conn.end();

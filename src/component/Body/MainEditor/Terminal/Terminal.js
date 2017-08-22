@@ -41,11 +41,6 @@ class TerminalComponent extends React.Component {
         this.term.on('paste', this.handlePaste)
         this.term.writeln('')
 
-        this.term.prompt = () => {
-            this.term.write('\r\n' + this.state.shellPrompt)
-        }
-        this.term.prompt()
-
     }
 
     @autobind
