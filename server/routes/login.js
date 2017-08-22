@@ -17,18 +17,4 @@ router.post('/signup', passport.authenticate('localSignup', { failureRedirect: '
         console.log(req.body);
     });
 
-router.get('/confirm', function(req, res, next){
-    //var query = { email : req.params.email , password : req.params.password };
-    var cursor = req.app.db.collection('users').find();
-    cursor.each(function(err,doc){
-        if(err){
-            console.log(err);
-        }else{
-            if(doc != null){
-                console.log(doc); //로그인 가능한지 확인
-            }
-        }
-    });
-});
-
 module.exports = router;

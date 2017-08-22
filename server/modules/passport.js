@@ -23,13 +23,20 @@ passport.use('localLogin', new LocalStrategy({
         passReqToCallback : true
     }
     ,function(req, email, password, done) {
-        if(email=='hello@naver.com' && password=='world'){
-            var user = { 'userid':'hello',
-                'email':'hello@naver.com'};
-            return done(null,user);
-        }else{
-            return done(null,false);
-        }
+      var query = { email : email , password : password };
+      var cursor = req.app.db.collection('users').find(query);
+      cursor.each(function(err,user){
+          if(err){
+              console.log(err);
+          }else{
+              if(user != null){
+                  return done(null,user); //로그인 가능한지 확인
+              }
+              else if(user == null){
+                  return done(null,false);
+              }
+          }
+      });
     }
 ));
 
