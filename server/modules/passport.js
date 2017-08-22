@@ -17,7 +17,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 // 로컬 로그인 시
-passport.use('localLogin', new LocalStrategy({
+passport.use('local', new LocalStrategy({
         usernameField : 'email',
         passwordField : 'password',
         passReqToCallback : true
@@ -28,31 +28,16 @@ passport.use('localLogin', new LocalStrategy({
       cursor.each(function(err,user){
           if(err){
               console.log(err);
+              return ;
           }else{
-              if(user != null){
+              if(user){
                   return done(null,user); //로그인 가능한지 확인
               }
-              else if(user == null){
-                  return done(null,false);
-              }
+              return done(null,false);
           }
       });
+      return done(null,false);
     }
 ));
-
-passport.use('localSignup', new LocalStrategy({
-    usernameField : 'email',
-    passwordField : 'password',
-    passReqToCallback : true
-}, function(req, email, password, done) {
-    console.log('localSignup', email, password);
-
-    req.app.db.collection('users').insertOne({
-            email: email,
-            pwd: password
-        }, function () {
-        console.log('test');
-    });
-}));
 
 module.exports = passport;

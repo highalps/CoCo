@@ -68,6 +68,17 @@ app.post('/project', function(req, res){  // 프로젝트의 파일 목록
       });
 });
 
+app.post('/signup', function(req, res, next) {
+      var user = {
+        email:req.body.email,
+        password:req.body.password,
+      };
+      req.app.db.collection('users').insertOne(user);
+      console.log('signup test', user);
+      res.redirect('login');
+});
+
+
 server.listen(port, function (err) {
     if (err) {
         throw err;
