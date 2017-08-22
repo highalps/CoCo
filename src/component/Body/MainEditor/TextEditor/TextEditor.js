@@ -42,13 +42,14 @@ class TextEditor extends React.Component {
 
     componentDidMount() {
         this.codeMirror = CodeMirror.fromTextArea(this._refs.textArea, option);
-        this.shareConnection = new shareDB.Connection(webScoket.getWebsocket())
+        this.shareConnection = new shareDB.Connection(new WebSocket("ws://" + window.location.host + '/api'))
         this.connect(this.props)
     }
 
     connect(props) {
         this.setState({ isLoading: false })
         const fileName = 'tobechange/' + props.name
+        console.log(this.shareConnection);
         const doc = this.shareConnection.get('files', fileName)
         shareDBCodeMirror.attachDocToCodeMirror(doc, this.codeMirror, {
             key: 'content',

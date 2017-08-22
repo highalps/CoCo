@@ -11,7 +11,7 @@ class WebSocketService {
     }
 
     connect() {
-        this._socket = io("ws://localhost:3000")
+        this._socket = io("ws://" + window.location.hostname + ":3000")
         this._socket.on('connect', this._onConnect.bind(this))
         this._socket.on('disconnect', this._onDisConnect.bind(this))
         this._socket.on('data', this._onData.bind(this))
