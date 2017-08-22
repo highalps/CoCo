@@ -25,15 +25,17 @@
     </div>
     <button type="submit" class="btn btn-default">Sign in</button>
   </form>
+  <a href = "/auth/google">Sign In with Google</a>
 </div>
 
-<!-- Button to open the modal -->
+<!-- Button to open
+the modal -->
 <button onclick="document.getElementById('signup').style.display='block'">Sign Up</button>
 
 <!-- The Modal (contains the Sign Up form) -->
 <div id="signup" class="modal">
   <span onclick="document.getElementById('signup').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content animate" action="/signup" method="post">
+  <form class="modal-content animate" action="/login/signup" method="post">
     <div class="container">
       <label><b>Email</b></label>
       <input type="text" placeholder="Enter Email" name="email" required>

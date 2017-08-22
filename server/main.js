@@ -51,35 +51,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-
-
-app.post('/project', function(req, res){  // 프로젝트의 파일 목록
-      var query = {
-        name: req.body.name,
-      };
-      console.log("project query +"+query.name);
-      var cursor = req.app.db.collection('projects').find(query);
-        cursor.each(function(err,files){
-          if(err){
-            console.log(err);
-          }
-          else{
-              return res.json(files);  // doc 은 1개씩 읽어들이는 json
-          }
-      });
-});
-
-app.post('/signup', function(req, res, next) {
-      var user = {
-        email:req.body.email,
-        password:req.body.password,
-      };
-      req.app.db.collection('users').insertOne(user);
-      console.log('signup test', user);
-      res.redirect('/login');
-});
-
-
 server.listen(port, function (err) {
     if (err) {
         throw err;
@@ -87,6 +58,20 @@ server.listen(port, function (err) {
     console.log('Express listening on port', port);
 });
 
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+// GET /auth/google/callback
+//   Use passport.authenticate() as route middleware to authenticate the
+//   request.  If authentication fails, the user will be redirected back to the
+//   login page.  Otherwise, the primary route function function will be called,
+//   which, in this example, will redirect the user to the home page.
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/project');
+  });
 // function ensureAuthenticated(req, res, next) {
 //     // 로그인이 되어 있으면, 다음 파이프라인으로 진행
 //     if (req.isAuthenticated()) { return next(); }

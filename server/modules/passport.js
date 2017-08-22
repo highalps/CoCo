@@ -1,6 +1,8 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var assert = require('assert');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
 
 //serializer와 deseriazlier는 필수로 구현해야 함.
 
@@ -16,6 +18,20 @@ passport.deserializeUser(function(user, done) {
     done(null, user);
 });
 
+
+//구글 로그인
+passport.use(new GoogleStrategy({
+    clientID: "565437120355-6st0a0vdcblkviveld60uppe9hft8h4c.apps.googleusercontent.com",
+    clientSecret: "_K5lQEMuHXgHpYn0SYV8YN7T",
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+       User.findOrCreate({ googleId: profile.id }, function (err, user) {
+         return done(err, user);
+       });
+  }
+));
+
 // 로컬 로그인 시
 passport.use('local', new LocalStrategy({
         usernameField : 'email',
@@ -23,16 +39,17 @@ passport.use('local', new LocalStrategy({
         passReqToCallback : true
     }
     ,function(req, email, password, done) {
-      var query = { email : email , password : password };
-      var cursor = req.app.db.collection('users').find(query);
-      cursor.each(function(err,user){
-          if(err){
-              console.log(err);
-          }else{
-              if(user){
-                  return done(null,user); //로그인 가능한지 확인
-              }
-              return done(null,false);
+      var query = {email: email, password:password };
+
+      req.app.db.collection('users').findOne(query, function (err, user) {
+          assert.equal(err, null);
+
+          if(!user){
+              console.log('정보 없음');
+              return done(null, false)
+          }
+          else{
+              return done(null, user)
           }
       });
     }
