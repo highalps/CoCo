@@ -2,6 +2,7 @@
 import io from 'socket.io-client'
 
 /* */
+import terminalService from './terminalService'
 
 class WebSocketService {
 
@@ -21,20 +22,15 @@ class WebSocketService {
     }
 
     sendCommand(command) {
-        console.log("hgahga")
-        this._socket.emit('data', command)
+        this._socket.emit('command', command)
     }
 
-    _onConnect(a) {
-        console.log("A", a)
-    }
+    _onConnect() {}
 
-    _onDisConnect(a) {
-        console.log("B", a)
-    }
+    _onDisConnect() {}
 
-    _onData(a) {
-        console.log("C", a)
+    _onData(data) {
+        terminalService.writeTerminal(data)
     }
 }
 
