@@ -12,4 +12,14 @@ router.post('/',
         res.render('home');
     });
 
+router.post('/signup', function(req, res, next) {
+    var user = {
+        email:req.body.email,
+        password:req.body.password,
+    };
+    req.app.db.collection('users').insertOne(user);
+    console.log('signup test', user);
+    res.redirect('/login');
+});
+
 module.exports = router;

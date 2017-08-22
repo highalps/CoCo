@@ -51,35 +51,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-
-
-app.post('/project', function(req, res){  // 프로젝트의 파일 목록
-      var query = {
-        name: req.body.name,
-      };
-      console.log("project query +"+query.name);
-      var cursor = req.app.db.collection('projects').find(query);
-        cursor.each(function(err,files){
-          if(err){
-            console.log(err);
-          }
-          else{
-              return res.json(files);  // doc 은 1개씩 읽어들이는 json
-          }
-      });
-});
-
-app.post('/signup', function(req, res, next) {
-      var user = {
-        email:req.body.email,
-        password:req.body.password,
-      };
-      req.app.db.collection('users').insertOne(user);
-      console.log('signup test', user);
-      res.redirect('login');
-});
-
-
 server.listen(port, function (err) {
     if (err) {
         throw err;

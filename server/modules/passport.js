@@ -23,20 +23,19 @@ passport.use('local', new LocalStrategy({
         passReqToCallback : true
     }
     ,function(req, email, password, done) {
-      var query = { email : email , password : password };
-      var cursor = req.app.db.collection('users').find(query);
-      cursor.each(function(err,user){
-          if(err){
-              console.log(err);
-              return ;
-          }else{
-              if(user){
-                  return done(null,user); //로그인 가능한지 확인
-              }
-              return done(null,false);
+      var query = {email: email, password:password };
+
+      req.app.db.collection('users').findOne(query, function (err, user) {
+          assert.equal(err, null);
+
+          if(!user){
+              console.log('정보 없음');
+              return done(null, false)
+          }
+          else{
+              return done(null, user)
           }
       });
-      return done(null,false);
     }
 ));
 
