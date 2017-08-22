@@ -2,28 +2,24 @@ var express = require('express');
 var router = express.Router();
 var passport = require('../modules/passport')
 
-router.get('/', function(req, res){
+router.get('/', function(req, res, next){
     res.render('login');
 });
 
 router.post('/',
     passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-    function(req, res) {
+    function(req, res, next) {
         res.render('home');
     });
 
-router.get('/confirm', function(req, res){
-    //var query = { email : req.params.email , password : req.params.password };
-    var cursor = req.app.db.getCursor('users');
-    cursor.each(function(err,doc){
-        if(err){
-            console.log(err);
-        }else{
-            if(doc != null){
-                console.log(doc); //로그인 가능한지 확인
-            }
-        }
-    });
+router.post('/signup', function(req, res, next) {
+    var user = {
+        email:req.body.email,
+        password:req.body.password,
+    };
+    req.app.db.collection('users').insertOne(user);
+    console.log('signup test', user);
+    res.redirect('/login');
 });
 
 module.exports = router;
