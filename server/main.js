@@ -44,6 +44,7 @@ app.use(passport.session());
 
 app.use('/', express.static(__dirname + '/../build'));
 app.use('/login', require('./routes/login'));
+app.use('/project', require('./routes/project'));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
