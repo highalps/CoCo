@@ -28,7 +28,6 @@ passport.use('local', new LocalStrategy({
       cursor.each(function(err,user){
           if(err){
               console.log(err);
-              return ;
           }else{
               if(user){
                   return done(null,user); //로그인 가능한지 확인
@@ -36,7 +35,6 @@ passport.use('local', new LocalStrategy({
               return done(null,false);
           }
       });
-      return done(null,false);
     }
 ));
 

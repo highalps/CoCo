@@ -76,7 +76,7 @@ app.post('/signup', function(req, res, next) {
       };
       req.app.db.collection('users').insertOne(user);
       console.log('signup test', user);
-      res.redirect('login');
+      res.redirect('/login');
 });
 
 
