@@ -50,7 +50,6 @@ class TerminalComponent extends React.Component {
 
     @autobind
     handleKeyDown(key, e) {
-        console.log(this.term)
         const printable = !e.altKey && !e.altGraphKey && !e.ctrlKey && !e.metaKey
 
         if (e.keyCode === 13) {
