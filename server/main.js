@@ -44,28 +44,11 @@ app.use(passport.session());
 
 app.use('/', express.static(__dirname + '/../build'));
 app.use('/login', require('./routes/login'));
+app.use('/project', require('./routes/project'));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-});
-
-
-
-app.post('/project', function(req, res){  // 프로젝트의 파일 목록
-      var query = {
-        name: req.body.name,
-      };
-      console.log("project query +"+query.name);
-      var cursor = req.app.db.collection('projects').find(query);
-        cursor.each(function(err,files){
-          if(err){
-            console.log(err);
-          }
-          else{
-              return res.json(files);  // doc 은 1개씩 읽어들이는 json
-          }
-      });
 });
 
 server.listen(port, function (err) {
