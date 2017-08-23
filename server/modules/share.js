@@ -8,7 +8,7 @@ var ShareDBMongo = require('sharedb-mongo');
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://www.sopad.ml:27017/sopad";
 
-exports.init = function (server, app){
+exports.init = function (server, app, passport){
     var webSocketServer = new WebSocketServer({server: server});
 
     webSocketServer.on('connection', function (socket) {
@@ -19,6 +19,7 @@ exports.init = function (server, app){
     // sharedb-mongo의 connection을 전달
     db.getDbs(function (emtpy, mongo, mongopoll) {
         app.db = mongo;
+        passport.getDB(mongo);
     });
 };
 

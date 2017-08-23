@@ -30,7 +30,7 @@ if(process.env.NODE_ENV === 'development'){
 };
 
 // initialize custom module
-share.init(server, app);
+share.init(server, app, passport);
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -54,12 +54,20 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.get('/logout' , function(req, res){
+    req.session.destroy();
+    req.logout();
+    console.log("logout");
+    res.redirect('/login');
+});
+
 server.listen(port, function (err) {
     if (err) {
         throw err;
     }
     console.log('Express listening on port', port);
 });
+
 
 // function ensureAuthenticated(req, res, next) {
 //     // 로그인이 되어 있으면, 다음 파이프라인으로 진행
