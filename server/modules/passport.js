@@ -21,8 +21,8 @@ passport.deserializeUser(function(user, done) {
 
 //구글 로그인
 passport.use(new GoogleStrategy({
-    clientID: "464986204326-0kqkfkv6ho6ldaghjsluc1ub25ocvmaf.apps.googleusercontent.com",
-    clientSecret: "EBaINyfIEv6Wy81H3YGPsrhk",
+    clientID: "464986204326-n7e3eaqd5jcsngftdkibkqmjcj5ik76v.apps.googleusercontent.com",
+    clientSecret: "BaUiyZgVLXL29RKj-zNxy0Lf",
     callbackURL: "http://localhost:3000/login/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
@@ -45,7 +45,7 @@ passport.use(new GoogleStrategy({
           }
   }
 ));
-
+/*
 // 로컬 로그인 시
 passport.use('local', new LocalStrategy({
         usernameField : 'email',
@@ -68,7 +68,7 @@ passport.use('local', new LocalStrategy({
       });
     }
 ));
-
+*/
 passport.getDB = function (db) {
   database = db;
 }

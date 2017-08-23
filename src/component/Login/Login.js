@@ -10,9 +10,9 @@ class Login extends React.Component {
         return (
           <div>
             <button className={styles.loginBtn}>
-              Login with Google
+                Login with Google
             </button>
-          </div>
+         </div>
         );
     }
 }
