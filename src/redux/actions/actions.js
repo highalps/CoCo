@@ -3,7 +3,6 @@ import axios from 'axios'
 
 /* */
 import AT from '../actions/actionTypes'
-import Redux from '../../service/reduxService'
 
 const client = axios.create({
     baseURL: 'http://sopad.ml/api/',
@@ -19,14 +18,16 @@ function createAction(actionType) {
 
 export default {
     updateDirectory: (payload) => {
-        Redux.dispatch(createAction(AT.GET_DIRECTORY))
-        client.get('/directory')
-            .then(response => {
-                Redux.dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(response))
-            })
-            .catch(error => {
-                Redux.dispatch(createAction(AT.GET_DIRECTORY_ERROR)(error))
-            })
-    }
+        return (dispatch) => {
+            dispatch(createAction(AT.GET_DIRECTORY)(payload))
+            return client.get('/directory')
+                .then(response => {
+                    dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(response))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.GET_DIRECTORY_ERROR)(error))
+                })
+        }
+    },
 }
 
