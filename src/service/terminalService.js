@@ -9,14 +9,12 @@ class TerminalService {
     }
 
     initialize(refs, option) {
-        if (!this._terminalContainer) {
-            this._terminalContainer = refs
-            this._term = new Terminal(option)
-            this._term.open(this._terminalContainer)
-            const fitAddon = Terminal.loadAddon('fit')
-            fitAddon.fit(this._term)
-            return this._term
-        }
+        this._terminalContainer = refs
+        this._term = new Terminal(option)
+        this._term.open(this._terminalContainer)
+        const fitAddon = Terminal.loadAddon('fit')
+        fitAddon.fit(this._term)
+        return this._term
     }
 
     getTerminal() {
