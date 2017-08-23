@@ -1,5 +1,6 @@
 /* */
 import React from 'react'
+import { connect } from 'redux'
 
 /* */
 import styles from './Body.scss'
@@ -23,4 +24,4 @@ class Body extends React.Component {
     }
 }
 
-export default Body
+export default connect()(Body)
