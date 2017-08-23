@@ -2,14 +2,14 @@
 import Immutable from 'immutable'
 
 const initialState = {
-
+    project: Immutable.Map(),
 }
 
-const workspaceReducer = (state = initialState, action) => {
+const projectInfoReducer = (state = initialState, action) => {
     switch(action.type) {
         default:
             return state;
     }
 }
 
-export default workspaceReducer
+export default projectInfoReducer

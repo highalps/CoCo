@@ -15,10 +15,9 @@ class MainEditor extends React.Component {
 
     render() {
         return (
-            <div
-                className={styles.wrapper}>
-                 <EditorBox />
-                 <Terminal />
+            <div className={styles.wrapper}>
+                <EditorBox />
+                <Terminal />
             </div>
         )
     }

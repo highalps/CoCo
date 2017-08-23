@@ -2,21 +2,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux';
 
 /* */
 import Routes from './Routes'
+import Redux from './service/reduxService'
 
-require('./styles/global.scss')
-require('./styles/xterm.scss')
+// import global styles
+import './styles/global.scss'
+import './styles/xterm.scss'
 
-// TODO: apply redux flow && create action and reducer
-//const store = createStore(counterReducer);
+// import codemirror mode & style
+import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/clike/clike.js'
+import 'codemirror/theme/panda-syntax.css'
+import 'codemirror/theme/isotope.css'
 
 /* Render */
 ReactDOM.render(
-   // <Provider store={store}>
-        <Routes />,
-    //</Provider>,
+   <Provider store={Redux.getStore()}>
+        <Routes />
+    </Provider>,
     window.document.getElementById('main')
 )

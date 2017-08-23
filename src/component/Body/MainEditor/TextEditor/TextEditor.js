@@ -5,10 +5,6 @@ import otText from 'ot-text'
 import shareDB from 'sharedb/lib/client'
 import shareDBCodeMirror from 'sharedb-codemirror'
 import CodeMirror from 'codemirror'
-import 'codemirror/mode/javascript/javascript.js'
-import 'codemirror/mode/clike/clike.js'
-import 'codemirror/theme/panda-syntax.css'
-import 'codemirror/theme/isotope.css'
 
 /* */
 import styles from './TextEditor.scss'
