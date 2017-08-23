@@ -14,7 +14,7 @@ class MainScreen extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-              <div>Main Screen</div>
+              <div></div>
             </div>
         )
     }
