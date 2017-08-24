@@ -14,7 +14,14 @@ class MainScreen extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <img className ={styles.coddingImg} src="https://oxfest.files.wordpress.com/2017/02/codingsnippet.jpg"/>
+              <div className={styles.wrapperTitle}>
+                <div className={styles.sopadTitle}>
+                  이제는 웹에서 프로젝트를 진행하세요!!
+                </div>
+              </div>
+              <div>
+                  <img className ={styles.coddingImg} src="http://cfile10.uf.tistory.com/image/2105C64D570F2621101068"/>
+              </div>
             </div>
         )
     }

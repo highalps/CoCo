@@ -1,14 +1,26 @@
 .wrapper {
-  display: flex;
+  position:relative;
   height: 100%;
   width: 100%;
-  align-items: center;
-  margin-top: 20px;
-
+  background-color: #ffffff;
+  .wrapperTitle{
+      display: table;
+      height: 30%;
+      width:100%;
+  }
+  .sopadTitle{
+    display: table-cell;
+    font-size: 50px;
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+  }
   .coddingImg{
-    margin-left: 20px;
-    border-radius: 30px;
-    max-width: 80%;
-    height: auto;
+    margin-right: 5px;
+    margin-right: 5px;
+
+    width: 100%;
+    margin: auto;
   }
 }
