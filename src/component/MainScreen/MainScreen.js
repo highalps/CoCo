@@ -14,7 +14,7 @@ class MainScreen extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-              <div></div>
+                <img className ={styles.coddingImg} src="https://oxfest.files.wordpress.com/2017/02/codingsnippet.jpg"/>
             </div>
         )
     }

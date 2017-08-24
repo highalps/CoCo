@@ -1,15 +1,17 @@
 .wrapper {
   display: flex;
-  height: 100%;
+  height: 10%;
   align-items: center;
-  justify-content: center;
+  align-content: center;
+
 
   .loginBtn {
     box-sizing: border-box;
-    position: relative;
+    position: absolute;
     /* width: 13em;  - apply for fixed size */
     margin: 0.2em;
     padding: 0 15px 0 46px;
+    right: 250px;
     border: none;
     text-align: left;
     line-height: 34px;
@@ -49,6 +51,8 @@
     &:hover {
       cursor: pointer;
     }
+    position: absolute;
+    right: 500px;
     margin-right: 10px;
   }
 }
