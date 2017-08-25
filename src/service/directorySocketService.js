@@ -12,7 +12,7 @@ class DirectorySocket {
 
     connect() {
         this._socket = io('/update')
-        // TODO: 프로젝트 정보 얻어오면 8001을 해당 dockerPort로 변경
+        // TODO: 프로젝트 정보 얻어오면 8001을 해당 _id로 변경
         this._socket.emit('join room', 8001)
         this._socket.on('connect', this._onConnect.bind(this))
         this._socket.on('disconnect', this._onDisConnect.bind(this))

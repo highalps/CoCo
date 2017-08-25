@@ -43,7 +43,7 @@ class TextEditor extends React.Component {
 
     connect(props) {
         this.setState({ isLoading: false })
-        // TODO: tobechange를 project의 dockerPort로 변경
+        // TODO: tobechange를 project의 _id로 변경
         const fileName = 'tobechange/' + props.name
         console.log(this.shareConnection);
         const doc = this.shareConnection.get('files', fileName)
