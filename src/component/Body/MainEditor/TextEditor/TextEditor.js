@@ -8,7 +8,6 @@ import CodeMirror from 'codemirror'
 
 /* */
 import styles from './TextEditor.scss'
-import webScoket from '../../../../service/webSocketService'
 
 shareDB.types.map['json0'].registerSubtype(otText.type)
 
@@ -38,12 +37,13 @@ class TextEditor extends React.Component {
 
     componentDidMount() {
         this.codeMirror = CodeMirror.fromTextArea(this._refs.textArea, option);
-        this.shareConnection = new shareDB.Connection(new WebSocket("ws://" + window.location.host + '/api'))
+        this.shareConnection = new shareDB.Connection(new WebSocket("ws://" + window.location.host + '/editor'))
         this.connect(this.props)
     }
 
     connect(props) {
         this.setState({ isLoading: false })
+        // TODO: tobechange를 project의 dockerPort로 변경
         const fileName = 'tobechange/' + props.name
         console.log(this.shareConnection);
         const doc = this.shareConnection.get('files', fileName)
@@ -51,7 +51,6 @@ class TextEditor extends React.Component {
             key: 'content',
             verbose: true
         });
-
     }
 
     render() {

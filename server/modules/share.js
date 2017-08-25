@@ -1,7 +1,6 @@
 var ShareDB = require('sharedb');
 var WebSocketServer = require('ws').Server;
 var otText = require('ot-text');
-var mongoDB = require('mongodb');
 var WebSocketJSONStream = require('websocket-json-stream');
 var ShareDBMongo = require('sharedb-mongo');
 
@@ -20,6 +19,24 @@ exports.init = function (server, app, passport){
     db.getDbs(function (emtpy, mongo, mongopoll) {
         app.db = mongo;
         passport.getDB(mongo);
+
+        // TODO: project 생성부분 완성되면 dummy 생성 부분 지우기
+        // var dummy = {
+        //     _id: 8001,
+        //     title: 'dummy',
+        //     files: {
+        //         root: {
+        //             isDirectory: true
+        //         },
+        //         test: {
+        //             isDirectory: false,
+        //             type: 'cpp'
+        //         }
+        //     },
+        //     projectType: 'C',
+        //     userList: {}
+        // };
+        // mongo.collection('projects').insertOne(dummy);
     });
 };
 

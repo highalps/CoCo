@@ -1,7 +1,7 @@
 /* */
 import Terminal from 'xterm'
 
-class TerminalService {
+class TerminalSocket {
 
     constructor() {
         this._terminalContainer = null
@@ -28,4 +28,4 @@ class TerminalService {
     }
 }
 
-export default new TerminalService()
+export default new TerminalSocket()

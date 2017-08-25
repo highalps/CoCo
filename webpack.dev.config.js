@@ -104,7 +104,7 @@ var config = {
             '/' : {
                 target:'http://localhost:3000'
             },
-            '/api': {
+            '/editor': {
                 target: 'ws://localhost:3000',
                 ws: true
             }

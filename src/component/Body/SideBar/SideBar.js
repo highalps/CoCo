@@ -3,7 +3,7 @@ import React from 'react'
 
 /* */
 import styles from './SideBar.scss'
-import Project from './Project'
+import Directory from './Directory'
 
 class SideBar extends React.Component {
     constructor() {
@@ -17,7 +17,7 @@ class SideBar extends React.Component {
                <div className={styles.tab}>
                     탭
                </div>
-               <Project />
+               <Directory />
            </div>
         )
     }

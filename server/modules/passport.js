@@ -1,5 +1,4 @@
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var assert = require('assert');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var database = null;
@@ -29,48 +28,28 @@ passport.use(new GoogleStrategy({
           var query = {
             id:profile.id,
             name:profile.displayName
-          }
-           console.log("query+ ",query);
-          if (profile) {
-              database.collection('users').findOne(query, function (err, user) {
-              assert.equal(err, null);
-              if(!user){
-                database.collection('users').insertOne(query);
-              }
+        };
+        console.log("query+ ",query);
+        if (profile) {
+            database.collection('users').findOne(query, function (err, user) {
+                assert.equal(err, null);
+
+                // query에 맞는 유저정보가 없을 때 query 전체 저장
+                if(!user){
+                    query['projectList'] = [ 8001 ];
+                    database.collection('users').insertOne(query);
+                }
             });
             return done(null, profile);
-          }
-          else {
+        }
+        else {
             return done(null, false);
-          }
-  }
-));
-/*
-// 로컬 로그인 시
-passport.use('local', new LocalStrategy({
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback : true
-    }
-    ,function(req, email, password, done) {
-      var query = {email: email, password:password };
-
-      req.app.db.collection('users').findOne(query, function (err, user) {
-          assert.equal(err, null);
-
-          if(!user){
-              console.log('정보 없음');
-              return done(null, false)
-          }
-          else{
-              return done(null, user)
-          }
-      });
+        }
     }
 ));
-*/
+
 passport.getDB = function (db) {
-  database = db;
+    database = db;
 }
 
 module.exports = passport;

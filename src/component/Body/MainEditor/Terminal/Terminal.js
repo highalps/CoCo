@@ -4,8 +4,8 @@ import autobind from 'core-decorators/lib/autobind'
 
 /* */
 import styles from './Terminal.scss'
-import terminalService from '../../../../service/terminalService'
-import webSocket from '../../../../service/webSocketService'
+import terminalService from 'service/terminalService'
+import webSocket from 'service/terminalSocketService'
 
 const option = {
     cursorBlink: false,  // Do not blink the terminal's cursor

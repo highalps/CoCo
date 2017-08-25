@@ -4,21 +4,17 @@ import io from 'socket.io-client'
 /* */
 import terminalService from './terminalService'
 
-class WebSocketService {
+class TerminalSocketService {
 
     constructor() {
         this._socket = null
     }
 
     connect() {
-        this._socket = io("ws://" + window.location.hostname + ":3000")
+        this._socket = io('/8001')
         this._socket.on('connect', this._onConnect.bind(this))
         this._socket.on('disconnect', this._onDisConnect.bind(this))
         this._socket.on('data', this._onData.bind(this))
-    }
-
-    getWebsocket() {
-        return this._socket
     }
 
     sendCommand(command) {
@@ -34,4 +30,4 @@ class WebSocketService {
     }
 }
 
-export default new WebSocketService()
+export default new TerminalSocketService()

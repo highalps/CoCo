@@ -4,7 +4,6 @@ import axios from 'axios'
 /* */
 import AT from '../actions/actionTypes'
 
-// TODO: baseURL 명확히 (api 주소는 어떻게 설계할 것인가?)
 const client = axios.create({
     baseURL: 'http://sopad.ml/api/',
     timeout: 5000,
