@@ -17,7 +17,7 @@ function createAction(actionType) {
 }
 
 export default {
-    getList: (payload) => {
+    getList: (payload) => { // 로그인 직후 유저의 프로젝트 리스트 받기
         return (dispatch) => {
             dispatch(createAction(AT.GET_DIRECTORY)(payload))
             return client.get('/list')
@@ -29,7 +29,7 @@ export default {
                 })
         }
     },
-    addProject: (payload) => {
+    addProject: (payload) => { // 프로젝트 리스트화면에서 새로운 프로젝트 생성
         return (dispatch) => {
             dispatch(createAction(AT.GET_DIRECTORY)(payload))
             return client.post('/project')
@@ -41,7 +41,7 @@ export default {
                 })
         }
     },
-    getProject: (payload) => {
+    getProject: (payload) => { // 리스트에서 선택한 프로젝트에 대한 정보 전송
         return (dispatch) => {
             dispatch(createAction(AT.GET_DIRECTORY)(payload))
             return client.get('/project')
@@ -53,7 +53,7 @@ export default {
                 })
         }
     },
-    updateDirectory: (payload) => {
+    updateDirectory: (payload) => { // /sopad에서 디렉토리 업데이트 요청
         return (dispatch) => {
             dispatch(createAction(AT.GET_DIRECTORY)(payload))
             return client.put('/directory')
@@ -65,7 +65,7 @@ export default {
                 })
         }
     },
-    addUser: (payload) => {
+    addUser: (payload) => { // /sopad에서 접근 가능한 사용자 추가
         return (dispatch) => {
             dispatch(createAction(AT.GET_DIRECTORY)(payload))
             return client.post('/user')
@@ -76,18 +76,6 @@ export default {
                     dispatch(createAction(AT.GET_DIRECTORY_ERROR)(error))
                 })
         }
-    },
-    updateUser: (payload) => {
-        return (dispatch) => {
-            dispatch(createAction(AT.GET_DIRECTORY)(payload))
-            return client.put('/user')
-                .then(response => {
-                    dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(response))
-                })
-                .catch(error => {
-                    dispatch(createAction(AT.GET_DIRECTORY_ERROR)(error))
-                })
-        }
-    },
+    }
 }
 

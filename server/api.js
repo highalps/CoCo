@@ -29,7 +29,8 @@ router.post('/project', function(req, res, next) {
 
 });
 
-// TODO: react에서 받는 데이터가 어디로 오는지 찾기 (req.??), 주소로 받는 '/:_id'를 대체
+// TODO 1: react에서 받는 데이터가 어디로 오는지 찾기 (req.??), 주소로 받는 '/:_id'를 대체 (미정)
+// TODO 2: 프로젝트 정보 요청 시 사용자 목록 소켓에 추가 및 업데이트
 // 프로젝트 리스트에서 선택한 프로젝트 내용 넘기기
 router.get('/project/:_id', function (req, res, next) {
     console.log("project " + req.params._id + "요청");
@@ -56,11 +57,6 @@ router.put('/directory/:_id', function (req, res, next) {
 
 // 프로젝트에 유저 목록 추가
 router.post('/user', function (req, res, next) {
-
-});
-
-// 프로젝트에 현재 접속 중인 유저 목록 추가
-router.put('/user', function (req, res, next) {
 
 });
 
