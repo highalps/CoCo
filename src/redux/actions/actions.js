@@ -17,10 +17,70 @@ function createAction(actionType) {
 }
 
 export default {
-    getDirectory: (payload) => {
+    getList: (payload) => {
         return (dispatch) => {
             dispatch(createAction(AT.GET_DIRECTORY)(payload))
-            return client.get('/directory') // TODO: api 주소 어떻게 설계?
+            return client.get('/list')
+                .then(response => {
+                    dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(response))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.GET_DIRECTORY_ERROR)(error))
+                })
+        }
+    },
+    addProject: (payload) => {
+        return (dispatch) => {
+            dispatch(createAction(AT.GET_DIRECTORY)(payload))
+            return client.post('/project')
+                .then(response => {
+                    dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(response))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.GET_DIRECTORY_ERROR)(error))
+                })
+        }
+    },
+    getProject: (payload) => {
+        return (dispatch) => {
+            dispatch(createAction(AT.GET_DIRECTORY)(payload))
+            return client.get('/project')
+                .then(response => {
+                    dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(response))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.GET_DIRECTORY_ERROR)(error))
+                })
+        }
+    },
+    updateDirectory: (payload) => {
+        return (dispatch) => {
+            dispatch(createAction(AT.GET_DIRECTORY)(payload))
+            return client.put('/directory')
+                .then(response => {
+                    dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(response))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.GET_DIRECTORY_ERROR)(error))
+                })
+        }
+    },
+    addUser: (payload) => {
+        return (dispatch) => {
+            dispatch(createAction(AT.GET_DIRECTORY)(payload))
+            return client.post('/user')
+                .then(response => {
+                    dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(response))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.GET_DIRECTORY_ERROR)(error))
+                })
+        }
+    },
+    updateUser: (payload) => {
+        return (dispatch) => {
+            dispatch(createAction(AT.GET_DIRECTORY)(payload))
+            return client.put('/user')
                 .then(response => {
                     dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(response))
                 })

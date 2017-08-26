@@ -1,9 +1,6 @@
 /* */
 import io from 'socket.io-client'
 
-/* */
-//import terminalService from './terminalService'
-
 class DirectorySocket {
 
     constructor() {
