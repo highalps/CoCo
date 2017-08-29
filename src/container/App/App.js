@@ -8,7 +8,7 @@ import Header from 'component/Header'
 import Body from 'component/Body'
 import Footer from 'component/Footer'
 import TerminalSocket from 'service/terminalSocketService'
-import DirectorySocket from 'service/directorySocketService'
+import UpdateSocket from 'service/updateSocketService'
 
 const mapStateToProps = (state) => ({
     //TODO: 로그인 성공시 디렉토리 정보와 프로젝트 정보 가져오기
@@ -20,7 +20,7 @@ class App extends React.Component {
     constructor() {
         super()
         TerminalSocket.connect()
-        DirectorySocket.connect()
+        UpdateSocket.connect()
     }
 
     render() {

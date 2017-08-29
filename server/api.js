@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var assert = require('assert');
-var directoryUpdate = require('./modules/directory-update')
+var updateSocket = require('./service/update-socket');
 
 // REST API Reference: http://meetup.toast.com/posts/92
 
@@ -51,13 +51,28 @@ router.put('/directory/:_id', function (req, res, next) {
 
     });
 
+    var object = {
+        type: 'directory',
+        data: {
+            test: '디렉토리 업데이트'
+        }
+    };
     // TODO: react에서 받는 데이터 넣기
-    directoryUpdate.update(req.params._id, 'data');
+    updateSocket.update(req.params._id, object);
 });
 
 // 프로젝트에 유저 목록 추가
-router.post('/user', function (req, res, next) {
+router.post('/user/:_id', function (req, res, next) {
+    console.log("_id", req.params._id, "유저 접속 추가");
 
+    var object = {
+        type: 'user',
+        data: {
+            test: '유저접속 추가'
+        }
+    };
+    // TODO: react에서 받는 데이터 넣기
+    updateSocket.update(req.params._id, object);
 });
 
 module.exports = router;

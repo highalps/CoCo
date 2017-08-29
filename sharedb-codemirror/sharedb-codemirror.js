@@ -1,5 +1,3 @@
-var CODE_MIRROR_OP_SOURCE = 'CodeMirror';
-
 /**
  * @constructor
  * @param {CodeMirror} codeMirror - a CodeMirror editor instance
@@ -59,16 +57,16 @@ ShareDBCodeMirror.attachDocToCodeMirror = function(shareDoc, codeMirror, options
       shareDoc.on('op', shareDBOpListener);
     },
     onStop: function() {
-      shareDoc.destroy();
+      shareDoc.removeListener('op', shareDBOpListener);
     },
-    onOp: function(op, source) {
+    onOp: function(op) {
       var docOp = [{p: [key], t: 'text', o: op}];
 
       if (verbose) {
         console.log('ShareDBCodeMirror: submitting op to doc:', docOp);
       }
 
-      shareDoc.submitOp(docOp, source);
+      shareDoc.submitOp(docOp, {source: this});
       shareDBCodeMirror.assertValue(shareDoc.data[key]);
     }
   });
@@ -204,7 +202,7 @@ ShareDBCodeMirror.prototype.applyOp = function(op, source) {
     return;
   }
 
-  if (source === true || source === CODE_MIRROR_OP_SOURCE) {
+  if (source === this) {
     if (this.verbose) {
       console.log('ShareDBCodeMirror: skipping local op', op);
     }
@@ -265,7 +263,7 @@ ShareDBCodeMirror.prototype._handleChange = function(codeMirror, change) {
     console.log('ShareDBCodeMirror: produced op', op);
   }
 
-  this.onOp(op, CODE_MIRROR_OP_SOURCE);
+  this.onOp(op);
 };
 
 ShareDBCodeMirror.prototype._createOpFromChange = function(change) {

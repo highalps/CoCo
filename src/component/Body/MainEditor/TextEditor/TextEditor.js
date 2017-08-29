@@ -17,7 +17,7 @@ const option = {
     smartIndent: true,
     mode: 'text/x-c++src',
     theme: 'isotope',
-    scrollbarStyle: null,
+    scrollbarStyle: null
 }
 
 class TextEditor extends React.Component {
@@ -45,11 +45,10 @@ class TextEditor extends React.Component {
         this.setState({ isLoading: false })
         // TODO: tobechange를 project의 _id로 변경
         const fileName = 'tobechange/' + props.name
-        console.log(this.shareConnection);
         const doc = this.shareConnection.get('files', fileName)
         shareDBCodeMirror.attachDocToCodeMirror(doc, this.codeMirror, {
             key: 'content',
-            verbose: true
+            verbose: false
         });
     }
 

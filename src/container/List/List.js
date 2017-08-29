@@ -2,10 +2,9 @@
 import React from 'react'
 
 /* */
-import styles from './Home.scss'
-import Login from 'component/Login/'
-import MainScreen from 'component/MainScreen/'
+import styles from './List.scss'
 
+// TODO: 로그인 후 해당 사용자에 대한 프로젝트 정보 axios로 받기
 class Home extends React.Component {
 
     constructor() {
@@ -15,8 +14,6 @@ class Home extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-               <Login />
-               <MainScreen />
             </div>
         )
     }

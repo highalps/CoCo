@@ -1,7 +1,7 @@
 /* */
 import io from 'socket.io-client'
 
-class DirectorySocket {
+class UpdateSocket {
 
     constructor() {
         this._socket = null
@@ -13,7 +13,8 @@ class DirectorySocket {
         this._socket.emit('join room', 8001)
         this._socket.on('connect', this._onConnect.bind(this))
         this._socket.on('disconnect', this._onDisConnect.bind(this))
-        this._socket.on('update', this._onUpdate.bind(this))
+        this._socket.on('directory', this._onDirectoryUpdate.bind(this))
+        this._socket.on('user', this._onUserUpdate.bind(this))
     }
 
     sendCommand(command) {
@@ -24,10 +25,12 @@ class DirectorySocket {
 
     _onDisConnect() {}
 
-    _onUpdate(directory) {
-        console.log('디렉토리 업데이트');
+    _onDirectoryUpdate(data) {
         // TODO: SideBar에 업데이트
+    }
+
+    _onUserUpdate(data) {
     }
 }
 
-export default new DirectorySocket()
+export default new UpdateSocket()

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('../modules/passport')
+var passport = require('../service/passport')
 var assert = require('assert');
 
 router.get('/auth/google',
