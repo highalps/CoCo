@@ -5,7 +5,7 @@ import axios from 'axios'
 import AT from '../actions/actionTypes'
 
 const client = axios.create({
-    baseURL: 'http://sopad.ml/api/',
+    baseURL: 'http://localhost:4001/api/',
     timeout: 5000,
 })
 
@@ -22,7 +22,7 @@ export default {
             dispatch(createAction(AT.GET_LIST)(payload))
             return client.get('/list')
                 .then(response => {
-                    dispatch(createAction(AT.GET_LIST_SUCCESS)(response))
+                     dispatch(createAction(AT.GET_LIST_SUCCESS)(response))
                 })
                 .catch(error => {
                     dispatch(createAction(AT.GET_LIST_ERROR)(error))

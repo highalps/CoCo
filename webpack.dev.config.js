@@ -98,6 +98,7 @@ var config = {
     target: 'web',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
+        headers: { "Access-Control-Allow-Origin": "*"},
         compress: true,
         disableHostCheck: true,
         proxy: {
@@ -107,6 +108,9 @@ var config = {
             '/editor': {
                 target: 'ws://localhost:3000',
                 ws: true
+            },
+            '/api': {
+                target: 'http://localhost:3000/api',
             }
         }
     },
