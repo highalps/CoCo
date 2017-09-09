@@ -52,9 +52,9 @@ class ProjectList extends React.Component {
                                         onChange = {this.textChange}/>
                                 <label>사용할 언어  </label>
                                 <select value={this.state.language} onChange ={this.selectChange}>
-                                    <option value = "c">C</option>
-                                    <option value = "c++">C++</option>
-                                    <option value = "java">JAVA</option>
+                                    <option value = "C">C</option>
+                                    <option value = "CPP">C++</option>
+                                    <option value = "JAVA">JAVA</option>
                                 </select>
                                 </div>
                                 <div className={styles.fix}>

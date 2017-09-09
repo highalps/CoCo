@@ -27,10 +27,10 @@ function TerminalConnect(io, _id){
         }).on('error', function(err) {
             socket.emit('data', '\r\n*** SSH CONNECTION ERROR: ' + err.message + ' ***\r\n')
         }).connect({
-            host: 'www.sopad.ml',
+            host: 'external.sopad.ml',
             port: _id,
             username: 'root',
-            password: 'syspwd128'
+            password: 'docker123@'
         });
     })
 }
