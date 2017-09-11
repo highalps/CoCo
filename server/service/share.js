@@ -6,7 +6,7 @@ var ShareDBMongo = require('sharedb-mongo');
 
 var mongoDB = require('mongodb');
 //var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://www.sopad.ml:27017/sopad";
+var url = "mongodb://external.sopad.ml:27017/sopad";
 
 exports.init = function (server, app, passport){
     var webSocketServer = new WebSocketServer({server: server});
