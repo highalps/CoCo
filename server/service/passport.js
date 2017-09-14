@@ -20,9 +20,9 @@ passport.deserializeUser(function(user, done) {
 
 //구글 로그인
 passport.use(new GoogleStrategy({
-    clientID: "464986204326-n7e3eaqd5jcsngftdkibkqmjcj5ik76v.apps.googleusercontent.com",
-    clientSecret: "BaUiyZgVLXL29RKj-zNxy0Lf",
-    callbackURL: "http://localhost:4001/login/auth/google/callback"
+    clientID: "565437120355-6st0a0vdcblkviveld60uppe9hft8h4c.apps.googleusercontent.com",
+    clientSecret: "_K5lQEMuHXgHpYn0SYV8YN7T",
+    callbackURL: "http://localhost:4001/api/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
           var query = {

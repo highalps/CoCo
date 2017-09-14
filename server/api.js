@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var assert = require('assert');
 var updateSocket = require('./service/update-socket');
+var passport = require('./service/passport')
 
 // TODO: 도커 포트 번호 generation 코드 완성 시 제거
 var projectNumber = 8001;
@@ -110,5 +111,14 @@ router.post('/user/:_id', function (req, res, next) {
     // TODO: react에서 받는 데이터 넣기
     updateSocket.update(req.params._id, object);
 });
+
+router.get('/auth/google',
+    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+router.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/' }),
+    function(req, res) {
+        res.redirect('/#/sopad');
+    });
 
 module.exports = router;
