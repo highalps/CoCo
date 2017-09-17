@@ -24,7 +24,7 @@ class Login extends React.Component {
             <div className={styles.logo}>SopadLogo</div>
             <ul className={styles.topMenu}>
               <li><a href = "/#/sopad">SoPad</a></li>
-              <li><a href = "/login/auth/google">Google로그인</a></li>
+              <li><a href = "http://external.sopad.ml:3000/api/auth/google">Google로그인</a></li>
             </ul>
           </div>
         )

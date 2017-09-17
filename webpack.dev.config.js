@@ -103,14 +103,11 @@ var config = {
         disableHostCheck: true,
         proxy: {
             '/' : {
-                target:'http://localhost:3000'
+                target:'http://localhost'
             },
             '/editor': {
-                target: 'ws://localhost:3000',
+                target: 'ws://external.sopad.ml',
                 ws: true
-            },
-            '/api': {
-                target: 'http://localhost:3000/api',
             }
         }
     },

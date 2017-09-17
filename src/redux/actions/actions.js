@@ -4,8 +4,9 @@ import axios from 'axios'
 /* */
 import AT from '../actions/actionTypes'
 
+//TODO: nginx 설치 후 포트 번호 지우기
 const client = axios.create({
-    baseURL: 'http://localhost:4001/api/',
+    baseURL: 'http://external.sopad.ml:3000/api/',
     timeout: 5000,
 })
 
