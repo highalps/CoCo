@@ -12,4 +12,12 @@ router.get('/auth/google/callback',
         res.redirect('/#/sopad');
     });
 
+router.post('/', function(req,res){
+	var userID = req.body.userID,
+		password = req.body.password;
+
+	console.log(userID);
+	console.log(password);
+});
+
 module.exports = router;

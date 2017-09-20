@@ -65,7 +65,15 @@ app.get('/logout' , function(req, res){
     req.session.destroy();
     req.logout();
     console.log("logout");
-    res.redirect('/login');
+    res.redirect('/');
+});
+
+app.post('/login', function(req,res){
+	var userID = req.body.userID,
+		password = req.body.password;
+
+	console.log(userID);
+	console.log(password);
 });
 
 server.listen(port, function (err) {

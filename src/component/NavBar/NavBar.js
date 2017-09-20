@@ -1,6 +1,7 @@
 import React from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import Styles from './NavBar.scss';
+import styles from './NavBar.scss';
+import {Link} from 'react-router-dom';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -19,17 +20,17 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className="topMenu bg-primary">
-      <div className="temp">
+      <div className={styles.temp}>
         <Navbar light toggleable>
           <NavbarToggler right onClick={this.toggle} />
           <NavbarBrand className="text-white" href="/">Sopad</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink  className="text-white" href="/components/">components</NavLink>
+                <Link to = "/login"  className="text-white"  >login</Link>
               </NavItem>
               <NavItem>
-                <NavLink  className="text-white" href="/login/auth/google">GoogleLogin</NavLink>
+                <Link to = "/sign_up"  className="text-white" >sign up</Link>
               </NavItem>
             </Nav>
           </Collapse>
