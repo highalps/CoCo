@@ -29,7 +29,7 @@ class NavBar extends React.Component {
                 <NavLink  className="text-white" href="/components/">components</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink  className="text-white" href="/login/auth/google">GoogleLogin</NavLink>
+                <NavLink  className="text-white" href="/auth">GoogleLogin</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
