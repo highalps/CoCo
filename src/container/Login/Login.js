@@ -7,12 +7,11 @@ class Login extends React.Component {
 
 	constructor() {
 		super()
-		this.state = {userID: '', password:'', errors : ''};
+		this.state = {userID: '', password:''};
 
 		this.userIDChange = this.userIDChange.bind(this);
 		this.passwordChange = this.passwordChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
-		this.validate = this.validate.bind(this);
 	}
 
 	userIDChange(event){
@@ -24,32 +23,14 @@ class Login extends React.Component {
 
 	onSubmit() {
 		console.log("onClick");
-		let err = this.validate();
-		if(err.length !== 0) {
-			this.setState({
-				errors: err
-			});
-		}
-		else{
-			axios.post('http://localhost:4001/login',{
-				userID: this.state.userID,
-				password: this.state.password
-			}).then(response => {
-				console.log(response.data.res)})
+		axios.post('http://localhost:4001/login',{
+			userID: this.state.userID,
+			password: this.state.password
+		}).then(response => {
+			console.log(response.data.res)})
 			.catch (response => {console.log(response)});
-		}
 	}
 
-	validate = () =>{
-		let err = {}
-		if(this.state.userID === '') {
-			err.userID = "UserID is required";
-		}
-		if(this.state.password === '') {
-			err.password = "Password is required";
-		}
-		return err;
-	}
 
 	render() {
 		return (
@@ -92,9 +73,6 @@ class Login extends React.Component {
 							</div>
 						</div>
 					</div>
-					{this.state.errors.userID}
-					<br/>
-					{this.state.errors.password}
 				</div>
 			</div>
 		)

@@ -68,14 +68,6 @@ app.get('/logout' , function(req, res){
     res.redirect('/');
 });
 
-app.post('/login', function(req,res){
-	var userID = req.body.userID,
-		password = req.body.password;
-
-	console.log(userID);
-	console.log(password);
-});
-
 server.listen(port, function (err) {
     if (err) {
         throw err;
