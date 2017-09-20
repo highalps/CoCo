@@ -7,7 +7,7 @@ class Login extends React.Component {
 
 	constructor() {
 		super()
-		this.state = {userID: '', password:''};
+		this.state = {userID: '', password:'', msg:''};
 
 		this.userIDChange = this.userIDChange.bind(this);
 		this.passwordChange = this.passwordChange.bind(this);
@@ -27,8 +27,9 @@ class Login extends React.Component {
 			userID: this.state.userID,
 			password: this.state.password
 		}).then(response => {
-			console.log(response.data.res)})
-			.catch (response => {console.log(response)});
+			console.log(response.data.msg)
+			this.setState({msg: response.data.msg});
+		});
 	}
 
 
@@ -73,6 +74,7 @@ class Login extends React.Component {
 							</div>
 						</div>
 					</div>
+					{this.state.msg}
 				</div>
 			</div>
 		)
