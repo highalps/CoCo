@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('../service/passport')
-var assert = require('assert');
+//var assert = require('assert');
 
 router.get('/auth/google',
     passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
@@ -18,6 +18,10 @@ router.post('/', function(req,res){
 
 	console.log(userID);
 	console.log(password);
+
+	var test = "test";
+
+	return res.json({res : test});
 });
 
 module.exports = router;

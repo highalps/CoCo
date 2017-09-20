@@ -22,7 +22,8 @@ class Login extends React.Component {
 		this.setState({password: event.target.value});
 	}
 
-	onSubmit = () =>{
+	onSubmit() {
+		console.log("onClick");
 		let err = this.validate();
 		if(err.length !== 0) {
 			this.setState({
@@ -30,10 +31,11 @@ class Login extends React.Component {
 			});
 		}
 		else{
-			axios.post('/login',{
+			axios.post('http://localhost:4001/login',{
 				userID: this.state.userID,
 				password: this.state.password
-			}).then(response => {console.log(response)})
+			}).then(response => {
+				console.log(response.data.res)})
 			.catch (response => {console.log(response)});
 		}
 	}
@@ -56,10 +58,10 @@ class Login extends React.Component {
 					<div className="header blue white-text center">
 						<div className={styles.card}>로그인</div>
 					</div>
-					<form method="post" action = "/login" onSubmit={this.onSubmit}>
+					<div>
 						<div className={styles.card}>
 							<div className={styles.row}>
-								<div className="input-field col s12 username">
+								<div className="input-field col s12">
 									<input
 										name="userID"
 										ref = "userID"
@@ -79,10 +81,10 @@ class Login extends React.Component {
 										onChange={this.passwordChange}
 									/>
 								</div>
-								<button type="submit" className="btn btn-default" >확인</button>
+								<button type="submit" className="btn btn-default" onClick={this.onSubmit}>확인</button>
 							</div>
 						</div>
-					</form>
+					</div>
 					<div className={styles.footer}>
 						<div className={styles.card}>
 							<div className="right" >
@@ -99,4 +101,5 @@ class Login extends React.Component {
 	}
 }
 
-export default Login
+
+export default (Login)
