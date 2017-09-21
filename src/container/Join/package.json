@@ -1,0 +1,6 @@
+{
+  "name": "Join",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Join.js"
+}
