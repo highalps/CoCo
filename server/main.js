@@ -55,12 +55,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-// 없는 경로로 이동할 시
-app.use(function(req, res, next) {
-    var err = new Error('404 Not Found');
-    err.status = 404;
-    next(err);
-});
 
 
 server.listen(port, function (err) {

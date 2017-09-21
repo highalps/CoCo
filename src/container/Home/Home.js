@@ -3,10 +3,10 @@ import React from 'react'
 
 /* */
 import styles from './Home.scss'
-import NavBar from 'component/NavBar/'
-import MainScreen from 'component/MainScreen/'
-import Intro  from 'component/Intro/'
-import Library  from 'component/Library/'
+import NavBar from '../../component/NavBar/'
+import MainScreen from '../../component/MainScreen/'
+import Intro  from '../../component/Intro/'
+import Library  from '../../component/Library/'
 
 class Home extends React.Component {
 

@@ -57,7 +57,7 @@ class NavBar extends React.Component {
                 </DropdownMenu>
               </NavDropdown>
               <NavItem>
-                <NavLink  className="text-white" href='/#/login'>Login</NavLink>
+                <NavLink  className="text-white" href='/#/signIn'>Login</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
