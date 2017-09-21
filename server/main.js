@@ -65,7 +65,7 @@ app.get('/logout' , function(req, res){
     req.session.destroy();
     req.logout();
     console.log("logout");
-    res.redirect('/login');
+    res.redirect('/');
 });
 
 server.listen(port, function (err) {
@@ -83,3 +83,4 @@ new TerminalConnect(io, 8001);
 
 var updateSocket = require('./service/update-socket');
 updateSocket.init(io);
+

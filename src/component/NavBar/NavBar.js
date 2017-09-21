@@ -29,7 +29,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className="topMenu bg-primary">
-      <div className="temp">
+      <div className={styles.temp}>
         <Navbar light toggleable>
           <NavbarToggler right onClick={this.toggleNav} />
           <NavbarBrand className="text-white" href="#">Sopad</NavbarBrand>

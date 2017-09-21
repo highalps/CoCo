@@ -7,8 +7,7 @@ import NavBar from 'component/NavBar/'
 import MainScreen from 'component/MainScreen/'
 import Intro  from 'component/Intro/'
 import Library  from 'component/Library/'
-import ProjectList  from 'component/ProjectList/'
-import Join from '../Join/Join'
+
 class Home extends React.Component {
 
     constructor() {
@@ -28,7 +27,7 @@ class Home extends React.Component {
 
     renderPage() {
         if(this.state.isLogIn) {
-            return <ProjectList />
+            return <MainScreen />
         }
         else{
             return <MainScreen />
@@ -39,7 +38,7 @@ class Home extends React.Component {
             <div className={styles.wrapper}>
                <NavBar />
                <Intro />
-                {this.renderPage()}
+               <MainScreen/>
                <Library />
             </div>
         )
