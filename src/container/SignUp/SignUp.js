@@ -38,7 +38,7 @@ class SignIn extends React.Component {
         }).then(response => {
             console.log(response.data.msg)
             if (response.data.success) {
-                this.props.history.push("/#/")
+                this.props.history.push("/signIn")
             }
             this.setState({msg: response.data.msg});
         });
