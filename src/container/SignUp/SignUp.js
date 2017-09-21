@@ -16,6 +16,8 @@ class SignIn extends React.Component {
         this.state = {
             userID: '',
             password:'',
+            userEmail:'',
+            nickName:''
         }
     }
 
@@ -28,9 +30,11 @@ class SignIn extends React.Component {
     @autobind
     onSubmit() {
         console.log("onClick");
-        axios.post('http://localhost:4001/auth/login',{
+        axios.post('http://localhost:4001/auth/sign_up',{
             userID: this.state.userID,
-            password: this.state.password
+            password: this.state.password,
+            userEmail: this.state.userEmail,
+            nickName: this.state.nickName
         }).then(response => {
             console.log(response.data.msg)
             if (response.data.success) {
@@ -49,9 +53,12 @@ class SignIn extends React.Component {
                         <h1>회원가입</h1>
                         <input id="userID" type="text" className="validate" placeholder="user ID" onChange={this.onChange('userID')}/>
                         <input id="password" type="password" className="validate" placeholder="Password" onChange={this.onChange('password')}/>
+                        <input id="userEmail" type="text" className="validate" placeholder="userEmail" onChange={this.onChange('userEmail')}/>
+                        <input id="nickName" type="text" className="validate" placeholder="nickName" onChange={this.onChange('nickName')}/>
+                        {this.state.msg}
                         <div className={styles.buttons}>
-                            <Link className={classNames(styles.button, styles.signIn)} to="signIn">로그인</Link>
                             <button type="submit" className={styles.button} onClick={this.onSubmit}>확인</button>
+                            <Link className={classNames(styles.button, styles.signIn)} to="signIn">취소</Link>
                         </div>
                     </div>
                 </div>

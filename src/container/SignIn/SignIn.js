@@ -28,7 +28,7 @@ class SignIn extends React.Component {
     @autobind
 	onSubmit() {
 		console.log("onClick");
-		axios.post('http://localhost:4001/auth/login',{
+		axios.post('http://localhost:4001/auth/sign_in',{
 			userID: this.state.userID,
 			password: this.state.password
 		}).then(response => {
