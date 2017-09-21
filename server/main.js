@@ -1,4 +1,5 @@
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var http = require('http');
 var express = require('express');
 var webpackDevServer = require('webpack-dev-server');
@@ -11,7 +12,7 @@ var devPort = 4001;
 
 var server = http.createServer(app);
 
-var passport = require('./service/passport');
+var passport = require('./service/passport'); //passport module add
 var flash = require('connect-flash'); // session 관련해서 사용됨. 로그인 실패시 session등 클리어하는 기능으로 보임.
 var session = require('express-session');
 
@@ -47,7 +48,7 @@ app.use(passport.session());
 // TODO: express 라우팅 다시 손보기
 app.use('/', express.static(__dirname + '/../build'));
 app.use('/api', require('./api'));
-app.use('/login', require('./routes/login'));
+app.use('/auth', require('./routes/auth'));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -61,12 +62,6 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-app.get('/logout' , function(req, res){
-    req.session.destroy();
-    req.logout();
-    console.log("logout");
-    res.redirect('/');
-});
 
 server.listen(port, function (err) {
     if (err) {

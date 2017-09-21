@@ -29,20 +29,20 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className="topMenu bg-primary">
-      <div className={styles.temp}>
+      <div className={Styles.temp}>
         <Navbar light toggleable>
           <NavbarToggler right onClick={this.toggleNav} />
-          <NavbarBrand className="text-white" href="#">Sopad</NavbarBrand>
+          <NavbarBrand className="text-white">Sopad</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink  className="text-white" href="#">Home</NavLink>
+                <NavLink  className="text-white">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink  className="text-white" href="#">Board</NavLink>
+                <NavLink  className="text-white">Board</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink  className="text-white" href="#">Tutoring</NavLink>
+                <NavLink  className="text-white">Tutoring</NavLink>
               </NavItem>
               <NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDrop}>
                 <DropdownToggle className="text-white" nav caret>
@@ -57,7 +57,7 @@ class NavBar extends React.Component {
                 </DropdownMenu>
               </NavDropdown>
               <NavItem>
-                <NavLink  className="text-white" href="#">Login</NavLink>
+                <NavLink  className="text-white" href='/#/login'>Login</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

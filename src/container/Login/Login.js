@@ -1,8 +1,9 @@
 import React from 'react'
 import styles from './Login.scss'
-import {Link} from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 
+@withRouter
 class Login extends React.Component {
 
 	constructor() {
@@ -23,11 +24,14 @@ class Login extends React.Component {
 
 	onSubmit() {
 		console.log("onClick");
-		axios.post('http://localhost:4001/login',{
+		axios.post('http://localhost:4001/auth/login',{
 			userID: this.state.userID,
 			password: this.state.password
 		}).then(response => {
 			console.log(response.data.msg)
+			if (response.data.success) {
+				this.props.history.push("/#/")
+			}
 			this.setState({msg: response.data.msg});
 		});
 	}
