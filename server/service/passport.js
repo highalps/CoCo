@@ -33,17 +33,11 @@ passport.use('local', new LocalStrategy({
             return done(err);
         } else {
             if (result.length === 0) {
-                //res.json({success: false, msg: '해당 아이디가 존재하지 않습니다.'})
-                return done(null, false, req.flash('err', '해당 아이디가 존재하지 않습니다.'))
+                return done(null, false)
             } else {
-                console.log(password);
-                console.log(result[0].password);
                 if (!bcrypt.compareSync(password, result[0].password)){
-                    //res.json({success: false, msg : '비밀번호가 일치하지 않습니다.'})
-                    //res.error()
-                    return done(null, false, req.flash('err', '비밀번호가 일치하지 않습니다.'));
+                    return done(null, false);
                 } else {
-                    //res.json({success: true, msg: '로그인 되었습니다'})
                     return done(null, result[0]);
                 }
             }

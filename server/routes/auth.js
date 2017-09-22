@@ -12,29 +12,6 @@ var isAuthenticated = function (req, res, next) {
     res.redirect('/sign_in');
 };
 
-/*router.post('/sign_in', function(req,res){
-	var userID = req.body.userID,
-		password = req.body.password;
-
-	var sql = "select * from USER where userID = ?";
-	db.query(sql, userID ,function (err, result){
-		if (err) {
-			console.log('err :' + err);
-		} else {
-			if (result.length === 0) {
-				res.json({success: false, msg: '해당 아이디가 존재하지 않습니다.'})
-			} else {
-				//var hash = bcrypt.hashSync(result[0].password, 10);
-				if (!bcrypt.compareSync(password, result[0].password)){
-					res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
-				} else {
-					res.json({success: true, msg: '로그인 되었습니다'})
-				}
-			}
-		}
-	});
-});*/
-
 router.post('/sign_up', function(req,res){
 
     var hash = bcrypt.hashSync(req.body.password, 10);
@@ -53,14 +30,15 @@ router.post('/sign_up', function(req,res){
            console.log('err:' + err);
        } else{
            if(result.length !== 0){
-               res.json({success: false, msg: '해당아이디가 이미 존재합니다'})
+               res.status(401).send('해당아이디가 이미 존재합니다');
            } else {
                sql = "insert into USER SET ?";
                db.query(sql, user, function(err, result){
                    if (err) {
                        console.log('err :' + err);
+                       res.status(401);
                    } else {
-                       res.json({success:true, msg:'새 계정을 만들었습니다'})
+                       res.send(200);
                    }
                });
            }
@@ -69,21 +47,26 @@ router.post('/sign_up', function(req,res){
 
 });
 
-router.post('/sign_in',
-    passport.authenticate(
-        'local',
-        {
-            failureRedirect: '/#/signIn',
-            failureFlash: true}
-            ), // 인증실패시 401 리턴, {} -> 인증 스트레티지
-    function (req, res) {
-        var user = req.user;
-        console.log(user);
-        res.json({success: true, userID: req.user.userID})
-    });
+router.post('/sign_in', function(req, res, next) {
+    passport.authenticate('local', function(err, user) {
+        if (err) {
+            return next(err); // will generate a 500 error
+        }
+
+        // Generate a JSON response reflecting authentication status
+        if (! user) {
+            return res.status(401).send('해당 유저가 없습니다.');
+        }
+        req.login(user, function(err){
+            if(err){
+                return next(err);
+            }
+            return res.json({userID: user.userID});
+        });
+    })(req, res, next);
+});
 
 router.get('/sign_in', function(req, res){
-    //res.json({err: req.flush('err')});
 });
 
 router.get('/logout', function(req,res){
