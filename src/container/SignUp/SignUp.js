@@ -36,14 +36,11 @@ class SignIn extends React.Component {
             userEmail: this.state.userEmail,
             nickName: this.state.nickName
         }).then(response => {
-            console.log(response.data.msg)
-            if (response.data.success) {
-                this.props.history.push("/signIn")
-            }
-            this.setState({msg: response.data.msg});
+            this.props.history.push("/signIn")
+            }).catch (error =>{
+                this.setState({msg: '해당 아이디가 이미 존재합니다.'});
         });
     }
-
 
     render() {
         return (

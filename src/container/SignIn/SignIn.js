@@ -32,10 +32,9 @@ class SignIn extends React.Component {
 			userID: this.state.userID,
 			password: this.state.password
 		}).then(response => {
-			if (response.data.success) {
-				console.log(response.data);
-				this.props.history.push("/"+response.data.userID)
-			}
+			this.props.history.push("/"+response.data.userID)
+		}).catch(error => {
+			this.setState({msg:'아이디가 존재하지 않거나, 비밀번호가 맞지 않습니다.'})
 		});
 	}
 
@@ -48,7 +47,7 @@ class SignIn extends React.Component {
 						<h1>로그인</h1>
 						<input id="userID" type="text" className="validate" placeholder="user ID" onChange={this.onChange('userID')}/>
 						<input id="password" type="password" className="validate" placeholder="Password" onChange={this.onChange('password')}/>
-						{this.state.err}
+						{this.state.msg}
 						<div className={styles.buttons}>
 							<Link className={classNames(styles.button, styles.signUp)} to="signUp">회원가입</Link>
 							<button type="submit" className={styles.button} onClick={this.onSubmit}>확인</button>
