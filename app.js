@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', express.static(__dirname + '/build'));
 
 if(process.env.NODE_ENV === 'development'){
-    console.log('Server is running on development mode');
+    console.log('webpack is running on development mode');
 
     var config = require('./webpack.dev.config');
     var compiler = webpack(config);

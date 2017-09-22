@@ -3,15 +3,16 @@ import React from 'react'
 
 /* */
 import styles from './Home.scss'
-import Login from 'component/Login/'
-import MainScreen from 'component/MainScreen/'
-import ProjectList  from 'component/ProjectList/'
+import NavBar from '../../component/NavBar/'
+import MainScreen from '../../component/MainScreen/'
+import Intro  from '../../component/Intro/'
+import Library  from '../../component/Library/'
 
 class Home extends React.Component {
 
     constructor() {
         super();
-        this.state = {isLogIn: true};
+        this.state = {isLogIn: false};
 
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
@@ -26,7 +27,7 @@ class Home extends React.Component {
 
     renderPage() {
         if(this.state.isLogIn) {
-            return <ProjectList />
+            return <MainScreen />
         }
         else{
             return <MainScreen />
@@ -35,8 +36,10 @@ class Home extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-               <Login />
-                {this.renderPage()}
+               <NavBar />
+               <Intro />
+               <MainScreen/>
+               <Library />
             </div>
         )
     }

@@ -17,6 +17,9 @@ import 'codemirror/mode/clike/clike.js'
 import 'codemirror/theme/panda-syntax.css'
 import 'codemirror/theme/isotope.css'
 
+//import bootstrap
+import 'bootstrap/dist/css/bootstrap.css';
+
 /* Render */
 ReactDOM.render(
    <Provider store={Redux.getStore()}>

@@ -13,8 +13,8 @@ const listReducer = (state = initialState, action) => {
         case AT.GET_LIST_SUCCESS:
             return {
                 project: Immutable.fromJS({
-                    id: response.payload.id,
-                    name: response.payload.name,
+                    id: '111',
+                    name: 'test project',
                 })
             }
         default:
