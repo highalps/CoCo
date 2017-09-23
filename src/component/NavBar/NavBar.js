@@ -32,7 +32,7 @@ class NavBar extends React.Component {
       <div className={Styles.temp}>
         <Navbar light toggleable>
           <NavbarToggler right onClick={this.toggleNav} />
-          <NavbarBrand className="text-white">Sopad</NavbarBrand>
+          <NavbarBrand className="text-white">CoCo</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>

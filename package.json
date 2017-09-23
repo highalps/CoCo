@@ -1,7 +1,7 @@
 {
-  "name": "soPad",
+  "name": "CoCo",
   "version": "0.0.1",
-  "description": "collaborative IDE",
+  "description": "Platform of QnA and Online tutoring about programming",
   "main": "main.js",
   "scripts": {
     "build": "webpack",

@@ -15,7 +15,7 @@ class Header extends React.Component {
         return (
             <div className={styles.wrapper}>
                 <div className={styles.title}>
-                    soPad
+                    CoCo
                 </div>
                 <div className={styles.option}>
                     <div className={styles.runOption}>

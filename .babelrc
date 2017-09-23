@@ -1,7 +1,7 @@
 {
   "plugins": [[
     "module-alias", [
-      { "src": "./sharedb-codemirror", "expose": "sharedb-codemirror"},
+      { "src": "./sharedb-codemirror/sharedb-codemirror", "expose": "sharedb-codemirror"},
       { "src": "src/service", "expose": "service"},
       { "src": "src/component", "expose": "component"}
     ]

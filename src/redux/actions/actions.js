@@ -6,7 +6,7 @@ import AT from '../actions/actionTypes'
 
 //TODO: nginx 설치 후 포트 번호 지우기
 const client = axios.create({
-    baseURL: 'http://external.sopad.ml:3000/api/',
+    baseURL: 'http://external.cocotutor.ml:3000/api/',
     timeout: 5000,
 })
 
@@ -54,7 +54,7 @@ export default {
                 })
         }
     },
-    updateDirectory: (payload) => { // /sopad에서 디렉토리 업데이트 요청
+    updateDirectory: (payload) => { // /editor에서 디렉토리 업데이트 요청
         return (dispatch) => {
             dispatch(createAction(AT.UPDATE_DIRECTORY)(payload))
             return client.put('/directory')
@@ -66,7 +66,7 @@ export default {
                 })
         }
     },
-    addUser: (payload) => { // /sopad에서 접근 가능한 사용자 추가
+    addUser: (payload) => { // /editor에서 접근 가능한 사용자 추가
         return (dispatch) => {
             dispatch(createAction(AT.ADD_USER)(payload))
             return client.post('/user')

@@ -106,7 +106,7 @@ var config = {
                 target:'http://localhost'
             },
             '/editor': {
-                target: 'ws://external.sopad.ml',
+                target: 'ws://external.cocotutor.ml',
                 ws: true
             }
         }
