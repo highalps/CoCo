@@ -23,7 +23,6 @@
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
     "keymirror": "^0.1.1",
-    "mysql": "^2.14.1",
     "ot-text": "^1.0.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",

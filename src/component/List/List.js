@@ -7,7 +7,7 @@ import styles from './List.scss'
 import Action from '../../redux/actions/actions'
 
 const mapStateToProps = (state) => ({
-    list: state.listReducer.project,
+
 })
 
 @connect(mapStateToProps)

@@ -1,29 +1,40 @@
+/* */
 import React from 'react';
+import { connect } from 'react-redux'
+import autobind from 'core-decorators/lib/autobind'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
   NavDropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap';
-import Styles from './NavBar.scss';
 
+/* */
+import Styles from './NavBar.scss';
+import { userActions } from '../../redux/actions'
+
+const mapStateToProps = (state) => ({
+    nickName: state.userReducer.nickName,
+})
+
+@connect(mapStateToProps)
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggleNav = this.toggleNav.bind(this);
-    this.toggleDrop = this.toggleDrop.bind(this);
-
     this.state = {
-      isOpen: false,
-      dropdownOpen: false
-    };
+       isOpen: false,
+       dropdownOpen: false
+    }
   }
+
+  @autobind
+  handleClickLogout() {
+      this.props.dispatch(userActions.logout())
+  }
+
   toggleNav() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    this.setState({ isOpen: !this.state.isOpen })
   }
+
   toggleDrop() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
+    this.setState({ dropdownOpen: !this.state.dropdownOpen })
   }
 
   render() {
@@ -57,7 +68,11 @@ class NavBar extends React.Component {
                 </DropdownMenu>
               </NavDropdown>
               <NavItem>
-                <NavLink  className="text-white" href='/#/signIn'>Login</NavLink>
+                  {
+                    !this.props.nickName
+                      ? <NavLink className="text-white" href='/#/signIn'>Login</NavLink>
+                      : <NavLink className="text-white" onClick={this.handleClickLogout}>Logout</NavLink>
+                  }
               </NavItem>
             </Nav>
           </Collapse>

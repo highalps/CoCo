@@ -12,8 +12,8 @@ class ReduxService {
         this.store = createStore(
             combineReducers(reducers),
             applyMiddleware(
-                logger,
-                thunk
+                thunk,
+                logger
             )
         )
     }

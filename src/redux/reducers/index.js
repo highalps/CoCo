@@ -1,9 +1,5 @@
-import directoryReducer from './directoryReducer'
-import projectInfoReducer from './projectInfoReducer'
-import listReducer from './listReducer'
+import userReducer from './userReducer'
 
 export default {
-    directoryReducer,
-    projectInfoReducer,
-    listReducer,
+    userReducer,
 }
