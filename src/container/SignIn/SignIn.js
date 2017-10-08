@@ -4,7 +4,6 @@ import autobind from 'core-decorators/lib/autobind'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import axios from 'axios'
 
 /* */
 import styles from './SignIn.scss'

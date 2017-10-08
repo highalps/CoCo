@@ -2,12 +2,14 @@
 import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
 import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
-import axios from 'axios'
 
 /* */
 import styles from './SignUp.scss'
+import { userActions } from '../../redux/actions'
 
+@connect()
 @withRouter
 class SignIn extends React.Component {
 
@@ -29,17 +31,21 @@ class SignIn extends React.Component {
 
     @autobind
     onSubmit() {
-        console.log("onClick");
-        axios.post('http://external.cocotutor.ml:3000/auth/signup',{
+        const { history, dispatch } = this.props
+        const payload = {
             userID: this.state.userID,
             password: this.state.password,
             userEmail: this.state.userEmail,
             nickName: this.state.nickName
-        }).then(response => {
-            this.props.history.push("/signIn")
-            }).catch (error =>{
-                this.setState({msg: '해당 아이디가 이미 존재합니다.'});
-        });
+        }
+
+        dispatch(userActions.signUp(payload))
+            .then(() => {
+                history.push("/signIn")
+            })
+            .catch(error => {
+                this.setState({msg: '아이디가 존재하지 않거나, 비밀번호가 맞지 않습니다.'})
+            })
     }
 
     render() {

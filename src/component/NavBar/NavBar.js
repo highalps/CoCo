@@ -10,7 +10,7 @@ import Styles from './NavBar.scss';
 import { userActions } from '../../redux/actions'
 
 const mapStateToProps = (state) => ({
-    nickName: state.userReducer.nickName,
+    isLogged: state.userReducer.isLogged,
 })
 
 @connect(mapStateToProps)
@@ -38,6 +38,7 @@ class NavBar extends React.Component {
   }
 
   render() {
+    console.log("A", this.props.isLogged)
     return (
       <div className="topMenu bg-primary">
       <div className={Styles.temp}>
@@ -69,7 +70,7 @@ class NavBar extends React.Component {
               </NavDropdown>
               <NavItem>
                   {
-                    !this.props.nickName
+                    !this.props.isLogged
                       ? <NavLink className="text-white" href='/#/signIn'>Login</NavLink>
                       : <NavLink className="text-white" onClick={this.handleClickLogout}>Logout</NavLink>
                   }
