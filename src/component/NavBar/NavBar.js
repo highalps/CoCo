@@ -2,11 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
-  NavDropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap';
+import { Link } from 'react-router-dom'
 
 /* */
-import Styles from './NavBar.scss';
+import styles from './NavBar.scss';
 import { userActions } from '../../redux/actions'
 
 const mapStateToProps = (state) => ({
@@ -20,7 +19,6 @@ class NavBar extends React.Component {
 
     this.state = {
        isOpen: false,
-       dropdownOpen: false
     }
   }
 
@@ -29,58 +27,38 @@ class NavBar extends React.Component {
       this.props.dispatch(userActions.logout())
   }
 
-  toggleNav() {
-    this.setState({ isOpen: !this.state.isOpen })
-  }
-
-  toggleDrop() {
-    this.setState({ dropdownOpen: !this.state.dropdownOpen })
+  renderLoginButton() {
+    if (this.props.isLogged) {
+      return (
+          <Link className={styles.button} to="signIn">
+            <i className="fa fa-unlock-alt" />
+            로그인
+          </Link>
+      )
+    }
+    return (
+        <div className={styles.button} onClick={this.handleClickLogout}>
+          <i className="fa fa-lock" />
+          로그아웃
+        </div>
+    )
   }
 
   render() {
-    console.log("A", this.props.isLogged)
     return (
-      <div className="topMenu bg-primary">
-      <div className={Styles.temp}>
-        <Navbar light toggleable>
-          <NavbarToggler right onClick={this.toggleNav} />
-          <NavbarBrand className="text-white">CoCo</NavbarBrand>
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink  className="text-white">Home</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink  className="text-white">Board</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink  className="text-white">Tutoring</NavLink>
-              </NavItem>
-              <NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDrop}>
-                <DropdownToggle className="text-white" nav caret>
-                  MyPage
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem>회원정보</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>질문 및 답변</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>튜터링</DropdownItem>
-                </DropdownMenu>
-              </NavDropdown>
-              <NavItem>
-                  {
-                    !this.props.isLogged
-                      ? <NavLink className="text-white" href='/#/signIn'>Login</NavLink>
-                      : <NavLink className="text-white" onClick={this.handleClickLogout}>Logout</NavLink>
-                  }
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
+        <div className={styles.wrapper}>
+          <div className={styles.logo}>
+            CoCo tutor
+          </div>
+          <div className={styles.menu}>
+              {this.renderLoginButton()}
+            <div className={styles.button}>
+                <i className="fa fa-user-o" />
+                내 정보
+            </div>
+          </div>
         </div>
-      </div>
-    );
+    )
   }
 }
 export default NavBar;

@@ -1,4 +1,13 @@
 .wrapper {
   width: 100%;
   height: 100%;
+  background-color: #1b1a25;
+
+  .main {
+    width: 100%;
+    height: 100%;
+    background-image: url('https://static1.squarespace.com/static/567458eda128e6372f9c1656/t/58bef47c86e6c05548073060/1488909503692/coding-tutoring-nyc.jpg');
+    background-size: cover;
+    opacity: 0.5;
+  }
 }
