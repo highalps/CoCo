@@ -11,6 +11,7 @@ import TerminalSocket from 'service/terminalSocketService'
 import UpdateSocket from 'service/updateSocketService'
 
 const mapStateToProps = (state) => ({
+    a: state.userReducer.isLogged,
     //TODO: 로그인 성공시 디렉토리 정보와 프로젝트 정보 가져오기
 })
 

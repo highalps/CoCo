@@ -24,9 +24,11 @@ const userReducer = (state = initialState, action) => {
         }
 
         case AT.INIT_USER:
+            const { user } = action.payload
+            console.log("A",user)
             return {
-                ...state,
                 isLogged: true,
+                ...user,
             }
 
 
