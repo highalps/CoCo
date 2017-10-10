@@ -1,7 +1,7 @@
 import userActions from './userActions'
-import actions from './actions'
+import uiActions from './uiActions'
 
 export {
-    actions,
     userActions,
+    uiActions,
 }

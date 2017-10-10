@@ -1,25 +1,21 @@
 /* */
 import React from 'react';
-import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 /* */
 import styles from './NavBar.scss';
 import { userActions } from '../../redux/actions'
 
-const mapStateToProps = (state) => ({
-    isLogged: state.userReducer.isLogged,
-})
-
-@connect(mapStateToProps)
+@connect()
 class NavBar extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-       isOpen: false,
-    }
+  constructor() {
+      super()
+      this.state = {
+         isOpen: false,
+      }
   }
 
   @autobind
@@ -28,18 +24,18 @@ class NavBar extends React.Component {
   }
 
   renderLoginButton() {
-    if (this.props.isLogged) {
+    if (!this.props.isLogged) {
       return (
           <Link className={styles.button} to="signIn">
             <i className="fa fa-unlock-alt" />
-            로그인
+              <span className={styles.name}>로그인</span>
           </Link>
       )
     }
     return (
         <div className={styles.button} onClick={this.handleClickLogout}>
           <i className="fa fa-lock" />
-          로그아웃
+            <span className={styles.name}>로그아웃</span>
         </div>
     )
   }
@@ -54,11 +50,20 @@ class NavBar extends React.Component {
               {this.renderLoginButton()}
             <div className={styles.button}>
                 <i className="fa fa-user-o" />
-                내 정보
+                <span className={styles.name}>내 정보</span>
             </div>
           </div>
         </div>
     )
   }
 }
+
+NavBar.propTypes = {
+    isLogged: PropTypes.bool,
+}
+
+NavBar.defaultProps = {
+    isLogged: false,
+}
+
 export default NavBar;

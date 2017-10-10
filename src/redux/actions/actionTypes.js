@@ -15,4 +15,9 @@ export default keyMirror({
     LOG_OUT_SUCCESS: null,
     LOG_OUT_ERROR: null,
 
+   /* UI actions */
+   SHOW_CHAT_BUTTON: null,
+   SHOW_CHAT_LIST: null,
+   SHOW_CHAT_MESSAGE: null,
+
 })

@@ -1,0 +1,6 @@
+{
+  "name": "ChatWrapper",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ChatWrapper.js"
+}
