@@ -20,17 +20,13 @@
     box-sizing: border-box;
   }
 
-  a {
-    text-decoration: none;
-  }
-
   * {
     text-decoration: none;
     outline: none;
     box-sizing: border-box;
 
     :focus, :hover {
-      text-decoration: none;
+      text-decoration: none !important;
       outline: none;
     }
   }

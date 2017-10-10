@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 
 /* */
 import styles from './ChatWrapper.scss'
+import ChatButton from '../ChatButton'
+import ChatList from '../ChatList'
+import ChatMessage from '../ChatMessage'
 
 class ChatWrapper extends React.Component {
 
