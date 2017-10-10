@@ -30,7 +30,7 @@ class ChatWrapper extends React.Component {
 ChatWrapper.propTypes = {
     showChatButton: PropTypes.bool,
     showChatList: PropTypes.bool,
-    showChatMessage: PropTypes,bool,
+    showChatMessage: PropTypes.bool,
 }
 
 ChatWrapper.defaultProps = {

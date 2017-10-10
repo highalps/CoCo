@@ -44,7 +44,7 @@ Home.propTypes = {
     isLogged: PropTypes.bool,
     showChatButton: PropTypes.bool,
     showChatList: PropTypes.bool,
-    showChatMessage: PropTypes,bool,
+    showChatMessage: PropTypes.bool,
 }
 
 Home.defaultProps = {
