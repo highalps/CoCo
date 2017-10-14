@@ -7,7 +7,6 @@ import { setToken } from '../../utils/authUtils'
 
 const initialState = {
     uiState: Immutable.fromJS({
-        chatButton: true,
         chatList: false,
         chatMessage: false,
     })
@@ -17,12 +16,11 @@ const userReducer = (state = initialState, action) => {
     const { uiState } = state
 
     switch (action.type) {
-        case AT.SHOW_CHAT_BUTTON:
+        case AT.CLOSE_CHAT:
             return {
                 uiState: uiState
                     .set('chatList', false)
                     .set('chatMessage', false)
-                    .set('chatButton', true)
             }
 
         case AT.SHOW_CHAT_LIST:
@@ -30,7 +28,6 @@ const userReducer = (state = initialState, action) => {
                 uiState: uiState
                     .set('chatList', true)
                     .set('chatMessage', false)
-                    .set('chatButton', false)
             }
 
         case AT.SHOW_CHAT_MESSAGE:
@@ -38,7 +35,6 @@ const userReducer = (state = initialState, action) => {
                 uiState: uiState
                     .set('chatList', false)
                     .set('chatMessage', true)
-                    .set('chatButton', false)
             }
 
 

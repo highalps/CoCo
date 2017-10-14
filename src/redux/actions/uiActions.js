@@ -11,7 +11,7 @@ function createAction(actionType) {
 }
 
 export default {
-    showChatButton: () => createAction(AT.SHOW_CHAT_BUTTON)(),
+    closeChat: () => createAction(AT.CLOSE_CHAT)(),
 
     showChatList: () => createAction(AT.SHOW_CHAT_LIST)(),
 

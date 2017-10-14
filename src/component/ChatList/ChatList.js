@@ -8,20 +8,34 @@ import { connect } from 'react-redux'
 import styles from './ChatList.scss'
 import { uiActions } from '../../redux/actions'
 
+const dummy = [
+    {
+        message: {
+            lastUpdate: '2017.10.14',
+            content: '수업을 희망합니다',
+        }
+    },
+    {
+        message: {
+            lastUpdate: '2017.10.15',
+            content: '수업 관련 질문이 있습니다',
+        }
+    }
+]
+
+
 @connect()
 class ChatList extends React.Component {
 
-    @autobind
-    handleButtonClick() {
-        this.props.dispatch(uiActions.showChatButton())
-    }
 
     renderChatList() {
         return (
             <div className={styles.chatList}>
-                <div className={styles.item}>
-
+                {dummy.map(d => (
+                <div key={d.message.content} className={styles.item}>
+                    {d.message.content}
                 </div>
+            ))}
             </div>
         )
     }
@@ -29,11 +43,7 @@ class ChatList extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <div className={styles.header}>
-                    <div className={styles.button} onClick={this.handleButtonClick}>
-                        X
-                    </div>
-                </div>
+                {this.renderChatList()}
             </div>
         )
     }

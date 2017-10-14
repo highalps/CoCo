@@ -8,18 +8,27 @@ import { connect } from 'react-redux'
 import styles from './ChatButton.scss'
 import { uiActions } from '../../redux/actions'
 
+const openButton = require('../../styles/icon/chatButton.png')
+const closeButton = require('../../styles/icon/chatClose.png')
+
 @connect()
 class ChatButton extends React.Component {
 
     @autobind
     handleButtonClick() {
-        this.props.dispatch(uiActions.showChatList())
+        if (this.props.showChatList || this.props.showChatMessage) {
+            this.props.dispatch(uiActions.closeChat())
+        } else {
+            this.props.dispatch(uiActions.showChatList())
+        }
     }
 
     render() {
         return (
             <div className={styles.wrapper} onClick={this.handleButtonClick}>
-                <img className={styles.button} src={require('../../styles/icon/chatButton.png')} />
+                <img
+                    className={styles.image}
+                    src={(this.props.showChatList || this.props.showChatMessage) ? closeButton : openButton} />
             </div>
         )
     }

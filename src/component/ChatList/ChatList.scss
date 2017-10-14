@@ -1,5 +1,21 @@
 .wrapper {
-    width: 200px;
-    height: 600px;
+    position: absolute;
+    right: 10px;
+    bottom: 90px;
+    width: 370px;
+    height: 590px;
     border: solid 1px white;
+    box-shadow: 0 5px 40px rgba(0,0,0,.16);
+    border-radius: 8px;
+    overflow: hidden!important;
+    opacity: 1!important;
+    font-family: Helvetica, Arial, sans-serif;
+
+    .chatList {
+
+        .item {
+            color: white;
+            height: 120px;
+        }
+    }
 }

@@ -10,7 +10,6 @@ import ChatWrapper from '../../component/ChatWrapper'
 
 const mapStateToProps = (state) => ({
     isLogged: state.userReducer.isLogged,
-    showChatButton: state.uiReducer.uiState.get('chatButton'),
     showChatList: state.uiReducer.uiState.get('chatList'),
     showChatMessage: state.uiReducer.uiState.get('chatMessage'),
 })
@@ -23,7 +22,6 @@ class Home extends React.Component {
             return (
                 <div className={styles.chatWrapper}>
                     <ChatWrapper
-                        showChatButton={this.props.showChatButton}
                         showChatList={this.props.showChatList}
                         showChatMessage={this.props.showChatMessage} />
                 </div>

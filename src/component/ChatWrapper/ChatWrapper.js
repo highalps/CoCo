@@ -11,9 +11,7 @@ import ChatMessage from '../ChatMessage'
 class ChatWrapper extends React.Component {
 
     renderChat() {
-        if (this.props.showChatButton) {
-            return <ChatButton />
-        } else if (this.props.showChatList) {
+        if (this.props.showChatList) {
             return <ChatList />
         } else if (this.props.showChatMessage) {
             return <ChatMessage />
@@ -22,9 +20,11 @@ class ChatWrapper extends React.Component {
     }
 
     render() {
-        console.log("A",this.props)
         return (
             <div className={styles.wrapper}>
+                <ChatButton
+                    showChatList={this.props.showChatList}
+                    showChatMessage={this.props.showChatMessage} />
                 {this.renderChat()}
             </div>
         )
@@ -32,16 +32,13 @@ class ChatWrapper extends React.Component {
 }
 
 ChatWrapper.propTypes = {
-    showChatButton: PropTypes.bool,
     showChatList: PropTypes.bool,
     showChatMessage: PropTypes.bool,
 }
 
 ChatWrapper.defaultProps = {
-    showChatButton: false,
     showChatList: false,
     showChatMessage: false,
 }
-
 
 export default ChatWrapper

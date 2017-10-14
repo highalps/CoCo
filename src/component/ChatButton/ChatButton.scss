@@ -1,15 +1,24 @@
 .wrapper {
-  width: 80px;
-  height: 80px;
-  padding: 10px;
-  border-radius: 10%;
+  display: flex;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 60px;
+  height: 60px;
+  background: #1F8CEB;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,.09),0 4px 40px rgba(0,0,0,.24)!important;
     cursor: pointer;
   }
 
-  .button {
-    width: 60px;
-    height: 60px;
+  .image {
+    width: 30px;
+    height: 30px;
+    animation: .25s ease!important;
+    transition: transform .16s linear,opacity .08s linear,-webkit-transform .16s linear;
   }
 }
