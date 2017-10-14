@@ -18,11 +18,18 @@ export function setToken(access_token)  {
 }
 
 export function initAuth() {
-    delete client.defaults.headers.common['Authorization']
     const token = localStorage.getItem('token')
     if (token) {
         setToken(token)
-        const user = decode(token)
+        let user;
+
+        // 임의로 개발자 도구로 local storage에 token을 저장 했을시 에러 처리
+        try {
+            user = decode(token)
+        } catch (err) {
+            localStorage.removeItem('token')
+            location.reload()
+        }
         Redux.dispatch({ type: AT.INIT_USER, payload: { user: user.user} })
     }
 }
