@@ -84,6 +84,17 @@ var config = {
                 ]
             },
             {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192
+                        }
+                    }
+                ]
+            },
+            {
                 test: /\.js\.map$/,
                 use: {
                     loader: 'file-loader'

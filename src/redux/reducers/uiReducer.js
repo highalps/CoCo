@@ -17,7 +17,7 @@ const userReducer = (state = initialState, action) => {
     const { uiState } = state
 
     switch (action.type) {
-        case AT.SHOW_CAHT_BUTTON:
+        case AT.SHOW_CHAT_BUTTON:
             return {
                 uiState: uiState
                     .set('chatList', false)
@@ -25,7 +25,7 @@ const userReducer = (state = initialState, action) => {
                     .set('chatButton', true)
             }
 
-        case AT.SHOW_CAHT_LIST:
+        case AT.SHOW_CHAT_LIST:
             return {
                 uiState: uiState
                     .set('chatList', true)
@@ -33,7 +33,7 @@ const userReducer = (state = initialState, action) => {
                     .set('chatButton', false)
             }
 
-        case AT.SHOW_CAHT_MESSAGE:
+        case AT.SHOW_CHAT_MESSAGE:
             return {
                 uiState: uiState
                     .set('chatList', false)

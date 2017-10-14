@@ -11,10 +11,10 @@ function createAction(actionType) {
 }
 
 export default {
-    showChatButton: () => createAction(AT.SHOW_CAHT_BUTTON)(),
+    showChatButton: () => createAction(AT.SHOW_CHAT_BUTTON)(),
 
-    showChatList: () => createAction(AT.SHOW_CAHT_LIST)(),
+    showChatList: () => createAction(AT.SHOW_CHAT_LIST)(),
 
-    showChatMessage: () => createAction(AT.SHOW_CAHT_MESSAGE)(),
+    showChatMessage: () => createAction(AT.SHOW_CHAT_MESSAGE)(),
 }
 

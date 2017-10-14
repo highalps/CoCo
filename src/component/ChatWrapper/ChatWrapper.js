@@ -22,6 +22,7 @@ class ChatWrapper extends React.Component {
     }
 
     render() {
+        console.log("A",this.props)
         return (
             <div className={styles.wrapper}>
                 {this.renderChat()}

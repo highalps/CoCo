@@ -1,5 +1,15 @@
 .wrapper {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  width: 80px;
+  height: 80px;
+  padding: 10px;
+  border-radius: 10%;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .button {
+    width: 60px;
+    height: 60px;
+  }
 }
