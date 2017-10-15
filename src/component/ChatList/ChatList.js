@@ -1,12 +1,10 @@
 /* */
 import React from 'react'
 import PropTypes from 'prop-types'
-import autobind from 'core-decorators/lib/autobind'
 import { connect } from 'react-redux'
 
 /* */
 import styles from './ChatList.scss'
-import { uiActions } from '../../redux/actions'
 
 const dummy = [
     {

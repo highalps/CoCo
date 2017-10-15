@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack",
+    "test": "eslint ./src/*.js",
     "start": "cross-env NODE_ENV=development node ./app.js && webpack-dev-server --hot"
   },
   "dependencies": {
@@ -55,6 +56,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.4",
     "eslint": "^4.2.0",
+    "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "font-awesome-webpack": "0.0.5-beta.2",

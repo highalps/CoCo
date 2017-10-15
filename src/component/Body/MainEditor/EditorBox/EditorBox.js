@@ -6,6 +6,7 @@ import Immutable from 'immutable'
 /* */
 import styles from './EditorBox.scss'
 import TextEditor from '../TextEditor'
+import WebStreamWrapper from '../WebStreamWrapper'
 
 const dummyTab = Immutable.List(['jane','chan'])
 
@@ -44,6 +45,7 @@ class EditorBox extends React.Component {
         return (
             <div className={styles.wrapper}>
                 {this.renderTab()}
+                <WebStreamWrapper />
                 <TextEditor name={this.state.name} />
             </div>
         )
