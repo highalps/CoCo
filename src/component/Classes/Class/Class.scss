@@ -1,0 +1,41 @@
+.classWrapper{
+  margin-left: 3%;
+  margin-top: 3%;
+  width:100%;
+  height: 40%;
+  padding-bottom: 2%;
+}
+.classTitle{
+  margin: 3%;
+  display:block;
+  text-align: center;
+  padding-top: 5%;
+  font-size: 100%;
+  font-style: italic;
+  overflow:hidden;
+}
+.classNickName{
+  margin-top: 20%;
+  padding:5%;
+  font-size: 80%;
+  height: 100%;
+  text-align: center;
+}
+
+.cardWrapper{
+  width:15%;
+  margin-left: 2%;
+  box-shadow: 0 8px 38px rgba(133, 133, 133, 0.3), 0 5px 12px rgba(133, 133, 133,0.22);
+  background: #ffffff;
+}
+.cardWrapper:hover{
+  opacity: 0.8;
+}
+
+.classLanguage{
+  text-align: center;
+  padding:4%;
+  font-size: 80%;
+  height: 100%;
+
+}
