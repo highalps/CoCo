@@ -19,7 +19,7 @@ TODO 이게 유동적으로 이루어져야 한다.
 const classData = [
     {
         id:1,
-        title:"[C언어] 완전정복",
+        title:"[C언어] 완전정복asdfasdfasdfsdafasfddsafsadfasdfsdaf",
         nickName:"동네아저씨",
         language:"C"
     },
@@ -37,7 +37,7 @@ const classData = [
     },
     {
         id:4,
-        title:"[Python] 1주일 정복!",
+        title:"[Python] 1주일 정복!fasddddddddddddddddasfd",
         nickName:"동네아저씨",
         language:"Python"
     },
@@ -136,9 +136,14 @@ class Classes  extends React.Component {
     render(){
         return(
             <div className = {styles.wrapper}>
+                <div className = {styles.head}>
+                    CoCo 강의 검색
+                </div>
                 <Search />
-                <div className = "container-fluid">
-                    {this._renderClasses()}
+                <div className = {styles.bgControl}>
+                    <div className = "container-fluid">
+                        {this._renderClasses()}
+                    </div>
                 </div>
             </div>
         )

@@ -6,21 +6,27 @@
   padding-bottom: 2%;
 }
 .classTitle{
-  margin: 3%;
+  margin: 15% 3% 3% 3%;
   display:block;
   text-align: center;
   height: 70px;
   padding-top: 5%;
   font-size: 100%;
   font-style: italic;
-  overflow:hidden;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 .classNickName{
   margin-top: 20%;
   padding:5%;
   font-size: 80%;
   height: 50px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
   text-align: center;
+
 }
 
 .cardWrapper{
@@ -29,8 +35,8 @@
   box-shadow: 0 8px 38px rgba(133, 133, 133, 0.3), 0 5px 12px rgba(133, 133, 133,0.22);
   background: #ffffff;
 }
-.cardWrapper:hover{
-  opacity: 0.8;
+.cardWrapper :hover{
+  opacity: 0.75;
 }
 
 .classLanguage{
@@ -38,5 +44,6 @@
   padding:4%;
   font-size: 80%;
   height: 50px;
-
+  font-weight: 500;
+  opacity: 0.8;
 }
