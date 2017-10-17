@@ -9,57 +9,36 @@ class Class extends React.Component {
         super()
     }
 
+    _renderRow = () => {
+        const row = this.props.data.map((colData) => {
+            return <ColComponent colData = {colData} key = {colData.id}/>
+        });
+        return row;
+    }
     render() {
-        const classData = this.props.data;
         return (
             <div className = {styles.classWrapper}>
                 <CardDeck>
-                    <div className={styles.cardWrapper}>
-                        <Card>
-                            <div className={styles.classTitle}>{classData.title}</div>
-                            <div className = {styles.classNickName}>
-                                {classData.nickName}
-                            </div>
-                            <div className={styles.classLanguage}>Language | {classData.language}</div>
-                        </Card>
-                    </div>
-                    <div className={styles.cardWrapper}>
-                        <Card>
-                            <div className={styles.classTitle}>{classData.title}</div>
-                            <div className = {styles.classNickName}>
-                                {classData.nickName}
-                            </div>
-                            <div className={styles.classLanguage}>Language | {classData.language}</div>
-                        </Card>
-                    </div>
-                    <div className={styles.cardWrapper}>
-                        <Card>
-                            <div className={styles.classTitle}>{classData.title}</div>
-                            <div className = {styles.classNickName}>
-                                {classData.nickName}
-                            </div>
-                            <div className={styles.classLanguage}>Language | {classData.language}</div>
-                        </Card>
-                    </div>
-                    <div className={styles.cardWrapper}>
-                        <Card>
-                            <div className={styles.classTitle}>{classData.title}</div>
-                            <div className = {styles.classNickName}>
-                                {classData.nickName}
-                            </div>
-                            <div className={styles.classLanguage}>Language | {classData.language}</div>
-                        </Card>
-                    </div>
-                    <div className={styles.cardWrapper}>
-                        <Card>
-                            <div className={styles.classTitle}>{classData.title}</div>
-                            <div className = {styles.classNickName}>
-                                {classData.nickName}
-                            </div>
-                            <div className={styles.classLanguage}>Language | {classData.language}</div>
-                        </Card>
-                    </div>
+                    {this._renderRow()}
                 </CardDeck>
+            </div>
+        )
+    }
+}
+class  ColComponent extends React.Component {
+
+    render() {
+        const colData = this.props.colData;
+        console.log(this.props.colData)
+        return (
+            <div className={styles.cardWrapper}>
+                <Card>
+                    <div className={styles.classTitle}>{colData.title}</div>
+                    <div className={styles.classNickName}>
+                        {colData.nickName}
+                    </div>
+                    <div className={styles.classLanguage}>Language | {colData.language}</div>
+                </Card>
             </div>
         )
     }

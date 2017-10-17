@@ -46,22 +46,92 @@ const classData = [
         title:"[Python] 1주일 정복!",
         nickName:"동네아저씨",
         language:"Python"
-    }
+    },
+    {
+        id:6,
+        title:"[JAVA] 완전정복 해봅시다",
+        nickName:"동네아저씨",
+        language:"JAVA"
+    },
+    {
+        id:7,
+        title:"[Python] 1주일 정복!",
+        nickName:"동네아저씨",
+        language:"Python"
+    },
+    {
+        id:8,
+        title:"[Python] 1주일 정복!",
+        nickName:"동네아저씨",
+        language:"Python"
+    },
+    {
+        id:9,
+        title:"[Python] 1주일 정복!",
+        nickName:"동네아저씨",
+        language:"Python"
+    },
+    {
+        id:10,
+        title:"[JAVA] 완전정복 해봅시다",
+        nickName:"동네아저씨",
+        language:"JAVA"
+    },
+    {
+        id:11,
+        title:"[Python] 1주일 정복!",
+        nickName:"동네아저씨",
+        language:"Python"
+    },
+    {
+        id:12,
+        title:"[Python] 1주일 정복!",
+        nickName:"동네아저씨",
+        language:"Python"
+    },
+
 ];
+
+const rows = [];
+
 class Classes  extends React.Component {
 
     constructor(){
         super()
+        this._rowDataParsing()
     }
 
+    componentWillMount(){;
+    }
+
+
     _renderClasses = () => {
-        const classList = classData.map(data => {
+        const classList = rows.map((row, index) => {
             return <Class
-                data={data}
-                key={data.id}
+                data={row}
+                key={index}
             />
         });
         return classList
+    };
+    _rowDataParsing = () => {
+        let tmp1 = parseInt(classData.length / 5);
+        let tmp2 = parseInt(classData.length % 5);
+        let row = [];
+        for(let i = 0; i < tmp1; i++){
+            row = [];
+            for(let j=i*5; j<i*5+5; j++){
+                row.push(classData[j]);
+            }
+            rows.push(row);
+        }
+        if(tmp2 != 0){
+            row = [];
+            for(let k=(tmp1-1)*10; k < classData.length; k++){
+                row.push(classData[k]);
+            }
+            rows.push(row);
+        }
     };
     render(){
         return(
