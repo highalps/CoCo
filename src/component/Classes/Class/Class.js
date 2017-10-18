@@ -35,7 +35,7 @@ class  ColComponent extends React.Component {
                 <Card>
                     <div className={styles.classTitle}>{colData.title}</div>
                     <div className={styles.classNickName}>
-                        {colData.nickName}
+                        {colData.nickname}
                     </div>
                     <div className={styles.classLanguage}>Language | {colData.language}</div>
                 </Card>

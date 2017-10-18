@@ -7,9 +7,9 @@ import { setToken } from '../../utils/authUtils'
 
 const initialState = {
     isLogged: false,
-    userID: '',
+    id: '',
     email: '',
-    nickName: '',
+    nickname: '',
 }
 
 const userReducer = (state = initialState, action) => {
