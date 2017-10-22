@@ -1,11 +1,11 @@
 import React from 'react'
-import styles from './MyPage.scss'
+import styles from './MyClassInfo.scss'
 
 
 
 
 
-class MyPage  extends React.Component {
+class MyClassInfo  extends React.Component {
 
     constructor(){
         super()
@@ -14,10 +14,9 @@ class MyPage  extends React.Component {
     render(){
         return(
             <div className = {styles.wrapper}>
-                <MyPrivateInfo />
-                <MyClassInfo />
+
             </div>
         )
     }
 }
-export default MyPage;
+export default MyClassInfo;

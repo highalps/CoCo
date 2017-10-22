@@ -1,7 +1,7 @@
 
 {
-  "name": "Classes",
+  "name": "MyPage",
   "version": "0.0.0",
   "private": true,
-  "main": "./Classes.js"
+  "main": "./MyPage.js"
 }

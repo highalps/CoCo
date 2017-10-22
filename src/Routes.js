@@ -8,6 +8,7 @@ import App from './container/App'
 import SignUp from './container/SignUp'
 import SignIn from './container/SignIn'
 import Classes from './container/Classes'
+import MyPage from './container/MyPage'
 
 
 
@@ -19,6 +20,7 @@ export default () => (
             <Route path="/classes" component={Classes} />
             <Route path="/signUp" component={SignUp} />
             <Route path="/signIn" component={SignIn} />
+            <Route path="/MyPage" component={MyPage} />
         </Switch>
     </HashRouter>
 )

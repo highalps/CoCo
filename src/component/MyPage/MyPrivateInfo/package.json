@@ -1,7 +1,7 @@
 
 {
-  "name": "MyPage",
+  "name": "MyPrivateInfo",
   "version": "0.0.0",
   "private": true,
-  "main": "./MyPage.js"
+  "main": "./MyPrivateInfo.js"
 }
