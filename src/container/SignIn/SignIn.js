@@ -16,7 +16,7 @@ class SignIn extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			userID: '',
+			id: '',
 			password:'',
 		}
 	}
@@ -31,7 +31,7 @@ class SignIn extends React.Component {
 	onSubmit() {
 		const { history, dispatch } = this.props
         const payload = {
-            userID: this.state.userID,
+            id: this.state.id,
             password: this.state.password
         }
        	dispatch(userActions.signIn(payload))
@@ -50,7 +50,7 @@ render() {
 			<div className={styles.container}>
 				<div className={styles.loginBox}>
 					<h1>로그인</h1>
-					<input id="userID" type="text" className="validate" placeholder="user ID" onChange={this.onChange('userID')}/>
+					<input id="id" type="text" className="validate" placeholder="id" onChange={this.onChange('id')}/>
 					<input id="password" type="password" className="validate" placeholder="Password" onChange={this.onChange('password')}/>
 					{this.state.msg}
 					<div className={styles.buttons}>

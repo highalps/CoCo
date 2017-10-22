@@ -20,73 +20,73 @@ const classData = [
     {
         id:1,
         title:"[C언어] 완전정복asdfasdfasdfsdafasfddsafsadfasdfsdaf",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"C"
     },
     {
         id:2,
         title:"[JAVA] 완전정복 해봅시다",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"JAVA"
     },
     {
         id:3,
         title:"[Python] 1주일 정복!",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"Python"
     },
     {
         id:4,
         title:"[Python] 1주일 정복!fasddddddddddddddddasfd",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"Python"
     },
     {
         id:5,
         title:"[Python] 1주일 정복!",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"Python"
     },
     {
         id:6,
         title:"[JAVA] 완전정복 해봅시다",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"JAVA"
     },
     {
         id:7,
         title:"[Python] 1주일 정복!",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"Python"
     },
     {
         id:8,
         title:"[Python] 1주일 정복!",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"Python"
     },
     {
         id:9,
         title:"[Python] 1주일 정복!",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"Python"
     },
     {
         id:10,
         title:"[JAVA] 완전정복 해봅시다",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"JAVA"
     },
     {
         id:11,
         title:"[Python] 1주일 정복!",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"Python"
     },
     {
         id:12,
         title:"[Python] 1주일 정복!",
-        nickName:"동네아저씨",
+        nickname:"동네아저씨",
         language:"Python"
     },
 
