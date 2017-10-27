@@ -1,6 +1,8 @@
 /* */
 import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
+import classNames from 'classnames'
+import io from 'socket.io-client'
 import PropTypes from 'prop-types'
 
 /* */
@@ -12,9 +14,16 @@ class WebStreamWrapper extends React.Component {
         super()
         this._refs = {}
         this.state = {
+            isChatStart: false,
+            isPeerConnect: false,
+            isPossibleStream: false,
             token: '',
             href: '#',
         }
+        this.initValue()
+    }
+
+    initValue() {
         this.localStream = null;
         this.socket = io();
         this.userId = Math.round(Math.random() * 999999) + 999999;
@@ -37,28 +46,123 @@ class WebStreamWrapper extends React.Component {
                     'username': 'subrosa'
                 }]
         };
-        window.navigator.getUserMedia = navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia
+        navigator.getUserMedia = navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+        this.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+        this.RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription;
+        this.RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate || window.webkitRTCIceCandidate;
+        this.peerConnectionOptions = {
+            'optional': [{
+                'DtlsSrtpKeyAgreement': 'true'
+            }]
+        };
+        this.mediaConstraints = {
+            'mandatory': {
+                'OfferToReceiveAudio': true,
+                'OfferToReceiveVideo': true
+            }
+        }
+
+        this.socket.emit('joinRoom', this.roomId, this.userId);
+        this.socket.on('joinRoom', (roomId, userList) => {
+            if (Object.size(userList) > 1) {
+                // onFoundUser();
+            }
+        })
     }
 
     @autobind
     handleClickButton() {
         navigator.getUserMedia({ audio: true, video: { width: 1280, height: 720 }}, (stream) => {
             this.localStream = stream;
-            $videoWrap.append('<video id="local-video-large" class="local-video" muted="muted" autoplay="true" title="720p"></video>');
-            document.querySelector('#local-video-large').srcObject = this.localStream;
-            $body.addClass('room wait');
-            $tokenWrap.slideDown(1000);
-
-            if (isOffer) {
-                var peer = createPeerConnection('large');
-                createOffer('large', peer, localStream);
+            this.setState({ isChatStart: true })
+            const el = this._refs['local-video-first']
+            if (el) {
+                console.log("el", el)
+                el.srcObject = this.localStream
             }
 
-            createSmallVideo();
-        }, function() {
-            console.error('Error getUserMedia');
-        });
+            if (this.isOffer) {
+                this.peer = this.createPeerConnection('first')
+                this.createOffer('first', this.peer, this.localStream)
+            }
+
+            this.createSmallVideo()
+        }, () => {
+            console.error('Error getUserMedia')
+        })
     }
+
+    createSmallVideo() {
+        navigator.getUserMedia({
+            audio: true,
+            video: {
+                width: 160,
+                height: 90
+            }
+        }, (stream) => {
+            this.localSmallStream = stream
+            this.setState({ isPeerConnect: true })
+            const el = this._refs['local-video-second']
+            el.srcObject = this.localSmallStream;
+            var peer = this.createPeerConnection('second')
+            this.createOffer('second', peer, this.localSmallStream)
+        }, () => {
+            console.error('Error getUserMedia');
+        })
+    }
+
+
+    /**
+     * createOffer
+     * offer SDP를 생성 한다.
+     */
+    createOffer(sessionType, peer, stream) {
+        console.log('createOffer', arguments);
+
+        peer.addStream(stream); // addStream 제외시 recvonly로 SDP 생성됨
+        peer.createOffer(SDP => {
+            // url parameter codec=h264
+            if (location.search.substr(1).match('h264')) {
+                SDP.sdp = SDP.sdp.replace("100 101 107", "107 100 101") // for chrome < 57
+                SDP.sdp = SDP.sdp.replace("96 98 100", "100 96 98") // for chrome 57 <
+            }
+
+            peer.setLocalDescription(SDP)
+            console.log("Sending offer description", SDP)
+            const sendPayload = {
+                sender: this.userId,
+                to: 'all',
+                sessionType: sessionType,
+                sdp: SDP,
+            }
+            send(sendPayload)
+        }, this.onSdpError, this.mediaConstraints)
+    }
+
+    @autobind
+    onSdpError() {
+        console.log('onSdpError', arguments);
+    }
+
+    // onFoundUser() {
+    //     $roomList.html([
+    //         '<div class="room-info">',
+    //         '<p>당신을 기다리고 있어요. 참여 하실래요?</p>',
+    //         '<button id="join">Join</button>',
+    //         '</div>'].join('\n')
+    //     );
+    //
+    //     var $btnJoin = $('#join');
+    //     $btnJoin.click(function() {
+    //         isOffer = true;
+    //         getUserMedia();
+    //         $(this).attr('disabled', true);
+    //     });
+    //
+    //     $joinWrap.slideUp(1000);
+    //     $tokenWrap.slideUp(1000);
+    // }
+
 
     @autobind
     handleClickLink() {
@@ -71,6 +175,71 @@ class WebStreamWrapper extends React.Component {
             window.prompt("Copy to clipboard: Ctrl+C, Enter", link); // Copy to clipboard: Ctrl+C, Enter
         }
     }
+
+    /**
+     * createPeerConnection
+     * offer, answer 공통 함수로 peer를 생성하고 관련 이벤트를 바인딩 한다.
+     */
+    createPeerConnection(type) {
+        console.log('createPeerConnection', arguments)
+
+        var peer = {
+            type: type,
+            pc: null
+        };
+
+        peer.pc = new this.RTCPeerConnection(this.iceServers, this.peerConnectionOptions);
+        console.log('new Peer', peer);
+
+        peer.pc.onicecandidate = (event) => {
+            if (event.candidate) {
+                const sendPayload = {
+                    userId: this.userId,
+                    to: 'all',
+                    label: event.candidate.sdpMLineIndex,
+                    id: event.candidate.sdpMid,
+                    candidate: event.candidate.candidate,
+                    sessionType: type,
+                }
+                send(sendPayload)
+            }
+            else {
+                console.info('Candidate denied', event.candidate);
+            }
+        }
+
+            peer.pc.onaddstream = (event) => {
+                console.log("Adding remote strem", event);
+
+                var id = 'remote-video-' + type;
+                this.setState({isPossibleStream: true})
+                document.querySelector('#' + id).srcObject = event.stream;
+            };
+
+            peer.pc.onremovestream = function (event) {
+                console.log("Removing remote stream", event);
+            };
+
+            peer.pc.onnegotiationneeded = function (event) {
+                console.log("onnegotiationneeded", event);
+            };
+
+            peer.pc.onsignalingstatechange = function (event) {
+                console.log("onsignalingstatechange", event);
+            };
+
+            peer.pc.oniceconnectionstatechange = function (event) {
+                console.log("oniceconnectionstatechange",
+                    'iceGatheringState: ' + peer.iceGatheringState,
+                    '/ iceConnectionState: ' + peer.iceConnectionState);
+            }
+
+            // add peers array
+            peers.push(peer);
+
+            return peer.pc;
+    }
+
 
     setRoomToken() {
         //console.log('setRoomToken', arguments);
@@ -86,28 +255,28 @@ class WebStreamWrapper extends React.Component {
         this.setRoomToken();
         this.setClipboard();
         this.roomId = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '')
-
-        $('#btn-camera').click(function() {
-            var $this = $(this);
-            $this.toggleClass('active');
-
-            if ($this.hasClass('active')) {
-                pauseVideo();
-            } else {
-                resumeVideo();
-            }
-        });
-
-        $('#btn-mic').click(function() {
-            var $this = $(this);
-            $this.toggleClass('active');
-
-            if ($this.hasClass('active')) {
-                muteAudio();
-            } else {
-                unmuteAudio();
-            }
-        });
+        //
+        // $('#btn-camera').click(function() {
+        //     var $this = $(this);
+        //     $this.toggleClass('active');
+        //
+        //     if ($this.hasClass('active')) {
+        //         pauseVideo();
+        //     } else {
+        //         resumeVideo();
+        //     }
+        // });
+        //
+        // $('#btn-mic').click(function() {
+        //     var $this = $(this);
+        //     $this.toggleClass('active');
+        //
+        //     if ($this.hasClass('active')) {
+        //         muteAudio();
+        //     } else {
+        //         unmuteAudio();
+        //     }
+        // });
     }
 
 
@@ -124,7 +293,19 @@ class WebStreamWrapper extends React.Component {
                     <button onClick={this.handleClickButton}>Start</button>
                 </section>
                 <section id="room-list" />
-                <section className={styles.videoWrapper} ref={e => this._refs.videoWrapper = e}>
+                <section ref={e => this._refs.videoWrapper = e} className={styles.videoWrapper}>
+                    <video
+                        ref={e => this._refs["local-video-second"] = e}
+                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isPeerConnect })}
+                        muted="muted" autoplay="true" title="90p" />
+                    <video
+                        ref={e => this._refs["local-video-first"] = e}
+                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isChatStart })}
+                        muted="muted" autoplay="true" title="720p" />
+                    <video
+                        id="' + id + '"
+                        className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isPossibleStream })}
+                        autoplay="true" />
                     <div className={styles.button}>
                         <button id="btn-camera">Camera Pause</button>
                         <button id="btn-mic">Mic Mute</button>

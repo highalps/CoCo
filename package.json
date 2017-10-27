@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "test": "eslint ./src/*.js",
-    "start": "cross-env NODE_ENV=development node ./app.js && webpack-dev-server --hot"
+    "start": "cross-env NODE_ENV=development node ./app.js && webpack-dev-server --hot --host 0.0.0.0"
   },
   "dependencies": {
     "axios": "^0.16.2",

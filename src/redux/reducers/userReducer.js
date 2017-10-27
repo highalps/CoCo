@@ -32,7 +32,7 @@ const userReducer = (state = initialState, action) => {
             }
 
 
-        case AT.LOG_OUT_SUCCESS: {
+        case AT.LOG_OUT: {
             setToken(false)
             return initialState
         }

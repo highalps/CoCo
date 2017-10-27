@@ -12,8 +12,6 @@ export default keyMirror({
     SIGN_UP_ERROR: null,
 
     LOG_OUT: null,
-    LOG_OUT_SUCCESS: null,
-    LOG_OUT_ERROR: null,
 
    /* UI actions */
    CLOSE_CHAT: null,

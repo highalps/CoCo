@@ -1,7 +1,16 @@
 .wrapper {
-  width: 100%;
+  width: 30%;
   height: 100%;
   position: absolute;
-  right :0;
-  background-color: black;
+  right: 0;
+
+  .videoWrapper {
+
+    .local-video {
+
+      &.isVisible {
+        display: none;
+      }
+    }
+  }
 }
