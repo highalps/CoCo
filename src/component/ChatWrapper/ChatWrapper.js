@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './ChatWrapper.scss'
@@ -15,12 +16,12 @@ const mapStateToProps = (state) => ({
     showChatMessage: state.uiReducer.uiState.get('chatMessage'),
 })
 
-
+@withRouter
 @connect(mapStateToProps)
 class ChatWrapper extends React.Component {
 
     renderChatButton() {
-        if (this.props.isLogged) {
+        if (this.props.isLogged && this.props.location.pathname !== '/editor') {
             return (
                 <ChatButton
                     showChatList={this.props.showChatList}

@@ -17,17 +17,23 @@ class WebStreamWrapper extends React.Component {
             isChatStart: false,
             isPeerConnect: false,
             isPossibleStream: false,
+            isStreamFalse: false,
+            isPossibleJoin: false,
+            stopVideo: false,
+            stopAudio: false,
             token: '',
             href: '#',
         }
+        this.setRoomToken()
         this.initValue()
+        this.initSocket()
     }
 
     initValue() {
         this.localStream = null;
-        this.socket = io();
+        this.socket = io('external.cocotutor.ml:3000/stream')
         this.userId = Math.round(Math.random() * 999999) + 999999;
-        this.roomId = null;
+        this.roomId = '123'
         this.remoteUserId = null;
         this.isOffer = null;
         this.localStream = null;
@@ -46,7 +52,7 @@ class WebStreamWrapper extends React.Component {
                     'username': 'subrosa'
                 }]
         };
-        navigator.getUserMedia = navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+        window.navigator.getUserMedia = navigator.getUserMedia ||  navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia;
         this.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
         this.RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription;
         this.RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate || window.webkitRTCIceCandidate;
@@ -61,82 +67,262 @@ class WebStreamWrapper extends React.Component {
                 'OfferToReceiveVideo': true
             }
         }
+    }
 
-        this.socket.emit('joinRoom', this.roomId, this.userId);
+    /** socket method **/
+
+    initSocket() {
+        console.log("this.scoket", this.socket)
+        this.socket.emit('joinRoom', this.roomId, this.userId)
         this.socket.on('joinRoom', (roomId, userList) => {
+            console.log('joinRoom', arguments)
+            console.log("A",userList)
             if (Object.size(userList) > 1) {
-                // onFoundUser();
+                this.setState({ isPossibleJoin: true })
             }
         })
+        this.socket.on('leaveRoom', (userId) => {
+            console.log('leaveRoom', arguments)
+            this.onLeave(userId)
+        });
+
+        this.socket.on('message', (data) => {
+            this.onmessage(data)
+        });
+        console.log("hahahah", this.socket)
     }
 
-    @autobind
-    handleClickButton() {
-        navigator.getUserMedia({ audio: true, video: { width: 1280, height: 720 }}, (stream) => {
-            this.localStream = stream;
-            this.setState({ isChatStart: true })
-            const el = this._refs['local-video-first']
-            if (el) {
-                console.log("el", el)
-                el.srcObject = this.localStream
+    /**
+     * send
+     * @param {object} msg data
+     */
+    send(data) {
+        //console.log('send', data);
+
+        data.roomId = this.roomId;
+        this.socket.send(data);
+    }
+
+    /**
+     * onLeave
+     * @param {string} userId
+     */
+    onLeave(userId) {
+        if (this.remoteUserId === userId) {
+            this.setState({ isPossibleStream: false })
+            this.remoteUserId = null
+        }
+    }
+
+
+    /**
+     * onmessage
+     * @param {object} msg data
+     */
+    onmessage(data) {
+        console.log('onmessage', data)
+
+        const msg = data
+        const sdp = msg.sdp || null;
+
+        if (!this.remoteUserId) {
+            this.remoteUserId = data.userId;
+        }
+
+        // 접속자가 보내온 offer처리
+        if (sdp) {
+            if (sdp.type  == 'offer') {
+                this.createPeerConnection();
+                console.log('Adding local stream...');
+                this.createAnswer(msg)
+
+                // offer에 대한 응답 처리
+            } else if (sdp.type == 'answer') {
+                // answer signaling
+                this.peer.setRemoteDescription(new RTCSessionDescription(msg.sdp));
             }
 
-            if (this.isOffer) {
-                this.peer = this.createPeerConnection('first')
-                this.createOffer('first', this.peer, this.localStream)
-            }
+            // offer, answer cadidate처리
+        } else if (msg.candidate) {
+            const candidate = new RTCIceCandidate({
+                sdpMid: msg.id,
+                sdpMLineIndex: msg.label,
+                candidate: msg.candidate
+            });
 
-            this.createSmallVideo()
-        }, () => {
-            console.error('Error getUserMedia')
+            this.peer.addIceCandidate(candidate);
+        } else {
+            //console.log()
+        }
+    }
+
+    /**
+     * createAnswer
+     * offer에 대한 응답 SDP를 생성 한다.
+     * @param {object} msg offer가 보내온 signaling
+     */
+    createAnswer(msg) {
+        console.log('createAnswer', arguments);
+
+        this.peer.addStream(this.localStream);
+        this.peer.setRemoteDescription(new RTCSessionDescription(msg.sdp), function() {
+            this.peer.createAnswer(function(SDP) {
+                this.peer.setLocalDescription(SDP);
+                console.log("Sending answer to peer.", SDP);
+                send({
+                    sender: this.userId,
+                    to: 'all',
+                    sdp: SDP
+                });
+            }, this.onSdpError, mediaConstraints);
+        }, function() {
+            console.error('setRemoteDescription', arguments);
         })
     }
-
-    createSmallVideo() {
-        navigator.getUserMedia({
-            audio: true,
-            video: {
-                width: 160,
-                height: 90
-            }
-        }, (stream) => {
-            this.localSmallStream = stream
-            this.setState({ isPeerConnect: true })
-            const el = this._refs['local-video-second']
-            el.srcObject = this.localSmallStream;
-            var peer = this.createPeerConnection('second')
-            this.createOffer('second', peer, this.localSmallStream)
-        }, () => {
-            console.error('Error getUserMedia');
-        })
-    }
-
 
     /**
      * createOffer
      * offer SDP를 생성 한다.
      */
-    createOffer(sessionType, peer, stream) {
-        console.log('createOffer', arguments);
+    createOffer() {
+        console.log('createOffer', arguments)
 
-        peer.addStream(stream); // addStream 제외시 recvonly로 SDP 생성됨
-        peer.createOffer(SDP => {
+        this.peer.addStream(this.localStream) // addStream 제외시 recvonly로 SDP 생성됨
+        this.peer.createOffer(SDP => {
             // url parameter codec=h264
             if (location.search.substr(1).match('h264')) {
                 SDP.sdp = SDP.sdp.replace("100 101 107", "107 100 101") // for chrome < 57
                 SDP.sdp = SDP.sdp.replace("96 98 100", "100 96 98") // for chrome 57 <
             }
 
-            peer.setLocalDescription(SDP)
+            this.peer.setLocalDescription(SDP)
             console.log("Sending offer description", SDP)
             const sendPayload = {
                 sender: this.userId,
                 to: 'all',
-                sessionType: sessionType,
                 sdp: SDP,
             }
-            send(sendPayload)
+            this.send(sendPayload)
         }, this.onSdpError, this.mediaConstraints)
+    }
+
+
+    /**
+     * createPeerConnection
+     * offer, answer 공통 함수로 peer를 생성하고 관련 이벤트를 바인딩 한다.
+     */
+    createPeerConnection() {
+        console.log('createPeerConnection', arguments)
+
+        this.peer = new this.RTCPeerConnection(this.iceServers, this.peerConnectionOptions)
+        console.log('new Peer', this.peer);
+
+        this.peer.onicecandidate = (event) => {
+            if (event.candidate) {
+                const sendPayload = {
+                    userId: this.userId,
+                    to: 'all',
+                    label: event.candidate.sdpMLineIndex,
+                    id: event.candidate.sdpMid,
+                    candidate: event.candidate.candidate,
+                }
+                this.send(sendPayload)
+            }
+            else {
+                console.info('Candidate denied', event.candidate);
+            }
+        }
+
+        this.peer.onaddstream = (event) => {
+            console.log("Adding remote strem", event);
+
+            const id = 'remote-video'
+            this.setState({ isPossibleStream: true })
+            const el = this._refs['remote-video']
+            el.srcObject = event.stream
+        };
+
+        this.peer.onremovestream = (event) => {
+            console.log("Removing remote stream", event)
+        };
+
+        this.peer.onnegotiationneeded = (event) => {
+            console.log("onnegotiationneeded", event)
+        };
+
+        this.peer.onsignalingstatechange = (event) => {
+            console.log("onsignalingstatechange", event)
+        };
+
+        this.peer.oniceconnectionstatechange = (event) => {
+            console.log("oniceconnectionstatechange",
+                'iceGatheringState: ' + this.peer.iceGatheringState,
+                '/ iceConnectionState: ' + this.peer.iceConnectionState);
+        }
+    }
+
+    @autobind
+    handleClickButton() {
+        window.navigator.getUserMedia({
+            audio: true,
+            // video: {
+            //     mandatory: {
+            //         // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
+            //         // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
+            //         maxWidth: 1280,
+            //         maxHeight: 720,
+            //         minWidth: 1280,
+            //         minHeight: 720,
+            //         maxFrameRate: 24,
+            //         minFrameRate: 18,
+            //         maxAspectRatio: 1.778,
+            //         minAspectRatio: 1.777
+            //     },
+            //     optional: [
+            //         { googNoiseReduction: true }, // Likely removes the noise in the captured video stream at the expense of computational effort.
+            //         { facingMode: "user" }        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
+            //     ]
+            // }
+            video: false,
+            }, (stream) => {
+            this.localStream = stream
+            this.setState({ isChatStart: true })
+            const el = this._refs['local-video']
+            if (el) {
+                el.srcObject = this.localStream
+            }
+
+            if (this.isOffer) {
+                console.log("나는 오퍼다")
+                this.createPeerConnection()
+                this.createOffer()
+            }
+
+        }, () => {
+            this.setState({ isStreamFalse: true })
+        })
+    }
+
+    createSmallVideo() {
+        navigator.getUserMedia({
+            audio: true,
+            // video: {
+            //     width: 160,
+            //     height: 90
+            // }
+            video: false,
+        }, (stream) => {
+            this.localSmallStream = stream
+            this.setState({ isPeerConnect: true })
+            const el = this._refs['local-video-second']
+            if (el) {
+                el.srcObject = this.localSmallStream;
+            }
+            const peer = this.createPeerConnection('second')
+            this.createOffer()
+        }, () => {
+            console.error('Error getUserMedia');
+        })
     }
 
     @autobind
@@ -144,25 +330,11 @@ class WebStreamWrapper extends React.Component {
         console.log('onSdpError', arguments);
     }
 
-    // onFoundUser() {
-    //     $roomList.html([
-    //         '<div class="room-info">',
-    //         '<p>당신을 기다리고 있어요. 참여 하실래요?</p>',
-    //         '<button id="join">Join</button>',
-    //         '</div>'].join('\n')
-    //     );
-    //
-    //     var $btnJoin = $('#join');
-    //     $btnJoin.click(function() {
-    //         isOffer = true;
-    //         getUserMedia();
-    //         $(this).attr('disabled', true);
-    //     });
-    //
-    //     $joinWrap.slideUp(1000);
-    //     $tokenWrap.slideUp(1000);
-    // }
-
+    @autobind
+    handleClickJoinButton() {
+        this.isOffer = true
+        this.handleClickButton()
+    }
 
     @autobind
     handleClickLink() {
@@ -176,74 +348,8 @@ class WebStreamWrapper extends React.Component {
         }
     }
 
-    /**
-     * createPeerConnection
-     * offer, answer 공통 함수로 peer를 생성하고 관련 이벤트를 바인딩 한다.
-     */
-    createPeerConnection(type) {
-        console.log('createPeerConnection', arguments)
-
-        var peer = {
-            type: type,
-            pc: null
-        };
-
-        peer.pc = new this.RTCPeerConnection(this.iceServers, this.peerConnectionOptions);
-        console.log('new Peer', peer);
-
-        peer.pc.onicecandidate = (event) => {
-            if (event.candidate) {
-                const sendPayload = {
-                    userId: this.userId,
-                    to: 'all',
-                    label: event.candidate.sdpMLineIndex,
-                    id: event.candidate.sdpMid,
-                    candidate: event.candidate.candidate,
-                    sessionType: type,
-                }
-                send(sendPayload)
-            }
-            else {
-                console.info('Candidate denied', event.candidate);
-            }
-        }
-
-            peer.pc.onaddstream = (event) => {
-                console.log("Adding remote strem", event);
-
-                var id = 'remote-video-' + type;
-                this.setState({isPossibleStream: true})
-                document.querySelector('#' + id).srcObject = event.stream;
-            };
-
-            peer.pc.onremovestream = function (event) {
-                console.log("Removing remote stream", event);
-            };
-
-            peer.pc.onnegotiationneeded = function (event) {
-                console.log("onnegotiationneeded", event);
-            };
-
-            peer.pc.onsignalingstatechange = function (event) {
-                console.log("onsignalingstatechange", event);
-            };
-
-            peer.pc.oniceconnectionstatechange = function (event) {
-                console.log("oniceconnectionstatechange",
-                    'iceGatheringState: ' + peer.iceGatheringState,
-                    '/ iceConnectionState: ' + peer.iceConnectionState);
-            }
-
-            // add peers array
-            peers.push(peer);
-
-            return peer.pc;
-    }
-
-
     setRoomToken() {
         //console.log('setRoomToken', arguments);
-
         if (location.hash.length > 2) {
             this.setState({ href: location.href })
         } else {
@@ -251,35 +357,22 @@ class WebStreamWrapper extends React.Component {
         }
     }
 
-    initialize() {
-        this.setRoomToken();
-        this.setClipboard();
-        this.roomId = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '')
-        //
-        // $('#btn-camera').click(function() {
-        //     var $this = $(this);
-        //     $this.toggleClass('active');
-        //
-        //     if ($this.hasClass('active')) {
-        //         pauseVideo();
-        //     } else {
-        //         resumeVideo();
-        //     }
-        // });
-        //
-        // $('#btn-mic').click(function() {
-        //     var $this = $(this);
-        //     $this.toggleClass('active');
-        //
-        //     if ($this.hasClass('active')) {
-        //         muteAudio();
-        //     } else {
-        //         unmuteAudio();
-        //     }
-        // });
+    @autobind
+    toggleVideo() {
+        console.log('pauseVideo', arguments)
+        const stopVideo = this.state.stopVideo
+        this.setState({ stopVideo: !stopVideo })
+        this.localStream.getVideoTracks()[0].enabled = !stopVideo
     }
 
-
+    @autobind
+    toggleAudio() {
+        console.log('muteAudio', arguments)
+        const stopAudio = this.state.stopAudio
+        console.log("hihi", stopAudio)
+        this.setState({ stopAudio: !stopAudio })
+        this.localStream.getAudioTracks()[0].enabled = !stopAudio
+    }
 
     render() {
         return (
@@ -297,18 +390,27 @@ class WebStreamWrapper extends React.Component {
                     <video
                         ref={e => this._refs["local-video-second"] = e}
                         className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isPeerConnect })}
-                        muted="muted" autoplay="true" title="90p" />
+                        muted="muted" autoPlay="true" title="90p" />
                     <video
-                        ref={e => this._refs["local-video-first"] = e}
+                        ref={e => this._refs["local-video"] = e}
                         className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isChatStart })}
-                        muted="muted" autoplay="true" title="720p" />
+                        muted="muted" autoPlay="true" title="720p" />
                     <video
-                        id="' + id + '"
+                        ref={e => this._refs["remote-video"] = e}
                         className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isPossibleStream })}
-                        autoplay="true" />
+                        autoPlay="true" />
                     <div className={styles.button}>
-                        <button id="btn-camera">Camera Pause</button>
-                        <button id="btn-mic">Mic Mute</button>
+                        <button onClick={this.toggleVideo}>
+                            {this.state.stopVideo ? 'Camera Start' : 'Camera Pause' }
+                        </button>
+                        <button onClick={this.toggleAudio}>
+                            {this.state.stopAudio ? 'Mic Mute' : 'Mic Unmute' }
+                        </button>
+                        {
+                            this.state.isPossibleJoin
+                            ? (<button onClick={this.handleClickJoinButton}>참가하기</button>)
+                            : null
+                        }
                     </div>
                 </section>
             </div>
