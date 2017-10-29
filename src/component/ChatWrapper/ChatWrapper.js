@@ -1,6 +1,8 @@
 /* */
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './ChatWrapper.scss'
@@ -8,7 +10,26 @@ import ChatButton from '../ChatButton'
 import ChatList from '../ChatList'
 import ChatMessage from '../ChatMessage'
 
+const mapStateToProps = (state) => ({
+    isLogged: state.userReducer.isLogged,
+    showChatList: state.uiReducer.uiState.get('chatList'),
+    showChatMessage: state.uiReducer.uiState.get('chatMessage'),
+})
+
+@withRouter
+@connect(mapStateToProps)
 class ChatWrapper extends React.Component {
+
+    renderChatButton() {
+        if (this.props.isLogged && this.props.location.pathname !== '/editor') {
+            return (
+                <ChatButton
+                    showChatList={this.props.showChatList}
+                    showChatMessage={this.props.showChatMessage}/>
+            )
+        }
+        return null
+    }
 
     renderChat() {
         if (this.props.showChatList) {
@@ -22,9 +43,7 @@ class ChatWrapper extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <ChatButton
-                    showChatList={this.props.showChatList}
-                    showChatMessage={this.props.showChatMessage} />
+                {this.renderChatButton()}
                 {this.renderChat()}
             </div>
         )

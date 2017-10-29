@@ -5,6 +5,7 @@ import otText from 'ot-text'
 import shareDB from 'sharedb/lib/client'
 import shareDBCodeMirror from 'sharedb-codemirror'
 import CodeMirror from 'codemirror'
+import io from 'socket.io-client'
 
 /* */
 import styles from './TextEditor.scss'
@@ -38,6 +39,7 @@ class TextEditor extends React.Component {
     componentDidMount() {
         this.codeMirror = CodeMirror.fromTextArea(this._refs.textArea, option);
         this.shareConnection = new shareDB.Connection(new WebSocket("ws://" + 'external.cocotutor.ml:3000'))
+        // this.shareConnection = new shareDB.Connection(io('external.cocotutor.ml:3000'))
         this.connect(this.props)
     }
 

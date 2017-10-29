@@ -9,18 +9,20 @@ import SignUp from './container/SignUp'
 import SignIn from './container/SignIn'
 import Classes from './container/Classes'
 import MyPage from './container/MyPage'
-
-
+import ChatWrapper from './component/ChatWrapper'
 
 export default () => (
     <HashRouter>
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/editor" component={App} />
-            <Route path="/classes" component={Classes} />
-            <Route path="/signUp" component={SignUp} />
-            <Route path="/signIn" component={SignIn} />
-            <Route path="/MyPage" component={MyPage} />
-        </Switch>
+        <div style={{ width: "100%", height: "100%" }}>
+            <ChatWrapper />
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/editor" component={App} />
+                <Route path="/classes" component={Classes} />
+                <Route path="/signUp" component={SignUp} />
+                <Route path="/signIn" component={SignIn} />
+                <Route path="/MyPage" component={MyPage} />
+            </Switch>
+        </div>
     </HashRouter>
 )

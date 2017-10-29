@@ -19,13 +19,13 @@ import 'codemirror/theme/panda-syntax.css'
 import 'codemirror/theme/isotope.css'
 
 //import bootstrap
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.css'
 
 initAuth()
 
 /* Render */
 ReactDOM.render(
-   <Provider store={Redux.getStore()}>
+    <Provider store={Redux.getStore()}>
         <Routes />
     </Provider>,
     window.document.getElementById('main')

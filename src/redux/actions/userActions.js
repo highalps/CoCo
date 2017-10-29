@@ -1,5 +1,4 @@
 /* */
-import axios from 'axios'
 
 /* */
 import AT from '../actions/actionTypes'
@@ -16,7 +15,7 @@ export default {
     signIn: (payload) => { // 로그인 직후 유저의 프로젝트 리스트 받기
         return (dispatch) => {
             dispatch(createAction(AT.SIGN_IN)(payload))
-            return client.post('/login', payload)
+            return client.post('/auth/login', payload)
                 .then(response => {
                     dispatch(createAction(AT.SIGN_IN_SUCCESS)(response.data))
                 })
@@ -29,7 +28,7 @@ export default {
     signUp: (payload) => { // 로그인 직후 유저의 프로젝트 리스트 받기
         return (dispatch) => {
             dispatch(createAction(AT.SIGN_UP)(payload))
-            return client.post('/signUp', payload)
+            return client.post('/auth/signUp', payload)
                 .then(response => {
                     dispatch(createAction(AT.SIGN_UP_SUCCESS)(response.data))
                 })
@@ -39,18 +38,6 @@ export default {
                 })
         }
     },
-    logout: (payload) => { // 로그인 직후 유저의 프로젝트 리스트 받기
-        return (dispatch) => {
-            dispatch(createAction(AT.LOG_OUT)(payload))
-            return client.post('/logout', payload)
-                .then(response => {
-                    dispatch(createAction(AT.LOG_OUT_SUCCESS)(response.data))
-                })
-                .catch(error => {
-                    dispatch(createAction(AT.LOG_OUT_ERROR)(error))
-                    throw error
-                })
-        }
-    },
+    logout: () => createAction(AT.LOG_OUT)(),
 }
 
