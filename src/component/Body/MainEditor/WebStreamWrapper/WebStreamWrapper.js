@@ -31,7 +31,7 @@ class WebStreamWrapper extends React.Component {
 
     initValue() {
         this.localStream = null;
-        this.socket = io('external.cocotutor.ml:3000/stream')
+        this.socket = io('localhost:3000/stream')
         this.userId = Math.round(Math.random() * 999999) + 999999;
         this.roomId = '123'
         this.remoteUserId = null;
