@@ -4,6 +4,7 @@ import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
 import io from 'socket.io-client'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 
 /* */
 import styles from './WebStreamWrapper.scss'
@@ -31,7 +32,8 @@ class WebStreamWrapper extends React.Component {
 
     initValue() {
         this.localStream = null;
-        this.socket = io('localhost:3000/stream')
+        this.socket = io('external.cocotutor.ml:3000/stream')
+        // this.socket = io('localhost:3000/stream')
         this.userId = Math.round(Math.random() * 999999) + 999999;
         this.roomId = '123'
         this.remoteUserId = null;
@@ -76,8 +78,8 @@ class WebStreamWrapper extends React.Component {
         this.socket.emit('joinRoom', this.roomId, this.userId)
         this.socket.on('joinRoom', (roomId, userList) => {
             console.log('joinRoom', arguments)
-            console.log("A",userList)
-            if (Object.size(userList) > 1) {
+
+            if (Object.keys(userList).length > 1) {
                 this.setState({ isPossibleJoin: true })
             }
         })
@@ -89,12 +91,12 @@ class WebStreamWrapper extends React.Component {
         this.socket.on('message', (data) => {
             this.onmessage(data)
         });
-        console.log("hahahah", this.socket)
     }
 
     /**
      * send
      * @param {object} msg data
+     * socket.send는 message 이벤트를 보낸다.
      */
     send(data) {
         //console.log('send', data);
@@ -165,17 +167,17 @@ class WebStreamWrapper extends React.Component {
         console.log('createAnswer', arguments);
 
         this.peer.addStream(this.localStream);
-        this.peer.setRemoteDescription(new RTCSessionDescription(msg.sdp), function() {
-            this.peer.createAnswer(function(SDP) {
+        this.peer.setRemoteDescription(new RTCSessionDescription(msg.sdp), () => {
+            this.peer.createAnswer((SDP) => {
                 this.peer.setLocalDescription(SDP);
                 console.log("Sending answer to peer.", SDP);
-                send({
+                this.send({
                     sender: this.userId,
                     to: 'all',
                     sdp: SDP
                 });
-            }, this.onSdpError, mediaConstraints);
-        }, function() {
+            }, this.onSdpError, this.mediaConstraints);
+        }, () => {
             console.error('setRemoteDescription', arguments);
         })
     }
@@ -377,12 +379,8 @@ class WebStreamWrapper extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <section id="share-wrap">
-                    <p>2개의 해상도(720p, 90p)를 전달 합니다.</p>
-                    <div onClick={this.handleClickLink}>Share this room link</div>
-                </section>
                 <section id="join-wrap">
-                    <p>영상회의를 시작하시겠습니까?</p>
+                    <p>{this.state.isPossibleJoin ? '당신을 기다리고 있습니다' : '스트리밍 활성화를 하시겠습니까?'}</p>
                     <button onClick={this.handleClickButton}>Start</button>
                 </section>
                 <section id="room-list" />
