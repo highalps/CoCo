@@ -1,0 +1,6 @@
+{
+  "name": "ChatList",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ChatList.js"
+}

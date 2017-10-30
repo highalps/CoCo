@@ -12,21 +12,11 @@
         },
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react"],
     "rules": {
-        "indent": [
-            "error",
-            "tab"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "never"
-        ]
+        "indent": ["error", 4],
+        "quotes": ["error", "single"],
+        "semi": ["error", "never"],
+        "no-unused-vars": "off"
     }
 }

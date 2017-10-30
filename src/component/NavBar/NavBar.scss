@@ -1,6 +1,45 @@
-.topMenu{
+.wrapper {
+  z-index: 1;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 100px;
-}
-.temp{
-  padding-top: 10px;
+  padding: 20px;
+  justify-content: space-between;
+
+  .logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .menu {
+    display: flex;
+    margin-right: 20px;
+
+    .button {
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      margin: 0 10px;
+
+      &:hover {
+        font-weight: bold;
+      }
+
+      i {
+        font-size: 30px;
+      }
+
+      .name {
+        line-height: 200%;
+        font-size: 14px;
+      }
+    }
+  }
 }

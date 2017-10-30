@@ -1,0 +1,7 @@
+
+{
+  "name": "MyClassInfo",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MyClassInfo.js"
+}

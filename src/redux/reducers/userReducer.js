@@ -3,21 +3,37 @@ import Immutable from 'immutable'
 
 /* */
 import AT from '../actions/actionTypes'
+import { setToken } from '../../utils/authUtils'
 
 const initialState = {
-    nickName: '',
+    isLogged: false,
+    id: '',
+    email: '',
+    nickname: '',
 }
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case AT.SIGN_IN_SUCCESS: {
+            const { access_token, user } = action.payload
+            setToken(access_token)
             return {
-                ...state,
-                nickName: action.payload.nickName,
+                isLogged: true,
+                ...user,
             }
         }
 
-        case AT.LOG_OUT_SUCCESS: {
+        case AT.INIT_USER:
+            const { user } = action.payload
+            console.log("A",user)
+            return {
+                isLogged: true,
+                ...user,
+            }
+
+
+        case AT.LOG_OUT: {
+            setToken(false)
             return initialState
         }
 

@@ -1,27 +1,21 @@
 /* */
 import React from 'react';
-import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
-  NavDropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap';
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 /* */
-import Styles from './NavBar.scss';
+import styles from './NavBar.scss';
 import { userActions } from '../../redux/actions'
 
-const mapStateToProps = (state) => ({
-    nickName: state.userReducer.nickName,
-})
-
-@connect(mapStateToProps)
+@connect()
 class NavBar extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-       isOpen: false,
-       dropdownOpen: false
-    }
+  constructor() {
+      super()
+      this.state = {
+         isOpen: false,
+      }
   }
 
   @autobind
@@ -29,57 +23,47 @@ class NavBar extends React.Component {
       this.props.dispatch(userActions.logout())
   }
 
-  toggleNav() {
-    this.setState({ isOpen: !this.state.isOpen })
-  }
-
-  toggleDrop() {
-    this.setState({ dropdownOpen: !this.state.dropdownOpen })
+  renderLoginButton() {
+    if (!this.props.isLogged) {
+      return (
+          <Link className={styles.button} to="signIn">
+            <i className="fa fa-unlock-alt" />
+              <span className={styles.name}>로그인</span>
+          </Link>
+      )
+    }
+    return (
+        <div className={styles.button} onClick={this.handleClickLogout}>
+          <i className="fa fa-lock" />
+            <span className={styles.name}>로그아웃</span>
+        </div>
+    )
   }
 
   render() {
     return (
-      <div className="topMenu bg-primary">
-      <div className={Styles.temp}>
-        <Navbar light toggleable>
-          <NavbarToggler right onClick={this.toggleNav} />
-          <NavbarBrand className="text-white">CoCo</NavbarBrand>
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink  className="text-white">Home</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink  className="text-white">Board</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink  className="text-white">Tutoring</NavLink>
-              </NavItem>
-              <NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDrop}>
-                <DropdownToggle className="text-white" nav caret>
-                  MyPage
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem>회원정보</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>질문 및 답변</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>튜터링</DropdownItem>
-                </DropdownMenu>
-              </NavDropdown>
-              <NavItem>
-                  {
-                    !this.props.nickName
-                      ? <NavLink className="text-white" href='/#/signIn'>Login</NavLink>
-                      : <NavLink className="text-white" onClick={this.handleClickLogout}>Logout</NavLink>
-                  }
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
+        <div className={styles.wrapper}>
+          <div className={styles.logo}>
+            CoCo tutor
+          </div>
+          <div className={styles.menu}>
+              {this.renderLoginButton()}
+            <div className={styles.button}>
+                <i className="fa fa-user-o" />
+                <span className={styles.name}>내 정보</span>
+            </div>
+          </div>
         </div>
-      </div>
-    );
+    )
   }
 }
+
+NavBar.propTypes = {
+    isLogged: PropTypes.bool,
+}
+
+NavBar.defaultProps = {
+    isLogged: false,
+}
+
 export default NavBar;

@@ -1,0 +1,16 @@
+.wrapper {
+  width: 30%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+
+  .videoWrapper {
+
+    .local-video {
+
+      &.isVisible {
+        display: none;
+      }
+    }
+  }
+}

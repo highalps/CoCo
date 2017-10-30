@@ -2,22 +2,24 @@
 import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
 import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
-import axios from 'axios'
 
 /* */
 import styles from './SignUp.scss'
+import { userActions } from '../../redux/actions'
 
+@connect()
 @withRouter
 class SignIn extends React.Component {
 
     constructor() {
         super()
         this.state = {
-            userID: '',
+            id: '',
             password:'',
-            userEmail:'',
-            nickName:''
+            email:'',
+            nickname:''
         }
     }
 
@@ -29,17 +31,21 @@ class SignIn extends React.Component {
 
     @autobind
     onSubmit() {
-        console.log("onClick");
-        axios.post('http://external.cocotutor.ml:3000/auth/signup',{
-            userID: this.state.userID,
+        const { history, dispatch } = this.props
+        const payload = {
+            id: this.state.id,
             password: this.state.password,
-            userEmail: this.state.userEmail,
-            nickName: this.state.nickName
-        }).then(response => {
-            this.props.history.push("/signIn")
-            }).catch (error =>{
-                this.setState({msg: '해당 아이디가 이미 존재합니다.'});
-        });
+            email: this.state.email,
+            nickname: this.state.nickname
+        }
+
+        dispatch(userActions.signUp(payload))
+            .then(() => {
+                history.push("/signIn")
+            })
+            .catch(error => {
+                this.setState({msg: '아이디가 존재하지 않거나, 비밀번호가 맞지 않습니다.'})
+            })
     }
 
     render() {
@@ -48,10 +54,10 @@ class SignIn extends React.Component {
                 <div className={styles.container}>
                     <div className={styles.loginBox}>
                         <h1>회원가입</h1>
-                        <input id="userID" type="text" className="validate" placeholder="user ID" onChange={this.onChange('userID')}/>
+                        <input id="id" type="text" className="validate" placeholder="id" onChange={this.onChange('id')}/>
                         <input id="password" type="password" className="validate" placeholder="Password" onChange={this.onChange('password')}/>
-                        <input id="userEmail" type="text" className="validate" placeholder="userEmail" onChange={this.onChange('userEmail')}/>
-                        <input id="nickName" type="text" className="validate" placeholder="nickName" onChange={this.onChange('nickName')}/>
+                        <input id="email" type="text" className="validate" placeholder="email" onChange={this.onChange('email')}/>
+                        <input id="nickname" type="text" className="validate" placeholder="nickname" onChange={this.onChange('nickname')}/>
                         {this.state.msg}
                         <div className={styles.buttons}>
                             <button type="submit" className={styles.button} onClick={this.onSubmit}>확인</button>
