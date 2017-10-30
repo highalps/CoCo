@@ -1,8 +1,10 @@
 import React from 'react'
 import styles from './Classes.scss'
+import { Button, Card} from 'reactstrap';
 
 import Search from 'component/Classes/Search'
 import Class from 'component/Classes/Class'
+import CreateClass from 'component/Classes/CreateClass'
 
 
 
@@ -139,7 +141,11 @@ class Classes  extends React.Component {
                 <div className = {styles.head}>
                     CoCo 강의 검색
                 </div>
+                <div className={styles.createClassWrapper}>
+                    <CreateClass />
+                </div>
                 <Search />
+
                 <div className = {styles.bgControl}>
                     <div className = "container-fluid">
                         {this._renderClasses()}

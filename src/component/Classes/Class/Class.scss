@@ -26,7 +26,6 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 600;
   text-align: center;
-
 }
 
 .cardWrapper{
@@ -48,7 +47,10 @@
   opacity: 0.8;
 }
 .modalHeader{
-  background-color: #0000af;
+  background-color: #1934af;
   color:white;
-  opacity: 0.8;
+  opacity: 0.9;
+}
+.modalBodyStyle{
+  overflow-y: scroll;
 }

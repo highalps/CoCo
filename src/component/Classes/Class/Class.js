@@ -54,8 +54,9 @@ class  ColComponent extends React.Component {
                 </Card>
                 <Modal isOpen={this.state.modal} toggle={this._toggle}>
                     <ModalHeader toggle={this._toggle} className = {styles.modalHeader}>{colData.title}</ModalHeader>
-                    <ModalBody>
+                    <ModalBody className={styles.modalBodyStyle}>
                         <div>안녕하세요</div>
+
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this._toggle}>수강신청</Button>

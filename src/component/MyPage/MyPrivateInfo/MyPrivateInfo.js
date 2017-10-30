@@ -11,6 +11,7 @@ class MyPrivateInfo  extends React.Component {
         super()
     }
 
+
     render(){
         return(
             <div className = {styles.wrapper}>

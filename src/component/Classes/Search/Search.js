@@ -39,7 +39,7 @@ class Search extends React.Component {
 
     _searchClass(){
         console.log(this.state);
-        let url = "https://www.cocotutor.ml/api/board?group="+this.state.group+"&language="+this.state.language+"&keyword="+this.state.search;
+        let url = "https://www.cocotutor.ml/api/board/search?group="+this.state.group+"&language="+this.state.language+"&keyword="+this.state.search;
         return fetch(url)
             .then(response => response.json())
             .then(json => json.data)

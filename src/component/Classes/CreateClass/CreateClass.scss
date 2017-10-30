@@ -1,0 +1,60 @@
+.wrapper{
+  margin-top: 3%;
+  width:100%;
+}
+.cardWrapper{
+  background-color: white;
+  width: 15rem;
+  height: 20rem;
+  margin-left: 30%;
+}
+.classLanguage{
+  text-align: center;
+  padding:4%;
+  font-size: 120%;
+  height: 50px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+.classTitle{
+   margin: 0% 3% 3% 3%;
+  display:block;
+   text-align: center;
+   height: 120px;
+   padding-top: 13%;
+   font-size: 200%;
+   font-style: italic;
+   font-weight: bold;
+   overflow: hidden;
+   text-overflow: ellipsis;
+
+ }
+.classNickName{
+  margin-top: 20%;
+  padding:5%;
+  font-size: 120%;
+  height: 80px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  text-align: center;
+}
+.introWrapper{
+  margin-top:5%;
+  margin-left: 10%;
+  width: 30rem;
+  height: 17rem;
+}
+.introTitle{
+  text-align: center;
+  color: white;
+}
+.introSubTitle{
+  text-align: center;
+  color: white;
+}
+.introBtnWrapper{
+  margin-left: 10%;
+}
+.introBtn{
+  margin-left: 5%;
+}

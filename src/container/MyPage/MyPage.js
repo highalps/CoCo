@@ -12,6 +12,14 @@ class MyPage  extends React.Component {
     constructor(){
         super()
     }
+    _searchUserInfo(){
+        console.log(this.state);
+        let url = "https://www.cocotutor.ml/api/user/getUser/:id";
+        return fetch(url)
+            .then(response => response.json())
+            .then(json => json.data)
+            .catch(err => console.log(err))
+    }
 
     render(){
         return(
