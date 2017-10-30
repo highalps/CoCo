@@ -12,7 +12,6 @@ import { initAuth } from './utils/authUtils'
 import './styles/global.scss'
 import './styles/xterm.scss'
 
-import codemirror mode & style
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/mode/clike/clike.js'
 import 'codemirror/theme/panda-syntax.css'
