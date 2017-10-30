@@ -3,6 +3,7 @@ var http = require('http');
 var express = require('express');
 var webpack = require('webpack');
 var webpackDevServer = require('webpack-dev-server');
+var compression = require('compression')
 
 var app = express();
 var port = 80;
