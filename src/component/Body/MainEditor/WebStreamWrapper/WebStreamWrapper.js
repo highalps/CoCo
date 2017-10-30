@@ -20,8 +20,8 @@ class WebStreamWrapper extends React.Component {
             isPossibleStream: false,
             isStreamFalse: false,
             isPossibleJoin: false,
-            stopVideo: false,
-            stopAudio: false,
+            stopVideo: true,
+            stopAudio: true,
             token: '',
             href: '#',
         }
