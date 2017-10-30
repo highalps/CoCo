@@ -12,14 +12,14 @@ import { initAuth } from './utils/authUtils'
 import './styles/global.scss'
 import './styles/xterm.scss'
 
-// import codemirror mode & style
-// import 'codemirror/mode/javascript/javascript.js'
-// import 'codemirror/mode/clike/clike.js'
-// import 'codemirror/theme/panda-syntax.css'
-// import 'codemirror/theme/isotope.css'
+import codemirror mode & style
+import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/clike/clike.js'
+import 'codemirror/theme/panda-syntax.css'
+import 'codemirror/theme/isotope.css'
 
 //import bootstrap
-// import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css'
 
 initAuth()
 
