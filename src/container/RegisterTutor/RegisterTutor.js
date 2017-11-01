@@ -46,22 +46,27 @@ class RegisterTutor  extends React.Component {
                     CoCo 튜터 등록
                 </div>
                 <div className={styles.infoWrapper}>
-                    <div>
+                    <div className={styles.labelWrapper}>
                         <label className={styles.labelDisplay}>신분/학력</label>
                         <Input type="text" name = "job" onChange = {(e) => this._handleJobChange(e)} placeholder = "소속 학교 또는 회사를 입력하세요"/>
                     </div>
+                    <div className={styles.labelWrapper}>
+                        <label className={styles.labelDisplay}>본인 소개</label>
+                        <Input type="textarea" name = "job" onChange = {(e) => this._handleJobChange(e)} placeholder = "자기 소개를 해주세요!"/>
+                    </div>
+
                     <br/>
-                    <div>
+                    <div className={styles.labelWrapper}>
                         <label className={styles.labelDisplay}>Github</label>
                         <Input type="text" name = "git" onChange = {(e) => this._handleGitChange(e)} placeholder = "자신의 Github주소를 입력하세요!"/>
                     </div>
                     <br/>
-                    <div>
+                    <div className={styles.labelWrapper}>
                         <label className={styles.labelDisplay}>경력</label>
-                        <Input type="text" name = "career" onChange = {(e) => this._handleCareerChange(e)} placeholder = "경험 했던 프로젝트를 입력하세요!"/>
+                        <Input type="textarea" name = "career" onChange = {(e) => this._handleCareerChange(e)} placeholder = "경험 했던 프로젝트를 입력하세요!"/>
                     </div>
                     <br/>
-                    <div>
+                    <div className={styles.labelWrapper}>
                         <label className={styles.labelDisplay}>선호 언어</label>
                         <FormGroup check inline>
                             <Label check>
