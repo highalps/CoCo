@@ -4,3 +4,31 @@
   height: 100%;
   overflow-y: scroll;
 }
+
+.head{
+  margin-top: 3%;
+  padding-top: 9%;
+  padding-bottom: 9%;
+  text-align: center;
+  color: #ffffff;
+  background-image:url("http://zdnet2.cbsistatic.com/hub/i/r/2015/11/23/85d08677-8885-40f3-a608-0b10d835ae78/resize/770xauto/fd7b6198117bf4ae134148414493c13e/security-hands-hacker-jobs-it.jpg");
+  font-size: 300%;
+  font-style: italic;
+  opacity: 1.0;
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.infoWrapper{
+  width: 70%;
+  margin-left: 10%;
+  margin-top: 7%;
+}
+.labelDisplay{
+ font-size: 140%;
+  padding-bottom: 1%;
+}
+
+.checkBox{
+  margin-left: 5%;
+}
