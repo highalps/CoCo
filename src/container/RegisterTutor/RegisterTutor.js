@@ -15,7 +15,7 @@ class RegisterTutor  extends React.Component {
         this._handleJobChange = this._handleJobChange.bind(this);
         this._handleGitChange = this._handleGitChange.bind(this);
         this._handleCareerChange = this._handleCareerChange.bind(this);
-        this._handleLanguageChange = this._handleLanguageChange.bind(this);
+        //this._handleLanguageChange = this._handleLanguageChange.bind(this);
         this._registerTutor = this._registerTutor.bind(this);
     }
 
