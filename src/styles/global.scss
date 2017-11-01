@@ -3866,6 +3866,8 @@ tbody.collapse.show {
   display: block;
   padding: 0.5em 1em;
   font-size: 1.2rem;
+  background-color: #ff6678;
+  opacity: 0.9;
 }
 
 .nav-link:focus, .nav-link:hover {
@@ -3902,9 +3904,9 @@ tbody.collapse.show {
 }
 
 .nav-tabs .nav-link.active,
-.nav-tabs .nav-item.show .nav-link {
-  color: #464a4c;
-  background-color: #fff;
+.nav-tabs .nav-item.show {
+  color: white;
+  background-color: #ff3d55;
   border-color: #ddd #ddd #fff;
 }
 
@@ -9357,7 +9359,5 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
-
-
 
 }

@@ -4,6 +4,7 @@ import styles from './MyPage.scss'
 
 import MyPrivateInfo from 'component/MyPage/MyPrivateInfo'
 import MyClassInfo from 'component/MyPage/MyClassInfo'
+import MyClassList from 'component/MyPage/MyClassList'
 
 
 
@@ -28,6 +29,7 @@ class MyPage  extends React.Component {
                 <div className = {styles.classHead}>
                     클래스 정보
                 </div>
+                <MyClassList />
                 <MyClassInfo />
             </div>
         )
