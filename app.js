@@ -28,6 +28,10 @@ if(process.env.NODE_ENV === 'development'){
     });
 };
 
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/build');
+});
+
 server.listen(port, function (err) {
     if (err) {
         throw err;

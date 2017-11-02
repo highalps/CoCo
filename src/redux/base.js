@@ -2,8 +2,8 @@
 import axios from 'axios'
 
 const client = axios.create({
-    baseURL: 'http://localhost:3000',
-    // baseURL: 'http://external.cocotutor.ml:3000/auth/',
+    // baseURL: 'http://localhost:3000',
+    baseURL: 'https://external.cocotutor.ml/',
     timeout: 5000,
 })
 
