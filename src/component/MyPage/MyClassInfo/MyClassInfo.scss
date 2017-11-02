@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   padding-top: 5%;
-  background-color: rgba(255, 185, 185, 0.52);
+  background-color: rgba(0, 0, 0, 0.03);
   margin-top: 4%;
 }
 .headWrapper{
@@ -14,4 +14,12 @@
   width: 50%;
   text-align: center;
 }
-
+.subHead{
+  text-align: center;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  font-weight: 600;
+  font-size: 300%;
+  color: #ff3d55;
+  opacity: 0.8;
+}

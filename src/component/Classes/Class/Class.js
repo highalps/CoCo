@@ -28,39 +28,69 @@ class Class extends React.Component {
 }
 class  ColComponent extends React.Component {
 
+
     constructor(props){
         super(props)
         this.state = {
-            modal: false
+            modalProject: false,
+            modalUser: false,
         };
-        this._toggle = this._toggle.bind(this);
+        this._toggleProject = this._toggleProject.bind(this);
+        this._toggleUser = this._toggleUser.bind(this);
+
     }
-    _toggle() {
+    _toggleProject() {
         this.setState({
-            modal: !this.state.modal
+            modalProject: !this.state.modalProject
+        });
+    }
+    _toggleUser() {
+        this.setState({
+            modalUser: !this.state.modalUser
         });
     }
     render() {
         const colData = this.props.colData;
         console.log(this.props.colData);
         return (
-            <div className={styles.cardWrapper} onClick={this._toggle}>
+            <div className={styles.cardWrapper}>
                 <Card>
-                    <div className={styles.classTitle}>{colData.title}</div>
-                    <div className={styles.classNickName}>
+                    <div className={styles.classTitle} onClick={this._toggleProject}>{colData.title}</div>
+                    <div className={styles.classNickName} onClick={this._toggleUser}>
                         {colData.nickname}
                     </div>
                     <div className={styles.classLanguage}>Language | {colData.language}</div>
                 </Card>
-                <Modal isOpen={this.state.modal} toggle={this._toggle}>
+
+                <Modal isOpen={this.state.modalProject} toggle={this._toggleProject}>
                     <ModalHeader toggle={this._toggle} className = {styles.modalHeader}>{colData.title}</ModalHeader>
                     <ModalBody className={styles.modalBodyStyle}>
-                        <div>안녕하세요</div>
-
+                        <label>Contents</label>
+                        <div>Contents</div>
+                        <label>언어</label>
+                        <div>Contents</div>
+                        <label>닉네임</label>
+                        <div>Contents</div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this._toggle}>수강신청</Button>
-                        <Button color="secondary" onClick={this._toggle}>취소</Button>
+                        <Button color="primary" onClick={this._toggleProject}>수강신청</Button>
+                        <Button color="secondary" onClick={this._toggleProject}>취소</Button>
+                    </ModalFooter>
+                </Modal>
+
+                <Modal isOpen={this.state.modalUser} toggle={this._toggleUser}>
+                    <ModalHeader toggle={this._toggleUser} className = {styles.modalHeader}>튜터 소개</ModalHeader>
+                    <ModalBody className={styles.modalBodyStyle}>
+                        <label>Contents</label>
+                        <div>Contents</div>
+                        <label>언어</label>
+                        <div>Contents</div>
+                        <label>닉네임</label>
+                        <div>Contents</div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this._toggleUser}>수강신청</Button>
+                        <Button color="secondary" onClick={this._toggleUser}>취소</Button>
                     </ModalFooter>
                 </Modal>
             </div>

@@ -1,6 +1,6 @@
 .wrapper {
   width: 100%;
-  background-color: #c0c3c6;
+  background-color: #8b8e91;
   padding-top: 3%;
   padding-bottom: 3%;
 }
@@ -11,6 +11,10 @@
   height: 16rem;
   margin-left: 25%;
   margin-top: 2%;
+  border-radius: 10px;
+}
+.cardWrapper:hover{
+  opacity: 0.8;
 }
 
 .classLanguage{

@@ -26,7 +26,7 @@ class MyPage  extends React.Component {
         return(
             <div className = {styles.wrapper}>
                 <MyPrivateInfo />
-                <div className = {styles.classHead}>
+                <div className = {styles.head}>
                     클래스 정보
                 </div>
                 <MyClassList />

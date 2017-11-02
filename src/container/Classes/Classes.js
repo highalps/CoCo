@@ -138,14 +138,8 @@ class Classes  extends React.Component {
     render(){
         return(
             <div className = {styles.wrapper}>
-                <div className = {styles.head}>
-                    CoCo 강의 검색
-                </div>
-                <div className={styles.createClassWrapper}>
-                    <CreateClass />
-                </div>
+                <CreateClass />
                 <Search />
-
                 <div className = {styles.bgControl}>
                     <div className = "container-fluid">
                         {this._renderClasses()}

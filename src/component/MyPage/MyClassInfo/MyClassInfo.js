@@ -34,7 +34,7 @@ class MyClassInfo  extends React.Component {
                                 onClick={() => { this.toggle('1'); }}
                             >
 
-                                수강 신청 목록
+                                수강생
                             </NavLink>
                         </NavItem>
                         <NavItem  className={styles.head}>
@@ -42,14 +42,16 @@ class MyClassInfo  extends React.Component {
                                 className={classnames({ active: this.state.activeTab === '2' })}
                                 onClick={() => { this.toggle('2'); }}
                             >
-                                수강 신청 받은 목록
+                                튜터
                             </NavLink>
                         </NavItem>
                     </Nav>
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
+                            <div className={styles.subHead}>수업신청 현황</div>
                         </TabPane>
                         <TabPane tabId="2">
+                            <div className={styles.subHead}>수업신청 현황</div>
                         </TabPane>
                     </TabContent>
                 </div>

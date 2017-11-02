@@ -25,9 +25,11 @@ class MyPrivateInfo  extends React.Component {
                 </div>
                 <div className = {styles.profile}>
                     <div className = {styles.userInfoWrapper}>
-                        <h3>Email:  test@naver.com</h3>
+                        <h4>Email:  test@naver.com</h4>
                         <br/>
-                        <h3>튜터 등록: 미등록</h3>
+                        <h4>튜터 등록: 미등록</h4>
+                        <br/>
+                        <h4>정보 변경</h4>
                     </div>
                 </div>
 
