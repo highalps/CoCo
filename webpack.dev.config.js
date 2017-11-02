@@ -117,7 +117,7 @@ var config = {
                 target:'http://localhost:3000'
             },
             '/editor': {
-                target: 'ws://external.cocotutor.ml',
+                target: 'wss://external.cocotutor.ml',
                 ws: true
             }
         }

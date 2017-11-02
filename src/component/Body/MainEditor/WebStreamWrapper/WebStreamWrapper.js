@@ -3,8 +3,7 @@ import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
 import io from 'socket.io-client'
-import PropTypes from 'prop-types'
-import _ from 'lodash'
+import Detectrtc from 'detectrtc'
 
 /* */
 import styles from './WebStreamWrapper.scss'
@@ -31,18 +30,19 @@ class WebStreamWrapper extends React.Component {
     }
 
     initValue() {
-        this.localStream = null;
+        this.hasWebcam = DetectRTC.hasWebcam
+        this.hasMic = DetectRTC.hasMicrophone
+        this.localStream = null
         this.socket = io('external.cocotutor.ml/stream', {secure: true})
-        // this.socket = io('localhost:3000/stream')
         this.userId = Math.round(Math.random() * 999999) + 999999;
         this.roomId = '123'
-        this.remoteUserId = null;
-        this.isOffer = null;
-        this.localStream = null;
-        this.localSmallStream = null;
-        this.streams = [];
+        this.remoteUserId = null
+        this.isOffer = null
+        this.localStream = null
+        this.localSmallStream = null
+        this.streams = []
         this.peer = null; // offer or answer peer
-        this.peers = [];
+        this.peers = []
         this.iceServers = {
             'iceServers': [
                 {'url': 'stun:stun.l.google.com:19302'},
@@ -72,7 +72,6 @@ class WebStreamWrapper extends React.Component {
     }
 
     /** socket method **/
-
     initSocket() {
         console.log("this.scoket", this.socket)
         this.socket.emit('joinRoom', this.roomId, this.userId)
@@ -99,8 +98,6 @@ class WebStreamWrapper extends React.Component {
      * socket.send는 message 이벤트를 보낸다.
      */
     send(data) {
-        //console.log('send', data);
-
         data.roomId = this.roomId;
         this.socket.send(data);
     }
@@ -304,28 +301,6 @@ class WebStreamWrapper extends React.Component {
         })
     }
 
-    createSmallVideo() {
-        navigator.getUserMedia({
-            audio: true,
-            // video: {
-            //     width: 160,
-            //     height: 90
-            // }
-            video: false,
-        }, (stream) => {
-            this.localSmallStream = stream
-            this.setState({ isPeerConnect: true })
-            const el = this._refs['local-video-second']
-            if (el) {
-                el.srcObject = this.localSmallStream;
-            }
-            const peer = this.createPeerConnection('second')
-            this.createOffer()
-        }, () => {
-            console.error('Error getUserMedia');
-        })
-    }
-
     @autobind
     onSdpError() {
         console.log('onSdpError', arguments);
@@ -375,19 +350,41 @@ class WebStreamWrapper extends React.Component {
         this.localStream.getAudioTracks()[0].enabled = !stopAudio
     }
 
+    red() {
+        // DetectRTC.isWebRTCSupported
+    }
+
+    renderJoinComponent() {
+        if (this.state.isPossibleJoin) {
+            return (
+                <div className={styles.join}>
+                    <div>스트리밍 활성화를 하시겠습니까?</div>
+                    {
+                        !this.state.isChatStart
+                            ? <button onClick={this.handleClickButton}>Start</button>
+                            : null
+                    }
+                </div>
+            )
+        }
+        return (
+            <div className={styles.join}>
+                    <div>멘토(학생)가 당신을 기다리고 있습니다</div>
+                    {
+                        !this.state.isPossibleStream
+                            ? <button onClick={this.handleClickJoinButton}>참가하기</button>
+                            : null
+                    }
+                </div>
+        )
+    }
+
     render() {
         return (
             <div className={styles.wrapper}>
-                <section id="join-wrap">
-                    <p>{this.state.isPossibleJoin ? '당신을 기다리고 있습니다' : '스트리밍 활성화를 하시겠습니까?'}</p>
-                    <button onClick={this.handleClickButton}>Start</button>
-                </section>
+                {this.renderJoinComponent()}
                 <section id="room-list" />
                 <section ref={e => this._refs.videoWrapper = e} className={styles.videoWrapper}>
-                    <video
-                        ref={e => this._refs["local-video-second"] = e}
-                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isPeerConnect })}
-                        muted="muted" autoPlay="true" title="90p" />
                     <video
                         ref={e => this._refs["local-video"] = e}
                         className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isChatStart })}
@@ -403,11 +400,6 @@ class WebStreamWrapper extends React.Component {
                         <button onClick={this.toggleAudio}>
                             {this.state.stopAudio ? 'Mic Mute' : 'Mic Unmute' }
                         </button>
-                        {
-                            this.state.isPossibleJoin
-                            ? (<button onClick={this.handleClickJoinButton}>참가하기</button>)
-                            : null
-                        }
                     </div>
                 </section>
             </div>
