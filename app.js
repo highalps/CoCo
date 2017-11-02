@@ -6,7 +6,7 @@ var webpackDevServer = require('webpack-dev-server');
 var compression = require('compression')
 
 var app = express();
-var port = 80;
+var port = 3000;
 var devPort = 4001;
 
 var server = http.createServer(app);
