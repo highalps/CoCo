@@ -114,7 +114,7 @@ var config = {
         disableHostCheck: true,
         proxy: {
             '/' : {
-                target:'http://localhost'
+                target:'http://localhost:3000'
             },
             '/editor': {
                 target: 'ws://external.cocotutor.ml',
