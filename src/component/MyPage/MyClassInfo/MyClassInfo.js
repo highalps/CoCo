@@ -40,7 +40,7 @@ class MyClassInfo  extends React.Component {
                         <NavItem  className={styles.head}>
                             <NavLink
                                 className={classnames({ active: this.state.activeTab === '2' })}
-                                onClick={() => { this.toggle('2'); }}
+                                onClick={() => { this.toggle('2')}}
                             >
                                 튜터
                             </NavLink>

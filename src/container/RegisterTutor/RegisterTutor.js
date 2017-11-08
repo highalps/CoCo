@@ -1,22 +1,22 @@
 import React from 'react'
 import styles from './RegisterTutor.scss'
-import { Button,Input, FormGroup, Label } from 'reactstrap';
+import { Button,Input, FormGroup, Label } from 'reactstrap'
 
 class RegisterTutor  extends React.Component {
 
     constructor(){
         super()
         this.state = {
-            job:"",
-            git:"",
-            career:"",
+            job:'',
+            git:'',
+            career:'',
             language:[]
         }
-        this._handleJobChange = this._handleJobChange.bind(this);
-        this._handleGitChange = this._handleGitChange.bind(this);
-        this._handleCareerChange = this._handleCareerChange.bind(this);
-        //this._handleLanguageChange = this._handleLanguageChange.bind(this);
-        this._registerTutor = this._registerTutor.bind(this);
+        this._handleJobChange = this._handleJobChange.bind(this)
+        this._handleGitChange = this._handleGitChange.bind(this)
+        this._handleCareerChange = this._handleCareerChange.bind(this)
+        //this._handleLanguageChange = this._handleLanguageChange.bind(this)
+        this._registerTutor = this._registerTutor.bind(this)
     }
 
     _handleJobChange(e){
@@ -32,7 +32,7 @@ class RegisterTutor  extends React.Component {
     //     this.setState({ language:e.target.value})
     // }
     _registerTutor(){
-        let url = "https://www.cocotutor.ml/api/board/search?group="+this.state.group+"&language="+this.state.language+"&keyword="+this.state.search;
+        let url = 'https://www.cocotutor.ml/api/board/search?group='+this.state.group+'&language='+this.state.language+'&keyword='+this.state.search
         return fetch(url)
             .then(response => response.json())
             .then(json => json.data)
@@ -54,7 +54,7 @@ class RegisterTutor  extends React.Component {
                         </div>
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>본인 소개</label>
-                            <Input type="textarea" name = "job" onChange = {(e) => this._handleJobChange(e)} placeholder = "자기 소개를 해주세요!"/>
+                            <Input className={styles.area} type="textarea" name = "job" onChange = {(e) => this._handleJobChange(e)} placeholder = "자기 소개를 해주세요!"/>
                         </div>
 
                         <br/>
@@ -65,7 +65,7 @@ class RegisterTutor  extends React.Component {
                         <br/>
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>경력</label>
-                            <Input type="textarea" name = "career" onChange = {(e) => this._handleCareerChange(e)} placeholder = "경험 했던 프로젝트를 입력하세요!"/>
+                            <Input className={styles.area} type="textarea" name = "career" onChange = {(e) => this._handleCareerChange(e)} placeholder = "경험 했던 프로젝트를 입력하세요!"/>
                         </div>
                         <br/>
                         <div className={styles.labelWrapper}>
@@ -93,4 +93,4 @@ class RegisterTutor  extends React.Component {
         )
     }
 }
-export default RegisterTutor;
+export default RegisterTutor

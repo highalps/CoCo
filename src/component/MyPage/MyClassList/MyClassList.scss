@@ -1,8 +1,12 @@
 .wrapper {
   width: 100%;
-  background-color: #8b8e91;
+  min-width: 1200px;
+  background: #000428;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   padding-top: 3%;
   padding-bottom: 3%;
+  opacity: 0.8;
 }
 
 .cardWrapper{
@@ -36,7 +40,6 @@
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
-
 }
 .classNickName{
   margin-top: 20%;

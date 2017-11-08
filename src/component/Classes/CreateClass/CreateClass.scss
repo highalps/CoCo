@@ -1,12 +1,12 @@
 .wrapper{
   margin-top: 3%;
   width:100%;
-  background-color: #00000F;
-  opacity: 0.8;
+  background-image: url("https://appendto.com/wp-content/uploads/2016/04/StockSnap_TXSMCUMSQL.jpg");
+  background-size: 100% 100%;
   padding-top: 3%;
   padding-bottom: 2%;
-
 }
+
 
 .introBtnWrapper{
   margin-left: 32%;
@@ -26,4 +26,61 @@
   font-style: italic;
   font-weight: bold;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.infoWrapper{
+  width: 90%;
+  margin-left: 4%;
+  margin-top: 4%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+.labelDisplay{
+  margin-left: 5px;
+  font-size: 140%;
+  padding-bottom: 5px;
+  font-weight: 500;
+}
+
+.checkBox{
+  margin-left: 5%;
+}
+.labelWrapper{
+  padding-top: 1.5%;
+  padding-bottom: 2.5%;
+}
+.subHead{
+  padding-top: 8%;
+  margin-left: 10%;
+}
+.area{
+  height: 300px;
+}
+.modalTitle{
+  background-color: #1934af;
+  color:white;
+  opacity: 0.9;
+
+}
+
+.statusBtn{
+  float: right;
+}
+.day{
+  margin-left: 5%;
+  font-size: 140%;
+}
+.dayWrapper{
+  margin-left: 2%;
+}
+.dayBox{
+  width: 100%;
+}
+.time{
+ margin-left: 11%;
+}
+.subLabel{
+  margin-left: 20%;
+}
+.langBtnWrapper{
+  text-align: center;
 }

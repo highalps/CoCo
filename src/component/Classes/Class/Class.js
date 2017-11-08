@@ -1,7 +1,7 @@
 /* */
 import React from 'react'
 import styles from './Class.scss'
-import {Button,Card, CardTitle, CardText, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {Button,Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 class Class extends React.Component {
@@ -12,7 +12,8 @@ class Class extends React.Component {
 
     _renderRow = () => {
         const row = this.props.data.map((colData) => {
-            return <ColComponent colData = {colData} key = {colData.id}/>
+            console.log("colData", colData)
+            return <ColComponent colData = {colData} key = {colData.num}/>
         });
         return row;
     }
@@ -51,7 +52,6 @@ class  ColComponent extends React.Component {
     }
     render() {
         const colData = this.props.colData;
-        console.log(this.props.colData);
         return (
             <div className={styles.cardWrapper}>
                 <Card>
@@ -63,14 +63,14 @@ class  ColComponent extends React.Component {
                 </Card>
 
                 <Modal isOpen={this.state.modalProject} toggle={this._toggleProject}>
-                    <ModalHeader toggle={this._toggle} className = {styles.modalHeader}>{colData.title}</ModalHeader>
+                    <ModalHeader toggle={this._toggleProject} className = {styles.modalHeader}>{colData.title}</ModalHeader>
                     <ModalBody className={styles.modalBodyStyle}>
-                        <label>Contents</label>
-                        <div>Contents</div>
-                        <label>언어</label>
-                        <div>Contents</div>
-                        <label>닉네임</label>
-                        <div>Contents</div>
+                        <h3>강의 개설자</h3>
+                        <div>{colData.status === 1? "학생":"튜터"}</div>
+                        <h3>수업 내용</h3>
+                        <div>{colData.content}</div>
+                        <h3>언어</h3>
+                        <div>{colData.language}</div>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this._toggleProject}>수강신청</Button>

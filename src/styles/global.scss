@@ -3865,8 +3865,10 @@ tbody.collapse.show {
 .nav-link {
   display: block;
   padding: 0.5em 1em;
-  font-size: 1.2rem;
-  background-color: rgba(126, 126, 126, 0.31);
+  font-size: 1.8rem;
+  font-family: '맑은 고딕';
+  font-weight: 520;
+  background-color: rgba(202, 202, 202, 0.13);
 }
 
 .nav-link:focus, .nav-link:hover {
@@ -3887,7 +3889,7 @@ tbody.collapse.show {
 }
 
 .nav-tabs .nav-link {
-  border: 1px solid transparent;
+  border: transparent;
   border-top-right-radius: 0.25rem;
   border-top-left-radius: 0.25rem;
 }
@@ -3904,8 +3906,7 @@ tbody.collapse.show {
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show {
-  color: white;
-  background-color: #ff3d55;
+  background-color: #ffffff;
   border-color: #ddd #ddd #fff;
 }
 
@@ -3921,7 +3922,6 @@ tbody.collapse.show {
 
 .nav-pills .nav-link.active,
 .nav-pills .nav-item.show .nav-link {
-  color: #fff;
   cursor: default;
   background-color: #0275d8;
 }
