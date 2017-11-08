@@ -355,27 +355,58 @@ class WebStreamWrapper extends React.Component {
     }
 
     renderJoinComponent() {
-        if (this.state.isPossibleJoin) {
+        if (!this.state.isPossibleJoin) {
+            if (!this.state.isChatStart) {
+               return (
+                   <div className={styles.join}>
+                       <div onClick={this.handleClickButton}>
+                           <i className="fa fa-video-camera" />
+                       </div>
+                   </div>
+               )
+            }
+            return null
+        } else {
+            if (!this.state.isPossibleStream) {
+                return (
+                    <div className={styles.join}>
+                        <div onClick={this.handleClickJoinButton}>
+                            <i className="fa fa-video-camera" />
+                        </div>
+                    </div>
+                )
+            }
+            return null
+        }
+    }
+
+    renderVideoIcon() {
+        if (this.state.stopVideo) {
             return (
-                <div className={styles.join}>
-                    <div>스트리밍 활성화를 하시겠습니까?</div>
-                    {
-                        !this.state.isChatStart
-                            ? <button onClick={this.handleClickButton}>Start</button>
-                            : null
-                    }
+                <div className={classNames(styles.button, styles.mute)} onClick={this.toggleVideo}>
+                    <i className="fa fa-eye-slash"/>
                 </div>
             )
         }
         return (
-            <div className={styles.join}>
-                    <div>멘토(학생)가 당신을 기다리고 있습니다</div>
-                    {
-                        !this.state.isPossibleStream
-                            ? <button onClick={this.handleClickJoinButton}>참가하기</button>
-                            : null
-                    }
+            <div className={styles.button} onClick={this.toggleVideo}>
+                <i className="fa fa-eye" />
+            </div>
+        )
+    }
+
+    renderMicIcon() {
+        if (this.state.stopAudio) {
+            return (
+                <div className={classNames(styles.button, styles.mute)} onClick={this.toggleAudio}>
+                    <i className="fa fa-microphone-slash"/>
                 </div>
+            )
+        }
+        return (
+            <div className={styles.button} onClick={this.toggleAudio}>
+                <i className="fa fa-microphone" />
+            </div>
         )
     }
 
@@ -393,14 +424,16 @@ class WebStreamWrapper extends React.Component {
                         ref={e => this._refs["remote-video"] = e}
                         className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isPossibleStream })}
                         autoPlay="true" />
-                    <div className={styles.button}>
-                        <button onClick={this.toggleVideo}>
-                            {this.state.stopVideo ? 'Camera Start' : 'Camera Pause' }
-                        </button>
-                        <button onClick={this.toggleAudio}>
-                            {this.state.stopAudio ? 'Mic Mute' : 'Mic Unmute' }
-                        </button>
-                    </div>
+                    {
+                        this.state.isChatStart || this.state.isPossibleStream
+                        ? (
+                            <div className={styles.buttons}>
+                            {this.renderVideoIcon()}
+                            {this.renderMicIcon()}
+                            </div>
+                        )
+                        : null
+                    }
                 </section>
             </div>
         )
