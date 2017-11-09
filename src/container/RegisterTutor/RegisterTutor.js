@@ -7,15 +7,15 @@ class RegisterTutor  extends React.Component {
     constructor(){
         super()
         this.state = {
-            job:'',
-            git:'',
-            career:'',
-            language:[]
+            job: '',
+            git: '',
+            career: '',
+            language: new Set()
         }
         this._handleJobChange = this._handleJobChange.bind(this)
         this._handleGitChange = this._handleGitChange.bind(this)
         this._handleCareerChange = this._handleCareerChange.bind(this)
-        //this._handleLanguageChange = this._handleLanguageChange.bind(this)
+        this._handleLanguageChange = this._handleLanguageChange.bind(this)
         this._registerTutor = this._registerTutor.bind(this)
     }
 
@@ -28,15 +28,32 @@ class RegisterTutor  extends React.Component {
     _handleCareerChange(e){
         this.setState({ career:e.target.value})
     }
-    // _handleLanguageChange(e){
-    //     this.setState({ language:e.target.value})
-    // }
+    _handleLanguageChange(lang){
+        let language = this.state.language
+        if(language.has(lang)){
+            language.delete(lang)
+        }
+        else{
+            language.add(lang)
+        }
+        this.setState({ language:language})
+    }
     _registerTutor(){
-        let url = 'https://www.cocotutor.ml/api/board/search?group='+this.state.group+'&language='+this.state.language+'&keyword='+this.state.search
-        return fetch(url)
-            .then(response => response.json())
-            .then(json => json.data)
-            .catch(err => console.log(err))
+        let lang = new Array(this.state.language)
+        let temp = ''
+        for(let i; i < lang.length-1; i++){
+            temp += (lang[i]+',')
+        }
+        temp += lang[lang.length-1]
+        this.setState({ language:temp},
+            ()=>{
+                console.log("register ",this.state)
+            })
+        // let url = 'https://www.cocotutor.ml/api/board/search?group='+this.state.group+'&language='+this.state.language+'&keyword='+this.state.search
+        // return fetch(url)
+        //     .then(response => response.json())
+        //     .then(json => json.data)
+        //     .catch(err => console.log(err))
     }
 
     render(){
@@ -72,21 +89,21 @@ class RegisterTutor  extends React.Component {
                             <label className={styles.labelDisplay}>선호 언어</label>
                             <FormGroup check inline>
                                 <Label check>
-                                    <Input type="checkbox" /> C
+                                    <Input type="checkbox" onClick={()=>this._handleLanguageChange('c')}/> C
                                 </Label>
                                 <Label check className={styles.checkBox}>
-                                    <Input type="checkbox" /> Java
+                                    <Input type="checkbox"  onClick={()=>this._handleLanguageChange('java')}/> Java
                                 </Label>
                                 <Label check className={styles.checkBox}>
-                                    <Input type="checkbox" /> Python
+                                    <Input type="checkbox"  onClick={()=>this._handleLanguageChange('python')}/> Python
                                 </Label>
                                 <Label check className={styles.checkBox}>
-                                    <Input type="checkbox" /> JavaScript
+                                    <Input type="checkbox"  onClick={()=>this._handleLanguageChange('javascript')}/> JavaScript
                                 </Label>
                             </FormGroup>
                         </div>
                         <br/>
-                        <Button size= "lg" color="primary" className= {styles.registerBtn}onClick={()=>this._registerTutor()}>등록하기</Button>
+                        <Button size= "lg" color="primary" className= {styles.registerBtn} onClick={()=>this._registerTutor()}>등록하기</Button>
                     </div>
                 </div>
             </div>

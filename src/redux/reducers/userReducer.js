@@ -10,6 +10,7 @@ const initialState = {
     id: '',
     email: '',
     nickname: '',
+    tutor: 0
 }
 
 const userReducer = (state = initialState, action) => {

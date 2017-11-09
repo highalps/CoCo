@@ -1,26 +1,26 @@
 import React from 'react'
 import styles from './MyClassInfo.scss'
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
-import classnames from 'classnames';
+import { TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap'
+import classnames from 'classnames'
 
 
 
 class MyClassInfo  extends React.Component {
 
     constructor(props) {
-        super(props);
+        super(props)
 
-        this.toggle = this.toggle.bind(this);
+        this.toggle = this.toggle.bind(this)
         this.state = {
             activeTab: '1'
-        };
+        }
     }
 
     toggle(tab) {
         if (this.state.activeTab !== tab) {
             this.setState({
                 activeTab: tab
-            });
+            })
         }
     }
     render(){

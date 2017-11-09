@@ -2,7 +2,7 @@
 import React from 'react'
 import styles from './CreateClass.scss'
 import {ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Label, Form } from 'reactstrap'
-
+import axios from 'axios'
 
 /*
 body = {
@@ -50,6 +50,7 @@ class CreateClass extends React.Component {
         this._handleTimeChange = this._handleTimeChange.bind(this)
     }
 
+
     _handleTimeChange(day, e, time){
         if(e.target.value >= 1 && e.target.value <= 24){
             if(time === 1){
@@ -70,9 +71,7 @@ class CreateClass extends React.Component {
             modal: !this.state.modal
         })
     }
-    _create(){
-        console.log('create ', this.state.body)
-    }
+
     _handleTitleChange(e){
         let _body = { ...this.state.body }
         _body.title = e.target.value
@@ -93,7 +92,27 @@ class CreateClass extends React.Component {
         _body.status = status
         this.setState({ body:_body})
     }
+    _create(){
+        let day = []
+        let _body = { ...this.state.body }
+        for(let i=0; i < 7; i++){
+            if(_body.time[i].startTime != 0 || _body.time[i].endTime != 0){
+                day.push(_body.time[i])
+            }
+        }
+        _body.time = day
+        this.setState({ body : _body },
+            () => {
+                console.log('create ', this.state.body)
+                let url = 'https://external.cocotutor.ml/api/board'
+                axios.post(url,
+                    this.state.body
+                ).then(res =>{console.log(res.data)})
+                    .catch(error =>{console.log(error)})
+                this._toggle()
+            })
 
+    }
 
     render() {
         return (
