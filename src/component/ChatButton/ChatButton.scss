@@ -19,7 +19,14 @@
   .image {
     width: 30px;
     height: 30px;
-    animation: .25s ease!important;
-    transition: transform .16s linear,opacity .08s linear,-webkit-transform .16s linear;
+    transition: height 100ms 0ms, opacity 100ms 100ms;
+    opacity: 1.0;
+
+    &.isHidden {
+      transition: height 100ms 100ms, opacity 100ms 0ms;
+      height: 0;
+      width: 0;
+      opacity: 0;
+    }
   }
 }

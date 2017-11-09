@@ -1,16 +1,46 @@
 .wrapper {
   width: 30%;
   height: 100%;
+  background-color: #000;
   position: absolute;
   right: 0;
 
   .videoWrapper {
 
-    .local-video {
+    .local-video, .remote-video {
+      height: 350px;
 
       &.isVisible {
         display: none;
       }
+    }
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+
+    .button {
+        display: flex;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+
+        &.mute {
+          background-color: white;
+
+          i {
+            color: black;
+          }
+        }
+
+        i {
+          font-size: 24px;
+          color: white;
+        }
     }
   }
 }
