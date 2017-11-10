@@ -1,7 +1,7 @@
 /* */
 import React from 'react'
 import styles from './Class.scss'
-import {Button,Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {Button,Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
 
 class Class extends React.Component {
@@ -10,12 +10,11 @@ class Class extends React.Component {
         super()
     }
 
-    _renderRow = () => {
+    _renderRow() {
         const row = this.props.data.map((colData) => {
-            console.log("colData", colData)
             return <ColComponent colData = {colData} key = {colData.num}/>
-        });
-        return row;
+        })
+        return row
     }
     render() {
         return (
@@ -35,23 +34,23 @@ class  ColComponent extends React.Component {
         this.state = {
             modalProject: false,
             modalUser: false,
-        };
-        this._toggleProject = this._toggleProject.bind(this);
-        this._toggleUser = this._toggleUser.bind(this);
+        }
+        this._toggleProject = this._toggleProject.bind(this)
+        this._toggleUser = this._toggleUser.bind(this)
 
     }
     _toggleProject() {
         this.setState({
             modalProject: !this.state.modalProject
-        });
+        })
     }
     _toggleUser() {
         this.setState({
             modalUser: !this.state.modalUser
-        });
+        })
     }
     render() {
-        const colData = this.props.colData;
+        const colData = this.props.colData
         return (
             <div className={styles.cardWrapper}>
                 <Card>

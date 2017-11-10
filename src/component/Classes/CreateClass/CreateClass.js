@@ -1,7 +1,7 @@
 /* */
 import React from 'react'
 import styles from './CreateClass.scss'
-import {ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Label, Form } from 'reactstrap'
+import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Label, Form } from 'reactstrap'
 import axios from 'axios'
 
 /*
@@ -23,7 +23,6 @@ class CreateClass extends React.Component {
         super(props)
         this.state = {
             body:{
-                nickname:'',
                 title : '',
                 content : '',
                 language : '',
@@ -48,8 +47,47 @@ class CreateClass extends React.Component {
         this._handleLanguageChange = this._handleLanguageChange.bind(this)
         this._handleStatusChange = this._handleStatusChange.bind(this)
         this._handleTimeChange = this._handleTimeChange.bind(this)
+        this._initState = this._initState.bind(this)
+        this._renderTime = this._renderTime.bind(this)
+        this._returnTime = this._returnTime.bind(this)
     }
-
+    _initState(){
+        let _body = {
+            title : '',
+            content : '',
+            language : '',
+            status : 0,
+            time : [
+                {day:'월', startTime:0, endTime:0},
+                {day:'화', startTime:0, endTime:0},
+                {day:'수', startTime:0, endTime:0},
+                {day:'목', startTime:0, endTime:0},
+                {day:'금', startTime:0, endTime:0},
+                {day:'토', startTime:0, endTime:0},
+                {day:'일', startTime:0, endTime:0}
+            ]
+        }
+        this.setState({body:_body}, ()=>{console.log('init',this.state)})
+    }
+    _returnTime(day , index){
+        return(
+            <Form inline>
+                <label className={styles.day}>{day}:</label>
+                <FormGroup className={styles.time}>
+                    <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,1)} placeholder="1 ~ 24" />
+                    <label>~</label>
+                    <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,2)} placeholder="1 ~ 24" />
+                </FormGroup>
+            </Form>
+        )
+    }
+    _renderTime(){
+        let days = ['월', '화', '수', '목', '금', '토', '일']
+        let times = days.map((day, index)=>{
+            return this._returnTime(day, index)
+        })
+        return times
+    }
 
     _handleTimeChange(day, e, time){
         if(e.target.value >= 1 && e.target.value <= 24){
@@ -92,7 +130,16 @@ class CreateClass extends React.Component {
         _body.status = status
         this.setState({ body:_body})
     }
+
     _create(){
+        let temp = this.state.body
+        if(temp.language === '' || temp.content === '' || temp.status === 0 || temp.title === ''){
+            return (
+                <Alert color="primary">
+                    입력안된 사항이 있습니다.
+                </Alert>
+            )
+        }
         let day = []
         let _body = { ...this.state.body }
         for(let i=0; i < 7; i++){
@@ -100,6 +147,7 @@ class CreateClass extends React.Component {
                 day.push(_body.time[i])
             }
         }
+
         _body.time = day
         this.setState({ body : _body },
             () => {
@@ -110,8 +158,8 @@ class CreateClass extends React.Component {
                 ).then(res =>{console.log(res.data)})
                     .catch(error =>{console.log(error)})
                 this._toggle()
+                this._initState()
             })
-
     }
 
     render() {
@@ -146,67 +194,9 @@ class CreateClass extends React.Component {
                                 <label className={styles.labelDisplay}>수업 가능 시간</label><label className={styles.subLabel}>시작시간 ~ 종료시간</label>
 
                                 <div className = {styles.dayWrapper}>
-                                    <Form inline>
-                                        <label className={styles.day}>월:</label>
-                                        <FormGroup className={styles.time}>
-                                            <Input type="number"  onChange = {(e) => this._handleTimeChange(0,e,1)} placeholder="1 ~ 24" />
-                                            <label>~</label>
-                                            <Input type="number"  onChange = {(e) => this._handleTimeChange(0,e,2)} placeholder="1 ~ 24" />
-                                        </FormGroup>
-                                    </Form>
-                                    <Form inline>
-                                        <label className={styles.day}>화:</label>
-                                        <FormGroup className={styles.time}>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(1,e,1)} placeholder="1 ~ 24" />
-                                            <label>~</label>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(1,e,2)} placeholder="1 ~ 24" />
-                                        </FormGroup>
-                                    </Form>
-                                    <Form inline>
-                                        <label className={styles.day}>수:</label>
-                                        <FormGroup className={styles.time}>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(2,e,1)} placeholder="1 ~ 24" />
-                                            <label>~</label>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(2,e,2)} placeholder="1 ~ 24" />
-                                        </FormGroup>
-                                    </Form>
-                                    <Form inline>
-                                        <label className={styles.day}>목:</label>
-                                        <FormGroup className={styles.time}>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(3,e,1)} placeholder="1 ~ 24" />
-                                            <label>~</label>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(3,e,2)} placeholder="1 ~ 24" />
-                                        </FormGroup>
-                                    </Form>
-                                    <Form inline>
-                                        <label className={styles.day}>금:</label>
-                                        <FormGroup className={styles.time}>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(4,e,1)} placeholder="1 ~ 24" />
-                                            <label>~</label>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(4,e,2)} placeholder="1 ~ 24" />
-                                        </FormGroup>
-                                    </Form>
-                                    <Form inline>
-                                        <label className={styles.day}>토:</label>
-                                        <FormGroup className={styles.time}>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(5,e,1)} placeholder="1 ~ 24" />
-                                            <label>~</label>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(5,e,2)} placeholder="1 ~ 24" />
-                                        </FormGroup>
-                                    </Form>
-
-                                    <Form inline>
-                                        <label className={styles.day}>일:</label>
-                                        <FormGroup className={styles.time}>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(6,e,1)} placeholder="1 ~ 24" />
-                                            <label>~</label>
-                                            <Input type="number" onChange = {(e) => this._handleTimeChange(6,e,2)} placeholder="1 ~ 24" />
-                                        </FormGroup>
-
-                                    </Form>
+                                    {this._renderTime()}
                                 </div>
                             </div>
-
                             <br/>
                             <div className={styles.labelWrapper}>
                                 <div className={styles.labelDisplay}>사용 언어</div>
@@ -215,14 +205,12 @@ class CreateClass extends React.Component {
                                         <Button color="danger" onClick={() => this._handleLanguageChange('c')} active={this.state.body.language === 'c'}>C</Button>
                                         <Button color="danger" onClick={() => this._handleLanguageChange('java')} active={this.state.body.language === 'java'}>JAVA</Button>
                                         <Button color="danger" onClick={() => this._handleLanguageChange('python')} active={this.state.body.language === 'python'}>PYTHON</Button>
-                                        <Button color="danger" onClick={() => this._handleLanguageChange('javascript')} active={this.state.body.language === 'javascript'}>JAVASCRIPT</Button>
                                     </ButtonGroup>
                                 </div>
                             </div>
                             <br/>
                         </div>
                     </ModalBody>
-
                     <ModalFooter>
                         <Button color="primary" onClick={this._create}>생성하기</Button>{' '}
                         <Button color="secondary" onClick={this._toggle}>취소</Button>

@@ -9,47 +9,42 @@
   opacity: 0.8;
 }
 
-.cardWrapper{
-  background-color: white;
-  width: 13rem;
-  height: 16rem;
-  margin-left: 25%;
-  margin-top: 2%;
-  border-radius: 10px;
+.colWrapper{
+  display: inline-block;
+  width:25%;
+  text-align: center;
 }
-.cardWrapper:hover{
-  opacity: 0.8;
-}
+.colData{
+   height: 150px;
+   width: 80%;
+  margin-left: 10%;
 
+  background-color: #ffffff;
+  border-radius: 3rem;
+  border: 10px solid transparent;
+  -moz-border-image: -moz-linear-gradient(top, #d53445 0%, #d5d569 100%);
+  -webkit-border-image: -webkit-linear-gradient(top, #d53445 0%, #d5d569 100%);
+  border-image: linear-gradient(to bottom, #d53445 0%, #d5d569 100%);
+  border-image-slice: 1;
+}
+.colData:hover{
+  opacity: 0.9;
+}
 .classLanguage{
   text-align: center;
-  padding:4%;
-  font-size: 120%;
-  height: 50px;
-  font-weight: 500;
-  opacity: 0.8;
+  font-size: 110%;
+  margin-top: 10%;
+  opacity: 0.9;
+  font-family: "맑은 고딕";
 }
 .classTitle{
-  margin: 0% 3% 3% 3%;
-  display:block;
-  text-align: center;
-  height: 80px;
-  padding-top: 13%;
-  font-size: 200%;
-  font-style: italic;
-  font-weight: bold;
+  margin-top: 10%;
   overflow: hidden;
-  text-overflow: ellipsis;
-}
-.classNickName{
-  margin-top: 20%;
-  padding:5%;
-  font-size: 120%;
-  height: 60px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 600;
   text-align: center;
+  font-family: "맑은 고딕";
+  font-size: 180%;
 }
+
 .plusBtn{
   margin-left: 30%;
   margin-top: 30%;
@@ -60,3 +55,25 @@
   opacity: 0.7;
 }
 
+.modalHeader{
+
+  background: #DA22FF;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #9733EE, #DA22FF);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #9733EE, #DA22FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color:white;
+  opacity: 0.9;
+}
+.modalContent{
+  font-size: 130%;
+  font-family: "맑은 고딕";
+  word-break:break-all;
+}
+.modalLanguage{
+  font-size: 200%;
+  font-family: "맑은 고딕";
+}
+.modalLanguageLabel{
+  font-size: 150%;
+
+  font-family: "맑은 고딕";
+}

@@ -1,25 +1,15 @@
 /* */
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 /* */
 import styles from './MyPrivateInfo.scss'
 
 
-
-const mapStateToProps = (state) => ({
-    nickname: state.userReducer.nickname,
-    email: state.userReducer.email,
-    tutor: state.userReducer.tutor,
-    id : state.userReducer.id
-})
-/*id, nickname email tutor*/
-@connect(mapStateToProps)
 class MyPrivateInfo  extends React.Component {
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
     }
 
 
@@ -40,11 +30,11 @@ class MyPrivateInfo  extends React.Component {
                     <div className={styles.box}>
                         <div className={styles.box1}>
                             <div className={styles.middle}>받은수업신청서</div>
-                            <div className={styles.bottom}>0</div>
+                            <div className={styles.bottom}>{this.props.getWriter}</div>
                         </div>
                         <div className={styles.box1}>
                             <div className={styles.middle}>신청한수업</div>
-                            <div className={styles.bottom}>0</div>
+                            <div className={styles.bottom}>{this.props.getApplicant}</div>
                         </div>
                     </div>
                 </div>
@@ -56,7 +46,7 @@ class MyPrivateInfo  extends React.Component {
                         </div>
                         <div className = {styles.box3}>
                             <div className={styles.smSize}>튜터 등록 여부:</div>
-                            <div className={styles.lgSize}>{this.props.tutor===0? "미등록":"등록"}</div>
+                            <div className={styles.lgSize}>{this.props.tutor===0? '미등록':'등록'}</div>
                         </div>
                     </div>
                 </div>

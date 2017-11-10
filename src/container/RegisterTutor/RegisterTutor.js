@@ -1,26 +1,52 @@
 import React from 'react'
-import styles from './RegisterTutor.scss'
 import { Button,Input, FormGroup, Label } from 'reactstrap'
+import axios from 'axios'
+import { connect } from 'react-redux'
 
+import styles from './RegisterTutor.scss'
+
+const mapStateToProps = (state) => ({
+    nickname: state.userReducer.nickname,
+    email: state.userReducer.email,
+    tutor: state.userReducer.tutor,
+    id : state.userReducer.id
+})
+
+@connect(mapStateToProps)
 class RegisterTutor  extends React.Component {
 
     constructor(){
         super()
         this.state = {
-            job: '',
+            degree: '',
+            intro: '',
             git: '',
             career: '',
             language: new Set()
         }
-        this._handleJobChange = this._handleJobChange.bind(this)
+        this._handleDegreeChange = this._handleDegreeChange.bind(this)
         this._handleGitChange = this._handleGitChange.bind(this)
         this._handleCareerChange = this._handleCareerChange.bind(this)
         this._handleLanguageChange = this._handleLanguageChange.bind(this)
+        this._handleIntroChange = this._handleIntroChange.bind(this)
         this._registerTutor = this._registerTutor.bind(this)
+        this._initState = this._initState.bind(this)
+    }
+    _initState(){
+        this.setState({
+            degree: '',
+            intro: '',
+            git: '',
+            career: '',
+            language: new Set()
+        })
     }
 
-    _handleJobChange(e){
-        this.setState({ job:e.target.value})
+    _handleDegreeChange(e){
+        this.setState({ degree:e.target.value})
+    }
+    _handleIntroChange(e){
+        this.setState({ intro:e.target.value})
     }
     _handleGitChange(e){
         this.setState({ git:e.target.value})
@@ -39,22 +65,31 @@ class RegisterTutor  extends React.Component {
         this.setState({ language:language})
     }
     _registerTutor(){
-        let lang = new Array(this.state.language)
+        let lang = Array.from(this.state.language)
+        console.log('language', lang)
         let temp = ''
-        for(let i; i < lang.length-1; i++){
-            temp += (lang[i]+',')
+        for(let i = 0; i < lang.length-1; i++){
+            temp += String(lang[i])+','
         }
-        temp += lang[lang.length-1]
-        this.setState({ language:temp},
-            ()=>{
-                console.log("register ",this.state)
-            })
-        // let url = 'https://www.cocotutor.ml/api/board/search?group='+this.state.group+'&language='+this.state.language+'&keyword='+this.state.search
-        // return fetch(url)
-        //     .then(response => response.json())
-        //     .then(json => json.data)
-        //     .catch(err => console.log(err))
+        temp += String(lang[lang.length-1])
+        console.log("register ",this.state)
+        let url = 'https://external.cocotutor.ml/api/user/tutor'
+        console.log("url",url)
+        console.log('temp', temp)
+        axios.post(url,{
+                id : this.props.id,
+                degree:this.state.degree,
+                intro :this.state.intro,
+                github: this.state.git,
+                career:this.state.career,
+                language:temp
+            }
+        ).then(res =>{console.log(res.data)
+            this._initState()
+        }).catch(error =>{console.log(error)})
+
     }
+
 
     render(){
         return(
@@ -67,11 +102,11 @@ class RegisterTutor  extends React.Component {
                     <div className={styles.infoWrapper}>
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>신분/학력</label>
-                            <Input type="text" name = "job" onChange = {(e) => this._handleJobChange(e)} placeholder = "소속 학교 또는 회사를 입력하세요"/>
+                            <Input type="text" name = "degree" onChange = {(e) => this._handleDegreeChange(e)} placeholder = "소속 학교 또는 회사를 입력하세요"/>
                         </div>
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>본인 소개</label>
-                            <Input className={styles.area} type="textarea" name = "job" onChange = {(e) => this._handleJobChange(e)} placeholder = "자기 소개를 해주세요!"/>
+                            <Input className={styles.area} type="textarea" name = "degree" onChange = {(e) => this._handleIntroChange(e)} placeholder = "자기 소개를 해주세요!"/>
                         </div>
 
                         <br/>
