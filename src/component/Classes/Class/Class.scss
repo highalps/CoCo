@@ -16,7 +16,9 @@
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
-
+}
+.classTitle .classNickName:hover{
+  opacity: 0.8;
 }
 .classNickName{
   margin-top: 20%;
@@ -37,9 +39,7 @@
   border-radius: 10px;
 
 }
-.cardWrapper :hover{
-  opacity: 0.75;
-}
+
 
 .classLanguage{
   text-align: center;
@@ -56,3 +56,40 @@
 }
 .modalBodyStyle{
 }
+.timeHeaderWrapper{
+  margin-left: 17%;
+}
+.timeHeader{
+  display: inline-block;
+  margin-left: 6%;
+}
+.timeWrapper{
+  margin-left: 1%;
+}
+.modalBodyStyle{
+  width: 90%;
+  margin-left: 5%;
+}
+
+.time{
+  display: inline-block;
+  width: 20%;
+  border-right: 1px solid #0000af;
+  text-align: center;
+}
+.status{
+
+}
+.userBox{
+  padding:5%;
+}
+.classBoxP{
+  padding:8%;
+}
+/*
+career
+degree
+github
+intro
+language
+*/

@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './MyPage.scss'
-import axios from 'axios'
+import client from '../../redux/base.js'
 import { connect } from 'react-redux'
 
 import MyPrivateInfo from 'component/MyPage/MyPrivateInfo'
@@ -28,37 +28,15 @@ class MyPage  extends React.Component {
     constructor(){
         super()
         this.state = {
-            getApplicant : [
-                { num:1, title:'asdf', language:'c', content:'qwerqwerwqerwerqwerqwerqwerwqerqwerweqrqwerqwerqwerwqerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'},
-                { num:3, title:'asdfsadfafsd', language:'java'},
-                { num:2, title:'asdfsadfsadf', language:'c'},
-                { num:3, title:'asdfsadfafsd', language:'java'}
-            ],
-            getWriter : [
-                { num:1, title:'asdf', language:'c', content:'qwerqwerwqerwerqwerqwerqwerwqerqwerweqrqwerqwerqwerwqerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'},
-                { num:3, title:'asdfsadfafsd', language:'java'},
-                { num:2, title:'asdfsadfsadf', language:'c'},
-                { num:3, title:'asdfsadfafsd', language:'java'},
-                { num:1, title:'asdf', language:'c', content:'qwerqwerwqerwerqwerqwerqwerwqerqwerweqrqwerqwerqwerwqerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'},
-                { num:3, title:'asdfsadfafsd', language:'java'},
-                { num:2, title:'asdfsadfsadf', language:'c'},
-                { num:3, title:'asdfsadfafsd', language:'java'}
-            ],
-            getClass : [
-                { num:1, title:'asdf', language:'c', content:'qwerqwerwqerwerqwerqwerqwerwqerqwerweqrqwerqwerqwerwqerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'},
-                { num:3, title:'asdfsadfafsd', language:'java'},
-                { num:2, title:'asdfsadfsadf', language:'c'},
-                { num:3, title:'asdfsadfafsd', language:'java'}
-            ]
+            getApplicant : [],
+            getWriter : [],
+            getClass : []
         }
     }
 
     componentWillMount(){
-        let getWriter = 'https://external.cocotutor.ml/api/user/getWriter/hhk'
-        let getApplicant = 'https://external.cocotutor.ml/api/user/getApplicant/hhk'
-        let getClass = 'https://external.cocotutor.ml/api/user/getClass/hhk'
 
-        axios.get(getWriter
+        client.get('api/user/getWriter/hhk'
         ).then(res =>{
             console.log('getWriter', res.data.list)
             this.setState({
@@ -70,7 +48,7 @@ class MyPage  extends React.Component {
             console.log(error)
         })
 
-        axios.get(getApplicant
+        client.get('api/user/getApplicant/hhk'
         ).then(res =>{
             console.log('getApplicant', res.data.list)
             this.setState({
@@ -80,7 +58,7 @@ class MyPage  extends React.Component {
             console.log(error)
         })
 
-        axios.get(getClass
+        client.get('api/user/getClass/hhk'
         ).then(res =>{
             console.log('getClass', res.data.list)
             this.setState({

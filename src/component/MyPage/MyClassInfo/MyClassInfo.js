@@ -9,17 +9,28 @@ class MyClassInfo  extends React.Component {
 
     constructor(props) {
         super(props)
-        this._renderList = this._renderList.bind(this)
+        this._renderApplicantList = this._renderApplicantList.bind(this)
+        this._renderWriterList = this._renderWriterList.bind(this)
+
         this.toggle = this.toggle.bind(this)
         this.state = {
             activeTab: '1'
         }
     }
-    _renderList(data){
+    _renderApplicantList(data){
         return (
             <tr>
-                <th scope="row">{data.num}</th>
-                <td>{data.title}</td>
+                <th>{data.title}</th>
+                <td>{data.language}</td>
+                <td>{data.writer}</td>
+                <td><Button>확인</Button></td>
+            </tr>
+        )
+    }
+    _renderWriterList(data){
+        return (
+            <tr>
+                <th>{data.title}</th>
                 <td>{data.language}</td>
                 <td>{data.applicant}</td>
                 <td><Button>확인</Button></td>
@@ -45,7 +56,7 @@ class MyClassInfo  extends React.Component {
                                 onClick={() => { this.toggle('1') }}
                             >
 
-                                수강생
+                                신청한목록
                             </NavLink>
                         </NavItem>
                         <NavItem  className={styles.head}>
@@ -53,7 +64,7 @@ class MyClassInfo  extends React.Component {
                                 className={classnames({ active: this.state.activeTab === '2' })}
                                 onClick={() => { this.toggle('2')}}
                             >
-                                튜터
+                                신청받은목록
                             </NavLink>
                         </NavItem>
                     </Nav>
@@ -64,16 +75,15 @@ class MyClassInfo  extends React.Component {
                                 <Table striped>
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
                                             <th>제목</th>
                                             <th>언어</th>
-                                            <th>신청자</th>
+                                            <th>개설자</th>
                                             <th>확인하기</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        {this.props.getApplicant.map((data)=>{return this._renderList(data)})}
+                                        {this.props.getApplicant.map((data)=>{return this._renderApplicantList(data)})}
                                     </tbody>
                                 </Table>
                             </div>
@@ -84,7 +94,6 @@ class MyClassInfo  extends React.Component {
                                 <Table striped>
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
                                             <th>제목</th>
                                             <th>언어</th>
                                             <th>신청자</th>
@@ -92,7 +101,7 @@ class MyClassInfo  extends React.Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.props.getWriter.map((data)=>{return this._renderList(data)})}
+                                        {this.props.getWriter.map((data)=>{return this._renderWriterList(data)})}
                                     </tbody>
                                 </Table>
                             </div>

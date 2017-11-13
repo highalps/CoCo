@@ -1,5 +1,6 @@
 /* */
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 /* */
@@ -10,9 +11,23 @@ class MyPrivateInfo  extends React.Component {
 
     constructor(props){
         super(props)
+        this._ifTutorOrNot = this._ifTutorOrNot.bind(this)
+
     }
-
-
+    _ifTutorOrNot(){
+        if (this.props.tutor == 0) {
+            return (
+                <Link className to="RegisterTutor">
+                    <span className={styles.name}>튜터 등록 하기</span>
+                </Link>
+            )
+        }
+        return (
+            <div>
+                <span className={styles.name}>내 튜터 정보</span>
+            </div>
+        )
+    }
     render(){
         return(
             <div className = {styles.wrapper}>
@@ -48,10 +63,16 @@ class MyPrivateInfo  extends React.Component {
                             <div className={styles.smSize}>튜터 등록 여부:</div>
                             <div className={styles.lgSize}>{this.props.tutor===0? '미등록':'등록'}</div>
                         </div>
+                        <div className = {styles.box3}>
+                            {this._ifTutorOrNot()}
+                        </div>
+
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+
 export default MyPrivateInfo

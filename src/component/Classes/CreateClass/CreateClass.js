@@ -2,7 +2,7 @@
 import React from 'react'
 import styles from './CreateClass.scss'
 import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
-import axios from 'axios'
+import client from '../../../redux/base.js'
 
 /*
 body = {
@@ -151,9 +151,8 @@ class CreateClass extends React.Component {
         _body.time = day
         this.setState({ body : _body },
             () => {
-                console.log('create ', this.state.body)
                 let url = 'https://external.cocotutor.ml/api/board'
-                axios.post(url,
+                client.post('api/board',
                     this.state.body
                 ).then(res =>{console.log(res.data)})
                     .catch(error =>{console.log(error)})

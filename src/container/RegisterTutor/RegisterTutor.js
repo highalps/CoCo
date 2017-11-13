@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button,Input, FormGroup, Label } from 'reactstrap'
-import axios from 'axios'
+import client from '../../redux/base.js'
 import { connect } from 'react-redux'
 
 import styles from './RegisterTutor.scss'
@@ -72,11 +72,7 @@ class RegisterTutor  extends React.Component {
             temp += String(lang[i])+','
         }
         temp += String(lang[lang.length-1])
-        console.log("register ",this.state)
-        let url = 'https://external.cocotutor.ml/api/user/tutor'
-        console.log("url",url)
-        console.log('temp', temp)
-        axios.post(url,{
+        client.post('api/user/tutor',{
                 id : this.props.id,
                 degree:this.state.degree,
                 intro :this.state.intro,
@@ -131,9 +127,6 @@ class RegisterTutor  extends React.Component {
                                 </Label>
                                 <Label check className={styles.checkBox}>
                                     <Input type="checkbox"  onClick={()=>this._handleLanguageChange('python')}/> Python
-                                </Label>
-                                <Label check className={styles.checkBox}>
-                                    <Input type="checkbox"  onClick={()=>this._handleLanguageChange('javascript')}/> JavaScript
                                 </Label>
                             </FormGroup>
                         </div>
