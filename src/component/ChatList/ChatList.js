@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 /* */
 import styles from './ChatList.scss'
+import { chatActions } from '../../redux/actions'
 
 const dummy = [
     {
@@ -21,12 +22,31 @@ const dummy = [
     }
 ]
 
+const mapStateToProps = (state) => ({
 
-@connect()
+})
+
+@connect(mapStateToProps)
 class ChatList extends React.Component {
 
+    constructor() {
+        super()
+        this.state = {
+            chatLoading: true,
+        }
+    }
+
+    componentDidMount() {
+        this.props.dispatch(chatActions.getChatList())
+            .then(() => this.setState({ chatLoading: false }))
+    }
 
     renderChatList() {
+        if (this.state.chatLoading) {
+            return (
+                <div>불러오는 중...</div>
+            )
+        }
         return (
             <div className={styles.chatList}>
                 {dummy.map(d => (

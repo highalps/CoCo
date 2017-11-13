@@ -13,9 +13,16 @@ export default keyMirror({
 
     LOG_OUT: null,
 
+    GET_CHAT_LIST: null,
+    GET_CHAT_LIST_SUCCESS: null,
+    GET_CHAT_LIST_ERROR: null,
+
    /* UI actions */
    CLOSE_CHAT: null,
    SHOW_CHAT_LIST: null,
    SHOW_CHAT_MESSAGE: null,
+
+
+
 
 })

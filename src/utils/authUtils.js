@@ -9,11 +9,11 @@ import AT from '../redux/actions/actionTypes'
 export function setToken(access_token)  {
     if (access_token) {
         localStorage.setItem('token', access_token)
-        // client.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
+        client.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
     }
     else {
         localStorage.removeItem('token')
-       // delete client.defaults.headers.common['Authorization']
+        delete client.defaults.headers.common['Authorization']
     }
 }
 

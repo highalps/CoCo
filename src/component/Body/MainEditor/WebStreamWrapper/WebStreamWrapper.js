@@ -330,7 +330,7 @@ class WebStreamWrapper extends React.Component {
             this.setState({ href: location.href })
         } else {
             location.hash = '#' + (Math.random() * new Date().getTime()).toString(32).toUpperCase().replace(/\./g, '-');
-        }
+            }
     }
 
     @autobind
@@ -355,29 +355,24 @@ class WebStreamWrapper extends React.Component {
     }
 
     renderJoinComponent() {
-        if (!this.state.isPossibleJoin) {
-            if (!this.state.isChatStart) {
+        if (!(this.state.isPossibleJoin || this.state.isChatStart)) {
                return (
                    <div className={styles.join}>
-                       <div onClick={this.handleClickButton}>
+                       <div className={styles.camera} onClick={this.handleClickButton}>
                            <i className="fa fa-video-camera" />
                        </div>
                    </div>
                )
-            }
-            return null
-        } else {
-            if (!this.state.isPossibleStream) {
-                return (
-                    <div className={styles.join}>
-                        <div onClick={this.handleClickJoinButton}>
-                            <i className="fa fa-video-camera" />
-                        </div>
+        } else if (!this.state.isPossibleStream) {
+            return (
+                <div className={styles.join}>
+                    <div className={styles.camera} onClick={this.handleClickJoinButton}>
+                        <i className="fa fa-video-camera" />
                     </div>
-                )
-            }
-            return null
+                </div>
+            )
         }
+        return null
     }
 
     renderVideoIcon() {

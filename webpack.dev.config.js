@@ -109,7 +109,6 @@ var config = {
     target: 'web',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
-        headers: { "Access-Control-Allow-Origin": "*"},
         compress: true,
         disableHostCheck: true,
         proxy: {
