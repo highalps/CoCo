@@ -48,10 +48,16 @@ class NavBar extends React.Component {
           </div>
           <div className={styles.menu}>
               {this.renderLoginButton()}
-            <div className={styles.button}>
-                <i className="fa fa-user-o" />
-                <span className={styles.name}>내 정보</span>
-            </div>
+              <Link className={styles.button} to="RegisterTutor">
+                  <span className={styles.name}>튜터등록</span>
+              </Link>
+              <Link className={styles.button} to="Classes">
+                  <span className={styles.name}>강의검색</span>
+              </Link>
+              <Link className={styles.button} to="MyPage">
+                  <span className={styles.name}>내정보</span>
+              </Link>
+
           </div>
         </div>
     )

@@ -1,7 +1,7 @@
 /* */
 import React from 'react'
 import styles from './CreateClass.scss'
-import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Label, Form } from 'reactstrap'
+import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
 import axios from 'axios'
 
 /*

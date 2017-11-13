@@ -21,6 +21,7 @@ class MyClassInfo  extends React.Component {
                 <th scope="row">{data.num}</th>
                 <td>{data.title}</td>
                 <td>{data.language}</td>
+                <td>{data.applicant}</td>
                 <td><Button>확인</Button></td>
             </tr>
         )
@@ -66,7 +67,8 @@ class MyClassInfo  extends React.Component {
                                             <th>ID</th>
                                             <th>제목</th>
                                             <th>언어</th>
-                                            <th>참여하기</th>
+                                            <th>신청자</th>
+                                            <th>확인하기</th>
                                         </tr>
                                     </thead>
 
@@ -85,7 +87,8 @@ class MyClassInfo  extends React.Component {
                                             <th>ID</th>
                                             <th>제목</th>
                                             <th>언어</th>
-                                            <th>참여하기</th>
+                                            <th>신청자</th>
+                                            <th>확인하기</th>
                                         </tr>
                                     </thead>
                                     <tbody>
