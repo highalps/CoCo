@@ -47,7 +47,6 @@ class NavBar extends React.Component {
             CoCo tutor
           </div>
           <div className={styles.menu}>
-              {this.renderLoginButton()}
               <Link className={styles.button} to="RegisterTutor">
                   <span className={styles.name}>튜터등록</span>
               </Link>
@@ -55,9 +54,10 @@ class NavBar extends React.Component {
                   <span className={styles.name}>강의검색</span>
               </Link>
               <Link className={styles.button} to="MyPage">
+                  <i className="fa fa-user-o" />
                   <span className={styles.name}>내정보</span>
               </Link>
-
+              {this.renderLoginButton()}
           </div>
         </div>
     )
