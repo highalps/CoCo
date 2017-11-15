@@ -1,6 +1,8 @@
 /* */
 import React from 'react'
 import { Link } from 'react-router-dom'
+import {Button,Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import client from '../../../redux/base.js'
 
 
 /* */
@@ -8,11 +10,32 @@ import styles from './MyPrivateInfo.scss'
 
 
 class MyPrivateInfo  extends React.Component {
-
     constructor(props){
         super(props)
+        this.state = {
+            modal:false,
+            tutorInfo:{}
+        }
         this._ifTutorOrNot = this._ifTutorOrNot.bind(this)
+        this._getTutorData = this._getTutorData.bind(this)
+        this._toggle = this._toggle.bind(this)
 
+    }
+    _getTutorData(){
+        client.get('api/user/TutorInfo/'+this.props.id).then(res => {
+            this.setState({
+                tutorInfo:res.data.tutor
+            },()=>{
+                this._toggle()
+                console.log('tutorData', this.state.tutorInfo)
+            })
+        }).catch(error =>{console.log(error)
+        })
+    }
+    _toggle(){
+        this.setState({
+            modal:!this.state.modal
+        })
     }
     _ifTutorOrNot(){
         if (this.props.tutor == 0) {
@@ -62,6 +85,30 @@ class MyPrivateInfo  extends React.Component {
                         <div className = {styles.box3}>
                             <div className={styles.smSize}>튜터 등록 여부:</div>
                             <div className={styles.lgSize}>{this.props.tutor===0? '미등록':'등록'}</div>
+                            <Modal isOpen={this.state.modal} toggle={this._toggle}>
+                                <ModalHeader toggle={this._toggle} className = {styles.modalHeader}>튜터 소개</ModalHeader>
+                                <ModalBody className={styles.modalBodyStyle}>
+                                    <div className={styles.userBox}>
+                                        <label>튜터 소개</label><br/>
+                                        <div>{this.state.tutorInfo.intro}</div><hr/>
+                                    </div>
+                                    <div className={styles.userBox}>
+                                        <label>학위 정보</label><br/>
+                                        <div>{this.state.tutorInfo.degree}</div><hr/>
+                                    </div>
+                                    <div className={styles.userBox}>
+                                        <label>Github주소</label><br/>
+                                        <div>{this.state.tutorInfo.github}</div><hr/>
+                                    </div>
+                                    <div className={styles.userBox}>
+                                        <label>경력</label><br/>
+                                        <div>{this.state.tutorInfo.career}</div>
+                                    </div>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="primary" onClick={this._toggle}>확인</Button>
+                                </ModalFooter>
+                            </Modal>
                         </div>
                         <div className = {styles.box3}>
                             {this._ifTutorOrNot()}

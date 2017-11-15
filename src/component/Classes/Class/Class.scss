@@ -57,14 +57,16 @@
 .modalBodyStyle{
 }
 .timeHeaderWrapper{
-  margin-left: 17%;
+  margin-left: 5%;
 }
 .timeHeader{
   display: inline-block;
-  margin-left: 6%;
+  width: 30%;
+  text-align: center;
 }
+
 .timeWrapper{
-  margin-left: 1%;
+  margin-left: 5%;
 }
 .modalBodyStyle{
   width: 90%;
@@ -73,19 +75,42 @@
 
 .time{
   display: inline-block;
-  width: 20%;
-  border-right: 1px solid #0000af;
+  width: 30%;
   text-align: center;
 }
 .status{
-
+  font-size:150%;
+  margin-left: 5%;
 }
 .userBox{
   padding:5%;
 }
-.classBoxP{
-  padding:8%;
+.classBox{
+  padding:4%;
 }
+.language{
+  margin-left: 5%;
+  font-size: 200%;
+}
+.labels{
+  opacity: 0.7;
+  color: #5254ff;
+  font-family: "맑은 고딕";
+}
+.drop{
+  text-align: center;
+}
+.nestedModalBody{
+  width: 90%;
+  margin-left: 5%;
+}
+.nestedModalHeader{
+  background: #800080;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right,#ffc0cb ,#800080 );  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #800080, #ffc0cb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color:white;
+}
+
 /*
 career
 degree

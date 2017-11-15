@@ -25,8 +25,8 @@ class CreateClass extends React.Component {
             body:{
                 title : '',
                 content : '',
-                language : '',
-                status : 0,
+                language : 'c',
+                status : 1,
                 time : [
                     {day:'월', startTime:0, endTime:0},
                     {day:'화', startTime:0, endTime:0},
@@ -151,7 +151,6 @@ class CreateClass extends React.Component {
         _body.time = day
         this.setState({ body : _body },
             () => {
-                let url = 'https://external.cocotutor.ml/api/board'
                 client.post('api/board',
                     this.state.body
                 ).then(res =>{console.log(res.data)})
@@ -164,11 +163,12 @@ class CreateClass extends React.Component {
     render() {
         return (
             <div className = {styles.wrapper}>
+
                 <div>
                     <h1 className={styles.head}>CoCo 강의 검색</h1>
                     <div className={styles.introBtnWrapper}>
-                        <Button color="secondary" size='lg' className={styles.introBtn} onClick = {()=>window.location.href = 'http://localhost:4001/#/RegisterTutor'}>튜터 등록</Button>
-                        <Button color="secondary" size='lg' className={styles.introBtn} onClick = {this._toggle}>클래스 생성</Button>
+                        <Button size='lg' color="secondary" className={styles.introBtn} onClick = {()=>window.location.href = 'http://localhost:4001/#/RegisterTutor'}>튜터 등록</Button>
+                        <Button size='lg' color="secondary" className={styles.introBtn} onClick = {this._toggle}>클래스 생성</Button>
                     </div>
                 </div>
                 <Modal size='lg' isOpen={this.state.modal} toggle={this._toggle} className={this.props.className}>

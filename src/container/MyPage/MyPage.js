@@ -35,8 +35,7 @@ class MyPage  extends React.Component {
     }
 
     componentWillMount(){
-
-        client.get('api/user/getWriter/hhk'
+        client.get('api/user/getWriter/'+this.props.id
         ).then(res =>{
             console.log('getWriter', res.data.list)
             this.setState({
@@ -48,7 +47,7 @@ class MyPage  extends React.Component {
             console.log(error)
         })
 
-        client.get('api/user/getApplicant/hhk'
+        client.get('api/user/getApplicant/'+this.props.id
         ).then(res =>{
             console.log('getApplicant', res.data.list)
             this.setState({
@@ -58,7 +57,7 @@ class MyPage  extends React.Component {
             console.log(error)
         })
 
-        client.get('api/user/getClass/hhk'
+        client.get('api/user/getClass/'+this.props.id
         ).then(res =>{
             console.log('getClass', res.data.list)
             this.setState({
