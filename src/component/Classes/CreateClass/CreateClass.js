@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './CreateClass.scss'
 import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
 import client from '../../../redux/base.js'
+import { connect } from 'react-redux'
 
 /*
 body = {
@@ -17,6 +18,15 @@ body = {
 		]
 }
 */
+const mapStateToProps = (state) => ({
+    nickname: state.userReducer.nickname,
+    email: state.userReducer.email,
+    tutor: state.userReducer.tutor,
+    id : state.userReducer.id
+})
+
+@connect(mapStateToProps)
+
 class CreateClass extends React.Component {
 
     constructor(props) {
@@ -47,9 +57,15 @@ class CreateClass extends React.Component {
         this._handleLanguageChange = this._handleLanguageChange.bind(this)
         this._handleStatusChange = this._handleStatusChange.bind(this)
         this._handleTimeChange = this._handleTimeChange.bind(this)
-        this._initState = this._initState.bind(this)
         this._renderTime = this._renderTime.bind(this)
         this._returnTime = this._returnTime.bind(this)
+        this._renderIfTutor = this._renderIfTutor.bind(this)
+
+    }
+    _renderIfTutor(){
+        if(this.props.tutor === 1){
+            return <Button color="success" onClick={() => this._handleStatusChange(2)} active={this.state.body.status === 2}>튜터</Button>
+        }
     }
     _initState(){
         let _body = {
@@ -71,14 +87,14 @@ class CreateClass extends React.Component {
     }
     _returnTime(day , index){
         return(
-            <Form inline>
-                <label className={styles.day}>{day}:</label>
-                <FormGroup className={styles.time}>
-                    <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,1)} placeholder="1 ~ 24" />
-                    <label>~</label>
-                    <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,2)} placeholder="1 ~ 24" />
-                </FormGroup>
-            </Form>
+                <Form key={index} inline>
+                    <label className={styles.day}>{day}:</label>
+                    <FormGroup className={styles.time}>
+                        <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,1)} placeholder="1 ~ 24" />
+                        <label>~</label>
+                        <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,2)} placeholder="1 ~ 24" />
+                    </FormGroup>
+                </Form>
         )
     }
     _renderTime(){
@@ -177,7 +193,7 @@ class CreateClass extends React.Component {
                         <div className={styles.infoWrapper}>
                             <ButtonGroup className = {styles.statusBtn}>
                                 <Button color="success" onClick={() => this._handleStatusChange(1)} active={this.state.body.status === 1}>학생</Button>
-                                <Button color="success" onClick={() => this._handleStatusChange(2)} active={this.state.body.status === 2}>튜터</Button>
+                                {this._renderIfTutor()}
                             </ButtonGroup>
 
                             <div className={styles.labelWrapper}>
@@ -190,7 +206,9 @@ class CreateClass extends React.Component {
                                 <Input className={styles.area} type="textarea" name = "job" onChange = {(e) => this._handleContentChange(e)} placeholder = "수업 소개"/>
                             </div>
                             <div className={styles.labelWrapper}>
-                                <label className={styles.labelDisplay}>수업 가능 시간</label><label className={styles.subLabel}>시작시간 ~ 종료시간</label>
+                                <label className={styles.labelDisplay}>수업 가능 시간</label>
+                                <br/>
+                                <label className={styles.subLabel}>시작시간 ~ 종료시간</label>
 
                                 <div className = {styles.dayWrapper}>
                                     {this._renderTime()}

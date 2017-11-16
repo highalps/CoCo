@@ -1,12 +1,14 @@
 /* */
-import React from 'react'
 import styles from './Class.scss'
-import {Input, Button,Card, CardDeck,
-    Modal, ModalHeader, ModalBody, ModalFooter,
-    ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem,
-    Form, FormGroup} from 'reactstrap'
+import ModifyClass from '../ModifyClass'
+import TutorInfo from '../TutorInfo'
 import client from '../../../redux/base.js'
 
+
+import { autobind } from 'core-decorators/lib/autobind'
+import {Input, Button,Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Form, FormGroup} from 'reactstrap'
+import React from 'react'
+import { connect } from 'react-redux'
 
 
 class Class extends React.Component {
@@ -31,6 +33,15 @@ class Class extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (state) => ({
+    userNickname: state.userReducer.nickname,
+    email: state.userReducer.email,
+    tutor: state.userReducer.tutor,
+    id : state.userReducer.id
+})
+
+@connect(mapStateToProps)
 class  ColComponent extends React.Component {
 
 
@@ -38,6 +49,7 @@ class  ColComponent extends React.Component {
         super(props)
         this.state = {
             dropdownOpen:false,
+            modalModify: false,
             modalClass: false,
             modalUser: false,
             modalMatch: false,
@@ -59,17 +71,25 @@ class  ColComponent extends React.Component {
             }
         }
         this._toggleClass = this._toggleClass.bind(this)
-        this._toggleDrop = this._toggleDrop.bind(this)
         this._toggleUser = this._toggleUser.bind(this)
         this._toggleMatch = this._toggleMatch.bind(this)
+        this._toggleDrop = this._toggleDrop.bind(this)
         this._getClassData = this._getClassData.bind(this)
         this._getTutorData = this._getTutorData.bind(this)
         this._renderTime = this._renderTime.bind(this)
         this._matching = this._matching.bind(this)
         this._handleDay = this._handleDay.bind(this)
         this._handleTime = this._handleTime.bind(this)
+        this._ifUserNickEqualClassNick = this._ifUserNickEqualClassNick.bind(this)
+        this._toggleModify = this._toggleModify.bind(this)
+    }
 
-
+    _ifUserNickEqualClassNick(){
+        if(this.props.colData.nickname === this.props.userNickname){
+            return(
+                <Button onClick={this._toggleModify} color="success">정보수정</Button>
+            )
+        }
     }
     _handleDay(day){
         let _body = this.state.body
@@ -85,7 +105,6 @@ class  ColComponent extends React.Component {
             body: _body
         })
     }
-
     _matching(){
         let _body = {...this.state.body}
         _body.time = _body.day + '' + _body.time
@@ -100,23 +119,22 @@ class  ColComponent extends React.Component {
             console.log(error)
         })
     }
-    _renderTime(data){
+    _renderTime(data, index){
         return(
-            <div className={styles.timeWrapper}>
+            <div key={index} className={styles.timeWrapper}>
                 <hr/>
                 <div className={styles.time}>{data.day}</div>
                 <div className={styles.time}>{data.startTime}</div>
                 <div className={styles.time}>{data.endTime}</div>
             </div>
         )
-
     }
-
     _getClassData(){
         client.get('api/board/class/'+ this.props.colData.num).then(res =>{
             this.setState({
                 classInfo:res.data.list
             },()=>{
+                console.log('classInfo', this.state.classInfo)
                 this._toggleClass()
             })
         }).catch(error =>{console.log(error)
@@ -155,6 +173,9 @@ class  ColComponent extends React.Component {
             dropdownOpen: !this.state.dropdownOpen
         })
     }
+    _toggleModify() {
+        this.setState({ modalModify: !this.state.modalModify })
+    }
     render() {
         const colData = this.props.colData
         return (
@@ -173,7 +194,6 @@ class  ColComponent extends React.Component {
                         <div className={styles.classBox}>
                             <span className={styles.labels}>강의 개설자 :</span><span className={styles.status}>{colData.status === 1? '학생':'튜터'}</span>
                         </div><hr/>
-
                         <div className={styles.classBox}>
                             <h4 className={styles.labels}>수업 내용</h4><br/>
                             <div className={styles.content}>{this.state.classInfo.content}</div><hr/>
@@ -185,16 +205,14 @@ class  ColComponent extends React.Component {
                                 <div className={styles.timeHeader}>시작</div>
                                 <div className={styles.timeHeader}>종료</div>
                             </div>
-                            {this.state.classInfo.time.map((data) => {
-                                return this._renderTime(data)
+                            {this.state.classInfo.time.map((data, index) => {
+                                return this._renderTime(data, index)
                             })}<hr/>
                         </div>
-
                         <div className={styles.classBox}>
                             <span className={styles.labels}>언어 :</span><span className={styles.language}>{colData.language}</span>
                         </div>
                     </ModalBody>
-
                     <Modal isOpen={this.state.modalMatch} toggle={this._toggleMatch}>
                         <ModalHeader toggle={this._toggleMatch} className={styles.nestedModalHeader}>매칭 신청 하기</ModalHeader>
                         <ModalBody className={styles.nestedModalBody}>
@@ -202,7 +220,6 @@ class  ColComponent extends React.Component {
                                 <div>시작 시간을 설정하세요</div><br/>
                                 <Form inline>
                                     <FormGroup>
-
                                         <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this._toggleDrop}>
                                             <DropdownToggle caret>
                                                 {this.state.body.day}
@@ -227,9 +244,7 @@ class  ColComponent extends React.Component {
                                         <Input type="number" onChange = {(e) => this._handleTime(e)} placeholder="1 ~ 24" />
                                     </FormGroup>
                                 </Form>
-
                             </div>
-
                         </ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={this._matching}>매칭신청</Button>
@@ -237,39 +252,21 @@ class  ColComponent extends React.Component {
                     </Modal>
 
                     <ModalFooter>
+                        {this._ifUserNickEqualClassNick()}
                         <Button color="primary" onClick={this._toggleMatch}>{colData.status === 1? '튜터신청':'수강신청'}</Button>
                         <Button color="secondary" onClick={this._toggleClass}>취소</Button>
                     </ModalFooter>
                 </Modal>
-
-
-                <Modal isOpen={this.state.modalUser} toggle={this._toggleUser}>
-                    <ModalHeader toggle={this._toggleUser} className = {styles.modalHeader}>튜터 소개</ModalHeader>
-                    <ModalBody className={styles.modalBodyStyle}>
-                        <div className={styles.userBox}>
-                            <label>튜터 소개</label><br/>
-                            <div>{this.state.tutorInfo.intro}</div><hr/>
-                        </div>
-                        <div className={styles.userBox}>
-                            <label>학위 정보</label><br/>
-                            <div>{this.state.tutorInfo.degree}</div><hr/>
-                        </div>
-                        <div className={styles.userBox}>
-                            <label>Github주소</label><br/>
-                            <div>{this.state.tutorInfo.github}</div><hr/>
-                        </div>
-                        <div className={styles.userBox}>
-                            <label>경력</label><br/>
-                            <div>{this.state.tutorInfo.career}</div>
-                        </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={this._toggleUser}>확인</Button>
-                    </ModalFooter>
-                </Modal>
+                <TutorInfo
+                    isModalOpen={this.state.modalUser}
+                    tutorData={this.state.tutorInfo}
+                    onToggle={this._toggleUser}/>
+                <ModifyClass
+                    isModalOpen={this.state.modalModify}
+                    classData={colData}
+                    onToggle={this._toggleModify} />
             </div>
         )
     }
 }
-
 export default Class

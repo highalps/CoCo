@@ -1,31 +1,4 @@
 .wrapper{
-  margin-top: 3%;
-  width:100%;
-  background-image: url("https://appendto.com/wp-content/uploads/2016/04/StockSnap_TXSMCUMSQL.jpg");
-  background-size: 100% 100%;
-  padding-top: 3%;
-  padding-bottom: 2%;
-}
-
-
-.introBtnWrapper{
-  min-width: 450px;
-  margin-left: 32%;
-  margin-top: 3%;
-}
-.introBtn{
-  margin-left: 5%;
-}
-.head{
-  padding-top: 2%;
-  padding-bottom: 2%;
-  margin-top: 3%;
-  text-align: center;
-  color: #ffffff;
-  font-size: 300%;
-  font-style: italic;
-  font-weight: bold;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .infoWrapper{
   width: 90%;
@@ -73,9 +46,11 @@
 .dayWrapper{
   margin-left: 2%;
 }
-
+.dayBox{
+  width: 100%;
+}
 .time{
- margin-left: 3%;
+  margin-left: 3%;
 }
 .subLabel{
   margin-left: 33.5%;

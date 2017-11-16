@@ -1,0 +1,6 @@
+{
+  "name": "ModifyClass",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ModifyClass.js"
+}
