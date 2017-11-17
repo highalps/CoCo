@@ -57,6 +57,9 @@ class TerminalComponent extends React.Component {
             this.setState({ bashText: '' }, () => this.term.write('\r\n'))
         } else if (e.keyCode === 8) {
             // Do not delete the prompt
+            this.setState({
+                bashText: this.state.bashText.substring(0, this.state.bashText.length - 1)
+            }, () => this.term.write(key))
             if (this.term.x > 2) {
                 this.term.write('\b \b')
             }
