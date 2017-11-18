@@ -149,6 +149,7 @@
     }
     .xterm-viewport {
         /* On OS X this is required in order for the scroll bar to appear fully opaque */
+        overflow-y: auto;
         background-color: #000;
     }
 
@@ -161,7 +162,6 @@
         position: absolute;
         left: 0;
         top: 0;
-
         >
         div {
             /* Lines containing spans and text nodes ocassionally wrap despite being the same width (#327) */

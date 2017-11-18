@@ -183,7 +183,7 @@ class CreateClass extends React.Component {
                 <div>
                     <h1 className={styles.head}>CoCo 강의 검색</h1>
                     <div className={styles.introBtnWrapper}>
-                        <Button size='lg' color="secondary" className={styles.introBtn} onClick = {()=>window.location.href = 'http://localhost:4001/#/RegisterTutor'}>튜터 등록</Button>
+                        <Button size='lg' color="secondary" className={styles.introBtn} onClick = {()=>window.location.href = 'https://cocotutor.ml/#/RegisterTutor'}>튜터 등록</Button>
                         <Button size='lg' color="secondary" className={styles.introBtn} onClick = {this._toggle}>클래스 생성</Button>
                     </div>
                 </div>
