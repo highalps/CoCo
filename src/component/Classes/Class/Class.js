@@ -83,7 +83,18 @@ class  ColComponent extends React.Component {
         this._ifUserNickEqualClassNick = this._ifUserNickEqualClassNick.bind(this)
         this._toggleModify = this._toggleModify.bind(this)
     }
-
+    _initBody(){
+        let _body = this.state.body
+        _body = {
+            writer:this.props.colData.nickname,
+            classNum:this.props.colData.num,
+            day:'월',
+            time:1
+        }
+        this.setState({
+            body:_body
+        })
+    }
     _ifUserNickEqualClassNick(){
         if(this.props.colData.nickname === this.props.userNickname){
             return(
@@ -98,9 +109,9 @@ class  ColComponent extends React.Component {
             body:_body
         })
     }
-    _handleTime(time) {
+    _handleTime(e) {
         let _body = this.state.body
-        _body.time = time
+        _body.time = e.target.value
         this.setState({
             body: _body
         })
@@ -115,6 +126,7 @@ class  ColComponent extends React.Component {
             console.log('완료')
             this._toggleMatch()
             this._toggleClass()
+            this._initBody()
         }).then(error => {
             console.log(error)
         })

@@ -1,6 +1,6 @@
 /* */
 import React from 'react'
-
+import {Resize, ResizeVertical} from 'react-resize-layout'
 /* */
 import styles from './MainEditor.scss'
 import EditorBox from './EditorBox'
@@ -18,9 +18,15 @@ class MainEditor extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <EditorBox />
+                <Resize handleWidth='5px' handleColor='#777'>
+                    <ResizeVertical height='600px' minHeight='100px'>
+                        <EditorBox />
+                    </ResizeVertical>
+                    <ResizeVertical height='300px'>
+                        <Terminal />
+                    </ResizeVertical>
+                </Resize>
                 <WebStreamWrapper />
-                <Terminal />
             </div>
         )
     }

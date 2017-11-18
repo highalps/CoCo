@@ -71,7 +71,7 @@
         /** Prevent wrapping so the IME appears against the textarea at the correct position */
         white-space: nowrap;
         overflow: hidden;
-        resize: none;
+
     }
 
     a {
@@ -149,8 +149,8 @@
     }
     .xterm-viewport {
         /* On OS X this is required in order for the scroll bar to appear fully opaque */
-        overflow-y: auto;
         background-color: #000;
+        overflow-y: auto;
     }
 
     .xterm-wide-char, .xterm-normal-char {
