@@ -26,17 +26,30 @@ export default {
                 })
         }
     },
-    getChatMessages: (payload) => {
+    getMessages: (payload) => {
         return (dispatch) => {
             const { chatId } = payload
             dispatch(createAction(AT.GET_CHAT_MESSAGES)(payload))
             return client.get(`/api/chat/${chatId}`)
                 .then(response => {
-                    console.log("hihiroo",response.data);
                     dispatch(createAction(AT.GET_CHAT_MESSAGES_SUCCESS)(response.data))
                 })
                 .catch(error => {
                     dispatch(createAction(AT.GET_CHAT_MESSAGES_ERROR)(error))
+                    return Promise.reject(error.response)
+                })
+        }
+    },
+    createMessage: (payload) => {
+        return (dispatch) => {
+            const { chatId, mode, nickname, message } = payload
+            dispatch(createAction(AT.PUT_CHAT_MESSAGE)(payload))
+            return client.put(`/api/chat/${chatId}`, {mode, nickname, message})
+                .then(response => {
+                    dispatch(createAction(AT.PUT_CHAT_MESSAGE_SUCCESS)(response.data))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.PUT_CHAT_MESSAGE_ERROR)(error))
                     return Promise.reject(error.response)
                 })
         }

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import autobind from 'core-decorators/lib/autobind'
+import classNames from 'classnames'
 
 /* */
 import styles from './ChatList.scss'
@@ -19,6 +20,7 @@ class ChatList extends React.Component {
     constructor() {
         super()
         this.state = {
+            selectedChatNumber: -1,
             chatLoading: true,
         }
     }
@@ -38,6 +40,14 @@ class ChatList extends React.Component {
         }
     }
 
+    @autobind
+    handleMouseEnter(chatId) {
+        event.preventDefault()
+        return () => {
+            this.setState({ selectedChatNumber: chatId })
+        }
+    }
+
     renderChatList() {
         if (this.state.chatLoading) {
             return (
@@ -47,14 +57,17 @@ class ChatList extends React.Component {
         return (
             <div className={styles.chatList}>
                 {
-                    this.props.chatList.map(chat => (
-                        <div key={chat.get('num')} className={styles.item} onClick={this.handleChatClick(chat.get('num'))}>
+                    this.props.chatList.map((chat,idx) => (
+                        <div key={idx}
+                             className={classNames(styles.item, {[styles.selected]: this.state.selectedChatNumber === idx})}
+                             onClick={this.handleChatClick(chat.get('num'))}
+                             onMouseEnter={this.handleMouseEnter(idx)}>
                                 <div className={styles.icon}>
                                     {chat.get('nickname')[0]}
                                 </div>
                                 <div className={styles.info}>
                                     <div className={styles.title}>
-                                        <div>{chat.get('nickname')} 와의 대화</div>
+                                        <div>{chat.get('nickname')}와의 대화</div>
                                     </div>
                                     <div className={styles.body}>
                                     </div>

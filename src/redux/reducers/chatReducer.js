@@ -6,8 +6,11 @@ import AT from '../actions/actionTypes'
 
 const initialState = {
     chatList: Immutable.List(),
-    chatMessages: Immutable.List(),
     currentChatId: '',
+    chat: Immutable.fromJS({
+        messages: Immutable.List(),
+        mode: '',
+    }),
 }
 
 const userReducer = (state = initialState, action) => {
@@ -26,11 +29,13 @@ const userReducer = (state = initialState, action) => {
                 currentChatId: action.payload.chatId
             }
 
-        case AT.GET_CHAT_MESSAGES:
-            console.log(action.payload)
+        case AT.GET_CHAT_MESSAGES_SUCCESS:
+            const { mode, log } = action.payload
             return {
                 ...state,
-
+                chat: state.chat
+                    .set('mode', mode)
+                    .set('messages', Immutable.fromJS(log).sortBy(chat => chat.get('date')))
             }
 
         default:

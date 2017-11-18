@@ -34,11 +34,6 @@
         top: 75px;
         width: 100%;
 
-        &:hover {
-            cursor: pointer;
-            background-color: #f7f8fa;
-        }
-
         .item {
             display: flex;
             position: relative;
@@ -48,6 +43,11 @@
             width: 100%;
             padding: 32px 30px;
             border-bottom: 1px solid #f3f4f5;
+
+            &.selected {
+                cursor: pointer;
+                background-color: #f7f8fa;
+            }
 
             .icon {
                 width: 40px;

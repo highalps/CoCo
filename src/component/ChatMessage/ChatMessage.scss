@@ -9,9 +9,66 @@
   border-radius: 8px;
   overflow: hidden!important;
   opacity: 1!important;
-  background-image: url('https://cdn.dribbble.com/users/133107/screenshots/2436575/interesticons_1x.jpg');
   font-family: Helvetica, Arial, sans-serif;
   animation: .25s ease!important;
   transition: transform .16s linear,opacity .08s linear,-webkit-transform .16s linear;
 
+  .header {
+    z-index: 2147483001;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 75px;
+    background-color: #0071b2;
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  }
+
+  .body {
+    position: absolute;
+    top: 75px;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://cdn.dribbble.com/users/133107/screenshots/2436575/interesticons_1x.jpg');
+    padding: 30px 35px 40px;
+
+    .messages {
+
+      .item {
+
+      }
+    }
+
+  }
+
+  .footer {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: 55px;
+    max-height: 200px;
+    color: #565867;
+    background-color: #fff;
+    overflow: auto;
+
+    .input {
+      flex: 1;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      padding: 18px 60px 18px 30px;
+      resize: none;
+      border: none;
+      box-sizing: border-box;
+    }
+
+    .send {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+    }
+  }
 }
