@@ -27,10 +27,10 @@ const userReducer = (state = initialState, action) => {
             }
 
         case AT.GET_CHAT_MESSAGES:
+            console.log(action.payload)
             return {
                 ...state,
-                chatMessages: Immutable.fromJS(action.payload.log)
-                    .sortBy(chat => chat.get('date'))
+
             }
 
         default:
