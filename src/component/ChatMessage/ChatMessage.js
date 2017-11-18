@@ -41,7 +41,7 @@ class ChatMessage extends React.Component {
 
     @autobind
     handleKeyUp(event) {
-g        if (event.keyCode === 13 && !event.shiftKey) {
+        if (event.keyCode === 13 && !event.shiftKey) {
             const { chat } = this.props
             const payload = {
                 chatId: this.props.chatId,

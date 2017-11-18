@@ -18,9 +18,7 @@ const userReducer = (state = initialState, action) => {
         case AT.GET_CHAT_LIST_SUCCESS:
             return {
                 ...state,
-                chatList: Immutable.fromJS(
-                    action.payload.list
-                ).sortBy(chat => chat.get('date'))
+                chatList: Immutable.fromJS(action.payload.list).sortBy(chat => chat.get('date'))
             }
 
         case AT.SHOW_CHAT_MESSAGE:
