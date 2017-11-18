@@ -21,19 +21,19 @@ class TutorInfo  extends React.Component {
                 <ModalHeader toggle={this._toggleUser} className = {styles.modalHeader}>튜터 소개</ModalHeader>
                 <ModalBody className={styles.modalBodyStyle}>
                     <div className={styles.userBox}>
-                        <label>튜터 소개</label><br/>
+                        <label className={styles.labels}>튜터 소개</label><br/>
                         <div>{tutor.intro}</div><hr/>
                     </div>
                     <div className={styles.userBox}>
-                        <label>학위 정보</label><br/>
+                        <label className={styles.labels}>학위 정보</label><br/>
                         <div>{tutor.degree}</div><hr/>
                     </div>
                     <div className={styles.userBox}>
-                        <label>Github주소</label><br/>
+                        <label className={styles.labels}>Github주소</label><br/>
                         <div>{tutor.github}</div><hr/>
                     </div>
                     <div className={styles.userBox}>
-                        <label>경력</label><br/>
+                        <label className={styles.labels}>경력</label><br/>
                         <div>{tutor.career}</div>
                     </div>
                 </ModalBody>
