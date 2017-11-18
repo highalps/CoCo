@@ -57,9 +57,9 @@ class ColComponent extends React.Component {
             modalPlus: !this.state.modalPlus
         })
     }
-    _renderEntireList(data){
+    _renderEntireList(data, index){
         return (
-            <tr>
+            <tr key={index}>
                 <th scope="row">{data.num}</th>
                 <td>{data.title}</td>
                 <td>{data.language}</td>
@@ -76,7 +76,7 @@ class ColComponent extends React.Component {
                 <div className={styles.colData} onClick={parseInt(this.props.index) === 3? this._togglePlus:this._toggleInfo}>
                     <div className={styles.cardWrapper}>
                         <div className={styles.classTitle}>{colData.title}</div>
-                        <div className={styles.classLanguage}>{colData.language != ''? 'Language | '+ colData.language:'더보기'}</div>
+                        <div className={styles.classLanguage}>{colData.language !== ''? 'Language | '+ colData.language:'더보기'}</div>
                     </div>
                 </div>
                 <Modal isOpen={this.state.modalInfo} toggle={this._toggleInfo}>
@@ -109,7 +109,7 @@ class ColComponent extends React.Component {
                             </thead>
 
                             <tbody>
-                                {this.props.entire.map((data)=>{return this._renderEntireList(data)})}
+                                {this.props.entire.map((data, index)=>{return this._renderEntireList(data, index)})}
                             </tbody>
                         </Table>
 

@@ -1,7 +1,9 @@
-import React from 'react'
 import styles from './MyClassInfo.scss'
+
+import React from 'react'
 import {Table, TabContent, TabPane, Nav, NavItem, NavLink, Button} from 'reactstrap'
 import classnames from 'classnames'
+import client from '../../../redux/base.js'
 
 
 
@@ -11,29 +13,44 @@ class MyClassInfo  extends React.Component {
         super(props)
         this._renderApplicantList = this._renderApplicantList.bind(this)
         this._renderWriterList = this._renderWriterList.bind(this)
-
         this.toggle = this.toggle.bind(this)
         this.state = {
             activeTab: '1'
         }
+        this._accept = this._accept.bind(this)
+
     }
-    _renderApplicantList(data){
+
+    _accept(num){
+        return () => {
+            client.put('api/chat/request',{
+                mode:'on',
+                chatNum: num
+            })
+            .then(res =>{console.log(res)})
+            .catch(error =>{console.log(error)
+            })
+        }
+    }
+
+    _renderApplicantList(data, index){
         return (
-            <tr>
+            <tr key={index}>
                 <th>{data.title}</th>
                 <td>{data.language}</td>
                 <td>{data.writer}</td>
-                <td><Button>확인</Button></td>
+                <td><Button>취소</Button></td>
             </tr>
         )
     }
-    _renderWriterList(data){
+    _renderWriterList(data, index){
         return (
-            <tr>
+            <tr key={index}>
                 <th>{data.title}</th>
                 <td>{data.language}</td>
                 <td>{data.applicant}</td>
-                <td><Button>확인</Button></td>
+                <td><Button onClick = {this._accept(data.num)}>수락</Button></td>
+                <td><Button>거절</Button></td>
             </tr>
         )
     }
@@ -78,12 +95,12 @@ class MyClassInfo  extends React.Component {
                                             <th>제목</th>
                                             <th>언어</th>
                                             <th>개설자</th>
-                                            <th>확인하기</th>
+                                            <th>취소</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        {this.props.getApplicant.map((data)=>{return this._renderApplicantList(data)})}
+                                        {this.props.getApplicant.map((data, index)=>{return this._renderApplicantList(data, index)})}
                                     </tbody>
                                 </Table>
                             </div>
@@ -97,11 +114,12 @@ class MyClassInfo  extends React.Component {
                                             <th>제목</th>
                                             <th>언어</th>
                                             <th>신청자</th>
-                                            <th>확인하기</th>
+                                            <th>수락</th>
+                                            <th>거절</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.props.getWriter.map((data)=>{return this._renderWriterList(data)})}
+                                        {this.props.getWriter.map((data, index)=>{return this._renderWriterList(data, index)})}
                                     </tbody>
                                 </Table>
                             </div>
