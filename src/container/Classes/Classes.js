@@ -129,8 +129,9 @@ class Search  extends React.Component {
                     <ButtonGroup className = {styles.languageBtn}>
                         <Button size= "lg" color="primary" onClick={() => this._onLanguageBtnClick(0)} active={this.state.language === 0}>전체</Button>
                         <Button size= "lg" color="primary" onClick={() => this._onLanguageBtnClick(1)} active={this.state.language === 1}>C</Button>
-                        <Button size= "lg" color="primary" onClick={() => this._onLanguageBtnClick(2)} active={this.state.language === 2}>JAVA</Button>
-                        <Button size= "lg" color="primary" onClick={() => this._onLanguageBtnClick(3)} active={this.state.language === 3}>PYTHON</Button>
+                        <Button size= "lg" color="primary" onClick={() => this._onLanguageBtnClick(2)} active={this.state.language === 2}>C++</Button>
+                        <Button size= "lg" color="primary" onClick={() => this._onLanguageBtnClick(3)} active={this.state.language === 3}>JAVA</Button>
+                        <Button size= "lg" color="primary" onClick={() => this._onLanguageBtnClick(4)} active={this.state.language === 4}>PYTHON</Button>
                     </ButtonGroup>
                 </div>
                 <InputGroup size='lg' className={styles.inputGroup}>

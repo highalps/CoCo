@@ -123,6 +123,9 @@ class RegisterTutor  extends React.Component {
                                     <Input type="checkbox" onClick={()=>this._handleLanguageChange('c')}/> C
                                 </Label>
                                 <Label check className={styles.checkBox}>
+                                    <Input type="checkbox"  onClick={()=>this._handleLanguageChange('c++')}/> C++
+                                </Label>
+                                <Label check className={styles.checkBox}>
                                     <Input type="checkbox"  onClick={()=>this._handleLanguageChange('java')}/> Java
                                 </Label>
                                 <Label check className={styles.checkBox}>

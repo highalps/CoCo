@@ -172,6 +172,7 @@ class ModifyClass extends React.Component {
                             <div className = {styles.langBtnWrapper}>
                                 <ButtonGroup>
                                     <Button color="danger" onClick={() => this._handleLanguageChange('c')} active={this.state.body.language === 'c'}>C</Button>
+                                    <Button color="danger" onClick={() => this._handleLanguageChange('c++')} active={this.state.body.language === 'c++'}>C++</Button>
                                     <Button color="danger" onClick={() => this._handleLanguageChange('java')} active={this.state.body.language === 'java'}>JAVA</Button>
                                     <Button color="danger" onClick={() => this._handleLanguageChange('python')} active={this.state.body.language === 'python'}>PYTHON</Button>
                                 </ButtonGroup>
