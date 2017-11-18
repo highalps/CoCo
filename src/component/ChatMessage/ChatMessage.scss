@@ -1,6 +1,23 @@
 .wrapper {
   z-index: 10000;
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 30px;
+  bottom: 90px;
+  width: 370px;
+  height: 590px;
+  border: solid 1px white;
+  box-shadow: 0 5px 40px rgba(0,0,0,.16);
+  border-radius: 8px;
+  overflow: hidden!important;
+  opacity: 1!important;
+  font-family: Helvetica, Arial, sans-serif;
+  animation: .25s ease!important;
+  transition: transform .16s linear,opacity .08s linear,-webkit-transform .16s linear;
+
+  .chatList {
+
+    .item {
+      height: 120px;
+    }
+  }
 }

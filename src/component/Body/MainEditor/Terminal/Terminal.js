@@ -34,7 +34,7 @@ class TerminalComponent extends React.Component {
     }
 
     initailize() {
-        this.term.write('terminal')
+        // this.term.write('terminal')
 
         // add event listener
         this.term.on('key', this.handleKeyDown)

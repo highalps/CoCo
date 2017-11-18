@@ -17,6 +17,7 @@ const userReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case AT.CLOSE_CHAT:
+        case AT.LOG_OUT:
             return {
                 uiState: uiState
                     .set('chatList', false)

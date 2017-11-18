@@ -8,16 +8,25 @@ import Detectrtc from 'detectrtc'
 /* */
 import styles from './WebStreamWrapper.scss'
 
+/*
+    학생과 튜터 webRTC 연결이 맺어지는 과정
+     1. 첫번째 유저가 handleClickButton => getUserMedia 함수 실행 (isSuccessGetMedia: true) => 카메라 On
+     2. 두번째 유저가 들어오면 isPossibleJoin: true,
+        createPeerConnection() => isConnectionSuccess: true
+        createOffer() => socket 서버를 통한 SDP 연결
+
+ */
+
 class WebStreamWrapper extends React.Component {
 
     constructor() {
         super()
         this._refs = {}
         this.state = {
-            isChatStart: false,
+            isSuccessGetMedia: false,
             isPeerConnect: false,
-            isPossibleStream: false,
-            isStreamFalse: false,
+            isConnectionSuccess : false,
+            isErrorGetMedia: false,
             isPossibleJoin: false,
             stopVideo: true,
             stopAudio: true,
@@ -37,7 +46,6 @@ class WebStreamWrapper extends React.Component {
         this.userId = Math.round(Math.random() * 999999) + 999999;
         this.roomId = '123'
         this.remoteUserId = null
-        this.isOffer = null
         this.localStream = null
         this.localSmallStream = null
         this.streams = []
@@ -108,7 +116,7 @@ class WebStreamWrapper extends React.Component {
      */
     onLeave(userId) {
         if (this.remoteUserId === userId) {
-            this.setState({ isPossibleStream: false })
+            this.setState({ isConnectionSuccess : false })
             this.remoteUserId = null
         }
     }
@@ -236,8 +244,8 @@ class WebStreamWrapper extends React.Component {
             console.log("Adding remote strem", event);
 
             const id = 'remote-video'
-            this.setState({ isPossibleStream: true })
-            const el = this._refs['remote-video']
+            this.setState({ isConnectionSuccess : true })
+            const el = this._refs[id]
             el.srcObject = event.stream
         };
 
@@ -261,55 +269,51 @@ class WebStreamWrapper extends React.Component {
     }
 
     @autobind
-    handleClickButton() {
-        window.navigator.getUserMedia({
-            audio: true,
-            video: {
-                mandatory: {
-                    // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
-                    // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
-                    maxWidth: 1280,
-                    maxHeight: 720,
-                    minWidth: 1280,
-                    minHeight: 720,
-                    maxFrameRate: 24,
-                    minFrameRate: 18,
-                    maxAspectRatio: 1.778,
-                    minAspectRatio: 1.777
+    handleClickButton(isOffer) {
+        return () => {
+            window.navigator.getUserMedia({
+                audio: true,
+                video: {
+                    mandatory: {
+                        // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
+                        // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
+                        maxWidth: 1280,
+                        maxHeight: 720,
+                        minWidth: 1280,
+                        minHeight: 720,
+                        maxFrameRate: 24,
+                        minFrameRate: 18,
+                        maxAspectRatio: 1.778,
+                        minAspectRatio: 1.777
+                    },
+                    optional: [
+                        { googNoiseReduction: true }, // Likely removes the noise in the captured video stream at the expense of computational effort.
+                        { facingMode: "user" }        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
+                    ]
                 },
-                optional: [
-                    { googNoiseReduction: true }, // Likely removes the noise in the captured video stream at the expense of computational effort.
-                    { facingMode: "user" }        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
-                ]
-            },
             }, (stream) => {
-            this.localStream = stream
-            this.setState({ isChatStart: true })
-            const el = this._refs['local-video']
-            if (el) {
-                el.srcObject = this.localStream
-            }
+                this.localStream = stream
+                this.setState({ isSuccessGetMedia: true })
+                const el = this._refs['local-video']
+                if (el) {
+                    el.srcObject = this.localStream
+                }
 
-            if (this.isOffer) {
-                console.log("나는 오퍼다")
-                this.createPeerConnection()
-                this.createOffer()
-            }
+                if (isOffer) {
+                    console.log("나는 오퍼다")
+                    this.createPeerConnection()
+                    this.createOffer()
+                }
 
-        }, () => {
-            this.setState({ isStreamFalse: true })
-        })
+            }, () => {
+                this.setState({ isErrorGetMedia: true })
+            })
+        }
     }
 
     @autobind
     onSdpError() {
         console.log('onSdpError', arguments);
-    }
-
-    @autobind
-    handleClickJoinButton() {
-        this.isOffer = true
-        this.handleClickButton()
     }
 
     @autobind
@@ -355,18 +359,11 @@ class WebStreamWrapper extends React.Component {
     }
 
     renderJoinComponent() {
-        if (!(this.state.isPossibleJoin || this.state.isChatStart)) {
-               return (
-                   <div className={styles.join}>
-                       <div className={styles.camera} onClick={this.handleClickButton}>
-                           <i className="fa fa-video-camera" />
-                       </div>
-                   </div>
-               )
-        } else if (!this.state.isPossibleStream) {
+        const isOffer = this.state.isPossibleJoin
+        if (!this.state.isSuccessGetMedia) {
             return (
                 <div className={styles.join}>
-                    <div className={styles.camera} onClick={this.handleClickJoinButton}>
+                    <div className={styles.camera} onClick={this.handleClickButton(isOffer)}>
                         <i className="fa fa-video-camera" />
                     </div>
                 </div>
@@ -413,14 +410,14 @@ class WebStreamWrapper extends React.Component {
                 <section ref={e => this._refs.videoWrapper = e} className={styles.videoWrapper}>
                     <video
                         ref={e => this._refs["local-video"] = e}
-                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isChatStart })}
+                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isSuccessGetMedia })}
                         muted="muted" autoPlay="true" title="720p" />
                     <video
                         ref={e => this._refs["remote-video"] = e}
-                        className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isPossibleStream })}
+                        className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isConnectionSuccess  })}
                         autoPlay="true" />
                     {
-                        this.state.isChatStart || this.state.isPossibleStream
+                        this.state.isSuccessGetMedia || this.state.isConnectionSuccess 
                         ? (
                             <div className={styles.buttons}>
                             {this.renderVideoIcon()}

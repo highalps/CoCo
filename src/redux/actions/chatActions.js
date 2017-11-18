@@ -17,6 +17,7 @@ export default {
             dispatch(createAction(AT.GET_CHAT_LIST)(payload))
             return client.get('/api/chat/list', payload)
                 .then(response => {
+                    console.log('hiihi',response)
                     dispatch(createAction(AT.GET_CHAT_LIST_SUCCESS)(response.data))
                 })
                 .catch(error => {

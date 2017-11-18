@@ -2,6 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 var config = {
     entry: [
         'webpack-dev-server/client?http://localhost:4001',
@@ -105,6 +107,7 @@ var config = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin('style.css'),
+        //new BundleAnalyzerPlugin()
     ],
     target: 'web',
     devtool: 'cheap-module-eval-source-map',

@@ -2,28 +2,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Immutable from 'immutable'
+import autobind from 'core-decorators/lib/autobind'
 
 /* */
 import styles from './ChatList.scss'
-import { chatActions } from '../../redux/actions'
-
-const dummy = [
-    {
-        message: {
-            lastUpdate: '2017.10.14',
-            content: '수업을 희망합니다',
-        }
-    },
-    {
-        message: {
-            lastUpdate: '2017.10.15',
-            content: '수업 관련 질문이 있습니다',
-        }
-    }
-]
+import { chatActions, uiActions } from '../../redux/actions'
 
 const mapStateToProps = (state) => ({
-
+    chatList: state.chatReducer.chatList
 })
 
 @connect(mapStateToProps)
@@ -41,6 +28,17 @@ class ChatList extends React.Component {
             .then(() => this.setState({ chatLoading: false }))
     }
 
+    @autobind
+    handleChatClick(chatId) {
+        console.log("hihi",chatId)
+        return () => {
+            const payload = {
+                chatId
+            }
+            this.props.dispatch(uiActions.showChatMessage(payload))
+        }
+    }
+
     renderChatList() {
         if (this.state.chatLoading) {
             return (
@@ -49,9 +47,11 @@ class ChatList extends React.Component {
         }
         return (
             <div className={styles.chatList}>
-                {dummy.map(d => (
-                <div key={d.message.content} className={styles.item}>
-                    {d.message.content}
+                {this.props.chatList.map(chat => (
+                <div key={chat.get('num')} className={styles.item} onClick={this.handleChatClick(chat.get('num'))}>
+                    <div>{chat.get('applicant')}</div>
+                    <div>{chat.get('writer')}</div>
+                    <div>클래스 정보</div>
                 </div>
             ))}
             </div>
@@ -65,6 +65,14 @@ class ChatList extends React.Component {
             </div>
         )
     }
+}
+
+ChatList.propTypes = {
+    chatList: Immutable.List,
+}
+
+ChatList.defaultProps = {
+    chatList: Immutable.List(),
 }
 
 export default ChatList

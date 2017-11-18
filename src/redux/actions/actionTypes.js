@@ -17,6 +17,11 @@ export default keyMirror({
     GET_CHAT_LIST_SUCCESS: null,
     GET_CHAT_LIST_ERROR: null,
 
+    GET_CHAT_MESSAGES: null,
+    GET_CHAT_MESSAGES_SUCCESS: null,
+    GET_CHAT_MESSAGES_ERROR: null,
+
+
    /* UI actions */
    CLOSE_CHAT: null,
    SHOW_CHAT_LIST: null,
