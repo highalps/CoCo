@@ -8,9 +8,9 @@ class UpdateSocket {
     }
 
     connect() {
-        this._socket = io('https://external.cocotutor.ml/update')
+        this._socket = io('https://external.cocotutor.ml/data/')
         // TODO: 프로젝트 정보 얻어오면 8001을 해당 _id로 변경
-        this._socket.emit('join room', 8001)
+        this._socket.emit('join', 7)
         this._socket.on('connect', this._onConnect.bind(this))
         this._socket.on('disconnect', this._onDisConnect.bind(this))
         this._socket.on('directory', this._onDirectoryUpdate.bind(this))

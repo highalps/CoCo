@@ -8,6 +8,7 @@ import autobind from 'core-decorators/lib/autobind'
 /* */
 import styles from './ChatMessage.scss'
 import { chatActions, uiActions } from '../../redux/actions'
+import chatSocket from 'service/updateSocketService'
 
 const mapStateToProps = (state) => ({
     nickname: state.userReducer.nickname,
@@ -39,8 +40,8 @@ class ChatMessage extends React.Component {
     }
 
     @autobind
-    handleKeyPress(event) {
-        if (event.key === 'Enter') {
+    handleKeyUp(event) {
+g        if (event.keyCode === 13 && !event.shiftKey) {
             const { chat } = this.props
             const payload = {
                 chatId: this.props.chatId,
@@ -66,7 +67,7 @@ class ChatMessage extends React.Component {
                     <textarea
                         className={styles.input}
                         value={this.state.message}
-                        onKeyPress={this.handleKeyPress}
+                        onKeyUp={this.handleKeyUp}
                         onChange={this.handleOnChange} />
                     <div className={styles.send}>보내기</div>
                </div>

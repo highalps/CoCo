@@ -20,7 +20,6 @@ class App extends React.Component {
     constructor() {
         super()
         TerminalSocket.connect()
-        UpdateSocket.connect()
     }
 
     componentDidMount() {
