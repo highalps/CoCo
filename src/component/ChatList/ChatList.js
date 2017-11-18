@@ -30,7 +30,6 @@ class ChatList extends React.Component {
 
     @autobind
     handleChatClick(chatId) {
-        console.log("hihi",chatId)
         return () => {
             const payload = {
                 chatId
@@ -47,13 +46,22 @@ class ChatList extends React.Component {
         }
         return (
             <div className={styles.chatList}>
-                {this.props.chatList.map(chat => (
-                <div key={chat.get('num')} className={styles.item} onClick={this.handleChatClick(chat.get('num'))}>
-                    <div>{chat.get('applicant')}</div>
-                    <div>{chat.get('writer')}</div>
-                    <div>클래스 정보</div>
-                </div>
-            ))}
+                {
+                    this.props.chatList.map(chat => (
+                        <div key={chat.get('num')} className={styles.item} onClick={this.handleChatClick(chat.get('num'))}>
+                                <div className={styles.icon}>
+                                    {chat.get('nickname')[0]}
+                                </div>
+                                <div className={styles.info}>
+                                    <div className={styles.title}>
+                                        <div>{chat.get('nickname')} 와의 대화</div>
+                                    </div>
+                                    <div className={styles.body}>
+                                    </div>
+                                </div>
+                            </div>
+                      ))
+                }
             </div>
         )
     }
@@ -61,6 +69,7 @@ class ChatList extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
+                <div className={styles.header} />
                 {this.renderChatList()}
             </div>
         )

@@ -4,20 +4,14 @@
   right: 30px;
   bottom: 90px;
   width: 370px;
-  height: 590px;
-  border: solid 1px white;
+  height: 570px;
   box-shadow: 0 5px 40px rgba(0,0,0,.16);
   border-radius: 8px;
   overflow: hidden!important;
   opacity: 1!important;
+  background-image: url('https://cdn.dribbble.com/users/133107/screenshots/2436575/interesticons_1x.jpg');
   font-family: Helvetica, Arial, sans-serif;
   animation: .25s ease!important;
   transition: transform .16s linear,opacity .08s linear,-webkit-transform .16s linear;
 
-  .chatList {
-
-    .item {
-      height: 120px;
-    }
-  }
 }

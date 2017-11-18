@@ -4,21 +4,75 @@
     right: 30px;
     bottom: 90px;
     width: 370px;
-    height: 590px;
-    border: solid 1px white;
+    height: 570px;
     box-shadow: 0 5px 40px rgba(0,0,0,.16);
     border-radius: 8px;
     overflow: hidden!important;
     opacity: 1!important;
-    background-image: url('https://cdn.dribbble.com/users/133107/screenshots/2436575/interesticons_1x.jpg');
+    background-color: #fff;
+    //background-image: url('https://cdn.dribbble.com/users/133107/screenshots/2436575/interesticons_1x.jpg');
     font-family: Helvetica, Arial, sans-serif;
     animation: .25s ease!important;
     transition: transform .16s linear,opacity .08s linear,-webkit-transform .16s linear;
 
+    .header {
+        z-index: 2147483001;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 75px;
+        background-color: #0071b2;
+        -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
+        box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    }
+
     .chatList {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 75px;
+        width: 100%;
+
+        &:hover {
+            cursor: pointer;
+            background-color: #f7f8fa;
+        }
 
         .item {
-            height: 120px;
+            display: flex;
+            position: relative;
+            font-size: 12px;
+            font-family: sans-serif;
+            height: 100px;
+            width: 100%;
+            padding: 32px 30px;
+            border-bottom: 1px solid #f3f4f5;
+
+            .icon {
+                width: 40px;
+                height: 40px;
+                line-height: 35px;
+                border-radius: 50%;
+                border: 2px solid #fff;
+                background-color: #002b44;
+                color: #fff;
+                text-align: center;
+                font-size: 17.5px;
+                font-weight: 700
+            }
+
+            .info {
+                padding-left: 15px;
+
+                .title {
+                    color: rgba(73,76,93,.7);
+                }
+
+                .body {
+
+                }
+            }
         }
     }
 }
