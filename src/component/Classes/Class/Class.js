@@ -84,8 +84,7 @@ class  ColComponent extends React.Component {
         this._toggleModify = this._toggleModify.bind(this)
     }
     _initBody(){
-        let _body = this.state.body
-        _body = {
+        let _body = {
             writer:this.props.colData.nickname,
             classNum:this.props.colData.num,
             day:'월',

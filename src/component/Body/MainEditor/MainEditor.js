@@ -19,10 +19,10 @@ class MainEditor extends React.Component {
         return (
             <div className={styles.wrapper}>
                 <Resize handleWidth='5px' handleColor='#777'>
-                    <ResizeVertical height='600px' minHeight='100px'>
+                    <ResizeVertical height='400px' minHeight='100px'>
                         <EditorBox />
                     </ResizeVertical>
-                    <ResizeVertical height='300px'>
+                    <ResizeVertical height='150px'>
                         <Terminal />
                     </ResizeVertical>
                 </Resize>
