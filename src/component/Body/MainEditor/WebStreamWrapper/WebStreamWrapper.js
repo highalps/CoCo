@@ -408,6 +408,18 @@ class WebStreamWrapper extends React.Component {
                 {this.renderJoinComponent()}
                 <section id="room-list" />
                 <section ref={e => this._refs.videoWrapper = e} className={styles.videoWrapper}>
+                    <div className={styles.optionWrapper}>
+                        {
+                            this.state.isSuccessGetMedia || this.state.isConnectionSuccess
+                                ? (
+                                    <div className={styles.buttons}>
+                                        {this.renderVideoIcon()}
+                                        {this.renderMicIcon()}
+                                    </div>
+                                )
+                                : null
+                        }
+                    </div>
                     <video
                         ref={e => this._refs["local-video"] = e}
                         className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isSuccessGetMedia })}
@@ -416,16 +428,6 @@ class WebStreamWrapper extends React.Component {
                         ref={e => this._refs["remote-video"] = e}
                         className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isConnectionSuccess  })}
                         autoPlay="true" />
-                    {
-                        this.state.isSuccessGetMedia || this.state.isConnectionSuccess 
-                        ? (
-                            <div className={styles.buttons}>
-                            {this.renderVideoIcon()}
-                            {this.renderMicIcon()}
-                            </div>
-                        )
-                        : null
-                    }
                 </section>
             </div>
         )

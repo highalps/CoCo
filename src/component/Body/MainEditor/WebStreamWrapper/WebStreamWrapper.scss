@@ -31,8 +31,23 @@
 
   .videoWrapper {
 
+    .optionWrapper {
+      display: none;
+    }
+
+    &:hover {
+      .optionWrapper {
+          position: absolute;
+          height: 300px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+      }
+    }
+
     .local-video, .remote-video {
-      height: 350px;
+      height: 300px;
 
       &.isVisible {
         display: none;
@@ -41,8 +56,12 @@
   }
 
   .buttons {
+    z-index: 1;
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+
 
     .button {
         display: flex;

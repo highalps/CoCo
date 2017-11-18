@@ -22,7 +22,7 @@ class TutorInfo  extends React.Component {
                 <ModalBody className={styles.modalBodyStyle}>
                     <div className={styles.userBox}>
                         <label className={styles.labels}>튜터 소개</label><br/>
-                        <div>{tutor.intro}</div><hr/>
+                        <div className={styles.intro}>{tutor.intro}</div><hr/>
                     </div>
                     <div className={styles.userBox}>
                         <label className={styles.labels}>학위 정보</label><br/>
@@ -34,7 +34,7 @@ class TutorInfo  extends React.Component {
                     </div>
                     <div className={styles.userBox}>
                         <label className={styles.labels}>경력</label><br/>
-                        <div>{tutor.career}</div>
+                        <div className={styles.career}>{tutor.career}</div>
                     </div>
                 </ModalBody>
                 <ModalFooter>

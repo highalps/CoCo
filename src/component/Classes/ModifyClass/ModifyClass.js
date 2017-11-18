@@ -123,7 +123,7 @@ class ModifyClass extends React.Component {
         let day = []
         let _body = { ...this.state.body }
         for(let i=0; i < 7; i++){
-            if(_body.time[i].startTime != 0 || _body.time[i].endTime != 0){
+            if(_body.time[i].startTime !== 0 || _body.time[i].endTime !== 0){
                 day.push(_body.time[i])
             }
         }
