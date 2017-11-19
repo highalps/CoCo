@@ -8,7 +8,7 @@ import autobind from 'core-decorators/lib/autobind'
 /* */
 import styles from './ChatMessage.scss'
 import { chatActions, uiActions } from '../../redux/actions'
-import chatSocket from 'service/updateSocketService'
+import chatSocket from 'service/chatSocketService'
 
 const mapStateToProps = (state) => ({
     nickname: state.userReducer.nickname,

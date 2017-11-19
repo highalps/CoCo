@@ -90,11 +90,11 @@ class ChatList extends React.Component {
 }
 
 ChatList.propTypes = {
-    chatList: Immutable.List,
+    // chatList: Immutable.List,
 }
 
 ChatList.defaultProps = {
-    chatList: Immutable.List(),
+    // chatList: Immutable.List(),
 }
 
 export default ChatList

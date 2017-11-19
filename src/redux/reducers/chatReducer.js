@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 
 /* */
 import AT from '../actions/actionTypes'
+import chatSocket from '../../service/chatSocketService'
 
 const initialState = {
     chatList: Immutable.List(),
@@ -29,6 +30,7 @@ const userReducer = (state = initialState, action) => {
 
         case AT.GET_CHAT_MESSAGES_SUCCESS:
             const { mode, log } = action.payload
+            chatSocket.join(state.currentChatId)
             return {
                 ...state,
                 chat: state.chat

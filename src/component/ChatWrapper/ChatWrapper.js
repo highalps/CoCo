@@ -9,6 +9,7 @@ import styles from './ChatWrapper.scss'
 import ChatButton from '../ChatButton'
 import ChatList from '../ChatList'
 import ChatMessage from '../ChatMessage'
+import ChatSocket from '../../service/chatSocketService'
 
 const mapStateToProps = (state) => ({
     isLogged: state.userReducer.isLogged,
@@ -19,6 +20,11 @@ const mapStateToProps = (state) => ({
 @withRouter
 @connect(mapStateToProps)
 class ChatWrapper extends React.Component {
+
+    constructor() {
+        super()
+        ChatSocket.connect()
+    }
 
     renderChatButton() {
         if (this.props.isLogged && this.props.location.pathname !== '/editor') {
