@@ -16,6 +16,7 @@
   .header {
     z-index: 2147483001;
     position: absolute;
+    display: flex;
     top: 0;
     right: 0;
     left: 0;
@@ -23,6 +24,10 @@
     background-color: #0071b2;
     -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    color: #fff;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
   }
 
   .body {
@@ -32,11 +37,62 @@
     height: 100%;
     background-image: url('https://cdn.dribbble.com/users/133107/screenshots/2436575/interesticons_1x.jpg');
     padding: 30px 35px 40px;
+    overflow: auto;
 
-    .messages {
+    .messageWrapper {
+      position: absolute;
 
       .item {
+         width: 100%;
+         display: flex;
+         float: left;
+         position: relative;
+         margin-bottom: 20px;
+         max-width: 80%;
 
+        &.fromMe {
+          float: right;
+        }
+
+        &.admin {
+          max-width: 90%;
+        }
+
+        .avatar {
+          align-self: flex-end;
+          width: 40px;
+          height: 40px;
+          line-height: 35px;
+          border-radius: 50%;
+          border: 2px solid #fff;
+          background-color: #002b44;
+          color: #fff;
+          text-align: center;
+          font-size: 17.5px;
+          font-weight: 700;
+          margin-bottom: 10px;
+        }
+
+        .message {
+          flex: 1;
+          font-size: 14px;
+          margin-left: 15px;
+          color: #263238;
+          background-color: #f4f7f9;
+          padding: 17px 20px;
+          border-radius: 6px;
+          position: relative;
+
+          &.fromMe {
+            color: #fff;
+            background-color: #0071b2;
+          }
+
+          &.admin {
+            color: #fff;
+            background-color: #00afd7;
+          }
+        }
       }
     }
 
@@ -65,10 +121,17 @@
     }
 
     .send {
+      font-family: monospace;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 80px;
+
+      &.isFilled {
+          cursor: pointer;
+          font-weight: bold;
+          color: #0071b2;
+      }
     }
   }
 }
