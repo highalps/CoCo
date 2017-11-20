@@ -34,7 +34,7 @@ class TerminalComponent extends React.Component {
     }
 
     initailize() {
-        this.term.write('terminal')
+        // this.term.write('terminal')
 
         // add event listener
         this.term.on('key', this.handleKeyDown)
@@ -52,14 +52,19 @@ class TerminalComponent extends React.Component {
     handleKeyDown(key, e) {
         const printable = !e.altKey && !e.altGraphKey && !e.ctrlKey && !e.metaKey
 
+        console.log("A", key)
+        console.log("B", e)
         if (e.keyCode === 13) {
             webSocket.sendCommand(this.state.bashText)
             this.setState({ bashText: '' }, () => this.term.write('\r\n'))
         } else if (e.keyCode === 8) {
+            console.log("bash", this.state.bashText, this.state.bashText.substring(0, this.state.bashText.length - 1))
             // Do not delete the prompt
-            if (this.term.x > 2) {
+            if (this.state.bashText) {
                 this.term.write('\b \b')
             }
+            this.setState({ bashText: this.state.bashText.substring(0, this.state.bashText.length - 1) })
+
         } else if (printable) {
             this.setState({
                 bashText: this.state.bashText + key

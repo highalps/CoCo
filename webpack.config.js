@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CompressionPlugin = require("compression-webpack-plugin");
 
 var config = {
     entry: [
@@ -94,8 +95,19 @@ var config = {
         ],
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false, // 터미널 창에 출력되는 게 보기 귀찮아서 추가.
+                unused: true // tree shaking
+            }
+        }),
+        new CompressionPlugin({
+            asset: "[path].gz[query]",
+            algorithm: "gzip",
+            test: /\.(js|html)$/,
+            threshold: 10240, // 10kb
+            minRatio: 0.8
+        }),
         new ExtractTextPlugin('style.css'),
     ]
 }

@@ -10,6 +10,7 @@ const initialState = {
     id: '',
     email: '',
     nickname: '',
+    tutor: 0
 }
 
 const userReducer = (state = initialState, action) => {
@@ -25,7 +26,6 @@ const userReducer = (state = initialState, action) => {
 
         case AT.INIT_USER:
             const { user } = action.payload
-            console.log("A",user)
             return {
                 isLogged: true,
                 ...user,

@@ -1,7 +1,33 @@
 .wrapper{
-  position: relative;
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  min-height: 1000px;
+  padding-top: 5%;
+  background: #DD5E89;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #F7BB97, #DD5E89);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #F7BB97, #DD5E89); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  margin-top: 8%;
+  opacity: 0.8;
 }
-
+.headWrapper{
+  width:90%;
+  height: 100%;
+  margin-left: 5%;
+}
+.head{
+  width: 50%;
+  text-align: center;
+}
+.subHead{
+  text-align: center;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  font-weight: 600;
+  font-size: 300%;
+  opacity: 0.8;
+}
+.tableWrapper{
+  background-color: white;
+  min-height: 500px;
+  padding: 5%;
+}

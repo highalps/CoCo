@@ -12,7 +12,7 @@ function createAction(actionType) {
 }
 
 export default {
-    signIn: (payload) => { // 로그인 직후 유저의 프로젝트 리스트 받기
+    signIn: (payload) => {
         return (dispatch) => {
             dispatch(createAction(AT.SIGN_IN)(payload))
             return client.post('/auth/login', payload)
@@ -25,7 +25,7 @@ export default {
                 })
         }
     },
-    signUp: (payload) => { // 로그인 직후 유저의 프로젝트 리스트 받기
+    signUp: (payload) => {
         return (dispatch) => {
             dispatch(createAction(AT.SIGN_UP)(payload))
             return client.post('/auth/signUp', payload)

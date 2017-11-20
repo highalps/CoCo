@@ -3,11 +3,19 @@ import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
 import io from 'socket.io-client'
-import PropTypes from 'prop-types'
-import _ from 'lodash'
+import Detectrtc from 'detectrtc'
 
 /* */
 import styles from './WebStreamWrapper.scss'
+
+/*
+    학생과 튜터 webRTC 연결이 맺어지는 과정
+     1. 첫번째 유저가 handleClickButton => getUserMedia 함수 실행 (isSuccessGetMedia: true) => 카메라 On
+     2. 두번째 유저가 들어오면 isPossibleJoin: true,
+        createPeerConnection() => isConnectionSuccess: true
+        createOffer() => socket 서버를 통한 SDP 연결
+
+ */
 
 class WebStreamWrapper extends React.Component {
 
@@ -15,13 +23,13 @@ class WebStreamWrapper extends React.Component {
         super()
         this._refs = {}
         this.state = {
-            isChatStart: false,
+            isSuccessGetMedia: false,
             isPeerConnect: false,
-            isPossibleStream: false,
-            isStreamFalse: false,
+            isConnectionSuccess : false,
+            isErrorGetMedia: false,
             isPossibleJoin: false,
-            stopVideo: false,
-            stopAudio: false,
+            stopVideo: true,
+            stopAudio: true,
             token: '',
             href: '#',
         }
@@ -31,18 +39,18 @@ class WebStreamWrapper extends React.Component {
     }
 
     initValue() {
-        this.localStream = null;
-        this.socket = io('external.cocotutor.ml:3000/stream')
-        // this.socket = io('localhost:3000/stream')
+        this.hasWebcam = DetectRTC.hasWebcam
+        this.hasMic = DetectRTC.hasMicrophone
+        this.localStream = null
+        this.socket = io('external.cocotutor.ml/stream', {secure: true})
         this.userId = Math.round(Math.random() * 999999) + 999999;
         this.roomId = '123'
-        this.remoteUserId = null;
-        this.isOffer = null;
-        this.localStream = null;
-        this.localSmallStream = null;
-        this.streams = [];
+        this.remoteUserId = null
+        this.localStream = null
+        this.localSmallStream = null
+        this.streams = []
         this.peer = null; // offer or answer peer
-        this.peers = [];
+        this.peers = []
         this.iceServers = {
             'iceServers': [
                 {'url': 'stun:stun.l.google.com:19302'},
@@ -72,7 +80,6 @@ class WebStreamWrapper extends React.Component {
     }
 
     /** socket method **/
-
     initSocket() {
         console.log("this.scoket", this.socket)
         this.socket.emit('joinRoom', this.roomId, this.userId)
@@ -99,8 +106,6 @@ class WebStreamWrapper extends React.Component {
      * socket.send는 message 이벤트를 보낸다.
      */
     send(data) {
-        //console.log('send', data);
-
         data.roomId = this.roomId;
         this.socket.send(data);
     }
@@ -111,7 +116,7 @@ class WebStreamWrapper extends React.Component {
      */
     onLeave(userId) {
         if (this.remoteUserId === userId) {
-            this.setState({ isPossibleStream: false })
+            this.setState({ isConnectionSuccess : false })
             this.remoteUserId = null
         }
     }
@@ -239,8 +244,8 @@ class WebStreamWrapper extends React.Component {
             console.log("Adding remote strem", event);
 
             const id = 'remote-video'
-            this.setState({ isPossibleStream: true })
-            const el = this._refs['remote-video']
+            this.setState({ isConnectionSuccess : true })
+            const el = this._refs[id]
             el.srcObject = event.stream
         };
 
@@ -264,78 +269,51 @@ class WebStreamWrapper extends React.Component {
     }
 
     @autobind
-    handleClickButton() {
-        window.navigator.getUserMedia({
-            audio: true,
-            // video: {
-            //     mandatory: {
-            //         // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
-            //         // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
-            //         maxWidth: 1280,
-            //         maxHeight: 720,
-            //         minWidth: 1280,
-            //         minHeight: 720,
-            //         maxFrameRate: 24,
-            //         minFrameRate: 18,
-            //         maxAspectRatio: 1.778,
-            //         minAspectRatio: 1.777
-            //     },
-            //     optional: [
-            //         { googNoiseReduction: true }, // Likely removes the noise in the captured video stream at the expense of computational effort.
-            //         { facingMode: "user" }        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
-            //     ]
-            // }
-            video: false,
+    handleClickButton(isOffer) {
+        return () => {
+            window.navigator.getUserMedia({
+                audio: true,
+                video: {
+                    mandatory: {
+                        // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
+                        // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
+                        maxWidth: 1280,
+                        maxHeight: 720,
+                        minWidth: 1280,
+                        minHeight: 720,
+                        maxFrameRate: 24,
+                        minFrameRate: 18,
+                        maxAspectRatio: 1.778,
+                        minAspectRatio: 1.777
+                    },
+                    optional: [
+                        { googNoiseReduction: true }, // Likely removes the noise in the captured video stream at the expense of computational effort.
+                        { facingMode: "user" }        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
+                    ]
+                },
             }, (stream) => {
-            this.localStream = stream
-            this.setState({ isChatStart: true })
-            const el = this._refs['local-video']
-            if (el) {
-                el.srcObject = this.localStream
-            }
+                this.localStream = stream
+                this.setState({ isSuccessGetMedia: true })
+                const el = this._refs['local-video']
+                if (el) {
+                    el.srcObject = this.localStream
+                }
 
-            if (this.isOffer) {
-                console.log("나는 오퍼다")
-                this.createPeerConnection()
-                this.createOffer()
-            }
+                if (isOffer) {
+                    console.log("나는 오퍼다")
+                    this.createPeerConnection()
+                    this.createOffer()
+                }
 
-        }, () => {
-            this.setState({ isStreamFalse: true })
-        })
-    }
-
-    createSmallVideo() {
-        navigator.getUserMedia({
-            audio: true,
-            // video: {
-            //     width: 160,
-            //     height: 90
-            // }
-            video: false,
-        }, (stream) => {
-            this.localSmallStream = stream
-            this.setState({ isPeerConnect: true })
-            const el = this._refs['local-video-second']
-            if (el) {
-                el.srcObject = this.localSmallStream;
-            }
-            const peer = this.createPeerConnection('second')
-            this.createOffer()
-        }, () => {
-            console.error('Error getUserMedia');
-        })
+            }, () => {
+                this.setState({ isErrorGetMedia: true })
+            })
+        }
     }
 
     @autobind
     onSdpError() {
         console.log('onSdpError', arguments);
-    }
-
-    @autobind
-    handleClickJoinButton() {
-        this.isOffer = true
-        this.handleClickButton()
     }
 
     @autobind
@@ -356,7 +334,7 @@ class WebStreamWrapper extends React.Component {
             this.setState({ href: location.href })
         } else {
             location.hash = '#' + (Math.random() * new Date().getTime()).toString(32).toUpperCase().replace(/\./g, '-');
-        }
+            }
     }
 
     @autobind
@@ -376,40 +354,80 @@ class WebStreamWrapper extends React.Component {
         this.localStream.getAudioTracks()[0].enabled = !stopAudio
     }
 
+    red() {
+        // DetectRTC.isWebRTCSupported
+    }
+
+    renderJoinComponent() {
+        const isOffer = this.state.isPossibleJoin
+        if (!this.state.isSuccessGetMedia) {
+            return (
+                <div className={styles.join}>
+                    <div className={styles.camera} onClick={this.handleClickButton(isOffer)}>
+                        <i className="fa fa-video-camera" />
+                    </div>
+                </div>
+            )
+        }
+        return null
+    }
+
+    renderVideoIcon() {
+        if (this.state.stopVideo) {
+            return (
+                <div className={classNames(styles.button, styles.mute)} onClick={this.toggleVideo}>
+                    <i className="fa fa-eye-slash"/>
+                </div>
+            )
+        }
+        return (
+            <div className={styles.button} onClick={this.toggleVideo}>
+                <i className="fa fa-eye" />
+            </div>
+        )
+    }
+
+    renderMicIcon() {
+        if (this.state.stopAudio) {
+            return (
+                <div className={classNames(styles.button, styles.mute)} onClick={this.toggleAudio}>
+                    <i className="fa fa-microphone-slash"/>
+                </div>
+            )
+        }
+        return (
+            <div className={styles.button} onClick={this.toggleAudio}>
+                <i className="fa fa-microphone" />
+            </div>
+        )
+    }
+
     render() {
         return (
             <div className={styles.wrapper}>
-                <section id="join-wrap">
-                    <p>{this.state.isPossibleJoin ? '당신을 기다리고 있습니다' : '스트리밍 활성화를 하시겠습니까?'}</p>
-                    <button onClick={this.handleClickButton}>Start</button>
-                </section>
+                {this.renderJoinComponent()}
                 <section id="room-list" />
                 <section ref={e => this._refs.videoWrapper = e} className={styles.videoWrapper}>
-                    <video
-                        ref={e => this._refs["local-video-second"] = e}
-                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isPeerConnect })}
-                        muted="muted" autoPlay="true" title="90p" />
+                    <div className={styles.optionWrapper}>
+                        {
+                            this.state.isSuccessGetMedia || this.state.isConnectionSuccess
+                                ? (
+                                    <div className={styles.buttons}>
+                                        {this.renderVideoIcon()}
+                                        {this.renderMicIcon()}
+                                    </div>
+                                )
+                                : null
+                        }
+                    </div>
                     <video
                         ref={e => this._refs["local-video"] = e}
-                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isChatStart })}
+                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isSuccessGetMedia })}
                         muted="muted" autoPlay="true" title="720p" />
                     <video
                         ref={e => this._refs["remote-video"] = e}
-                        className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isPossibleStream })}
+                        className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isConnectionSuccess  })}
                         autoPlay="true" />
-                    <div className={styles.button}>
-                        <button onClick={this.toggleVideo}>
-                            {this.state.stopVideo ? 'Camera Start' : 'Camera Pause' }
-                        </button>
-                        <button onClick={this.toggleAudio}>
-                            {this.state.stopAudio ? 'Mic Mute' : 'Mic Unmute' }
-                        </button>
-                        {
-                            this.state.isPossibleJoin
-                            ? (<button onClick={this.handleClickJoinButton}>참가하기</button>)
-                            : null
-                        }
-                    </div>
                 </section>
             </div>
         )

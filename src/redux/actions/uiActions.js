@@ -15,6 +15,6 @@ export default {
 
     showChatList: () => createAction(AT.SHOW_CHAT_LIST)(),
 
-    showChatMessage: () => createAction(AT.SHOW_CHAT_MESSAGE)(),
+    showChatMessage: (payload) => createAction(AT.SHOW_CHAT_MESSAGE)(payload),
 }
 

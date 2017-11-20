@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import autobind from 'core-decorators/lib/autobind'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
 
 /* */
 import styles from './ChatButton.scss'
@@ -24,11 +25,11 @@ class ChatButton extends React.Component {
     }
 
     render() {
+        const isChatOpen = this.props.showChatList || this.props.showChatMessage
         return (
             <div className={styles.wrapper} onClick={this.handleButtonClick}>
-                <img
-                    className={styles.image}
-                    src={(this.props.showChatList || this.props.showChatMessage) ? closeButton : openButton} />
+                <img className={classNames(styles.image, {[styles.isHidden]: !isChatOpen})} src={closeButton} />
+                <img className={classNames(styles.image, {[styles.isHidden]: isChatOpen})} src={openButton} />
             </div>
         )
     }

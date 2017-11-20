@@ -1,16 +1,89 @@
 .wrapper {
   width: 30%;
   height: 100%;
+  background-color: #000;
   position: absolute;
+  box-sizing: border-box;
+  border: solid 24px #252525;
   right: 0;
+
+  .join {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .camera {
+      display: flex;
+      width: 50px;
+      height: 50px;
+      border: 2px solid #0000af;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+
+      i {
+        color: #0000af;
+      }
+    }
+  }
 
   .videoWrapper {
 
-    .local-video {
+    .optionWrapper {
+      display: none;
+    }
+
+    &:hover {
+      .optionWrapper {
+          position: absolute;
+          height: 300px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+      }
+    }
+
+    .local-video, .remote-video {
+      height: 300px;
 
       &.isVisible {
         display: none;
       }
+    }
+  }
+
+  .buttons {
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    .button {
+        display: flex;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+
+        &.mute {
+          background-color: white;
+
+          i {
+            color: black;
+          }
+        }
+
+        i {
+          font-size: 24px;
+          color: white;
+        }
     }
   }
 }

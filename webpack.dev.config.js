@@ -2,6 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 var config = {
     entry: [
         'webpack-dev-server/client?http://localhost:4001',
@@ -105,19 +107,19 @@ var config = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin('style.css'),
+        //new BundleAnalyzerPlugin()
     ],
     target: 'web',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
-        headers: { "Access-Control-Allow-Origin": "*"},
         compress: true,
         disableHostCheck: true,
         proxy: {
             '/' : {
-                target:'http://localhost'
+                target:'http://localhost:3000'
             },
             '/editor': {
-                target: 'ws://external.cocotutor.ml',
+                target: 'wss://external.cocotutor.ml',
                 ws: true
             }
         }

@@ -16,7 +16,9 @@
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
-
+}
+.classTitle .classNickName:hover{
+  opacity: 0.8;
 }
 .classNickName{
   margin-top: 20%;
@@ -26,18 +28,18 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 600;
   text-align: center;
-
 }
 
 .cardWrapper{
   width:15%;
+  min-width: 100px;
   margin-left: 2%;
   box-shadow: 0 8px 38px rgba(133, 133, 133, 0.3), 0 5px 12px rgba(133, 133, 133,0.22);
   background: #ffffff;
+  border-radius: 10px;
+
 }
-.cardWrapper :hover{
-  opacity: 0.75;
-}
+
 
 .classLanguage{
   text-align: center;
@@ -48,7 +50,71 @@
   opacity: 0.8;
 }
 .modalHeader{
-  background-color: #0000af;
+  background-color: #1934af;
   color:white;
-  opacity: 0.8;
+  opacity: 0.9;
 }
+.modalBodyStyle{
+}
+.timeHeaderWrapper{
+  margin-left: 5%;
+}
+.timeHeader{
+  display: inline-block;
+  width: 30%;
+  text-align: center;
+}
+
+.timeWrapper{
+  margin-left: 5%;
+}
+.modalBodyStyle{
+  width: 90%;
+  margin-left: 5%;
+}
+
+.time{
+  display: inline-block;
+  width: 30%;
+  text-align: center;
+}
+.status{
+  font-size:150%;
+  margin-left: 5%;
+}
+.classBox{
+  padding:4%;
+}
+.language{
+  margin-left: 5%;
+  font-size: 200%;
+}
+.labels{
+  opacity: 0.8;
+  color: #5254ff;
+  font-weight: 800;
+  font-family: "맑은 고딕";
+}
+.drop{
+  text-align: center;
+}
+.nestedModalBody{
+  width: 90%;
+  margin-left: 5%;
+}
+.nestedModalHeader{
+  background: #800080;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right,#ffc0cb ,#800080 );  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #800080, #ffc0cb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color:white;
+}
+.content{
+  display:block;
+}
+/*
+career
+degree
+github
+intro
+language
+*/

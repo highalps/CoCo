@@ -4,23 +4,40 @@
   height: 100%;
   overflow-y: scroll;
 }
-
-.head{
-  margin-top: 3%;
-  padding-top: 9%;
-  padding-bottom: 9%;
-  text-align: center;
-  color: #ffffff;
-  background-color: #00000F;
-  font-size: 300%;
-  font-style: italic;
+.createClassWrapper{
+  padding:1%;
+  margin-top: 2%;
+  background-color: #6e726f;
   opacity: 0.8;
-  font-weight: bold;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .bgControl{
   margin-top: 2%;
-  background-color:#e9ecef;
+  background: #16A085;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #F4D03F, #16A085);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #F4D03F, #16A085); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   padding:2.5%;
+}
+.searchWrapper{
+  margin-top: 1%;
+  padding: 2%;
+}
+
+.btnWrapper{
+  padding: 3%;
+}
+
+.groupBtn{
+  padding: 1%;
+  margin-left: 7%;
+}
+
+.languageBtn{
+  padding: 1%;
+  margin-left: 7%;
+}
+
+.inputGroup{
+  padding-left: 10%;
+  padding-right: 15%;
 }

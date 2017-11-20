@@ -38,8 +38,7 @@ class TextEditor extends React.Component {
 
     componentDidMount() {
         this.codeMirror = CodeMirror.fromTextArea(this._refs.textArea, option);
-        this.shareConnection = new shareDB.Connection(new WebSocket("ws://" + 'external.cocotutor.ml:3000'))
-        // this.shareConnection = new shareDB.Connection(io('external.cocotutor.ml:3000'))
+        this.shareConnection = new shareDB.Connection(new WebSocket("wss://" + 'external.cocotutor.ml'));
         this.connect(this.props)
     }
 
