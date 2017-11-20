@@ -54,5 +54,7 @@ export default {
                 })
         }
     },
+
+    updateMessage: (payload) => createAction(AT.UPDATE_MESSAGE)(payload)
 }
 

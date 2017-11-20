@@ -38,6 +38,15 @@ const userReducer = (state = initialState, action) => {
                     .set('messages', Immutable.fromJS(log).sortBy(chat => chat.get('date')))
             }
 
+        case AT.SHOW_CHAT_LIST:
+            return {
+                ...state,
+                chat: state.chat.clear(),
+            }
+
+        case AT.CLOSE_CHAT:
+            return initialState
+
         default:
             return state;
     }

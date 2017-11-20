@@ -21,6 +21,7 @@ class ChatMessage extends React.Component {
 
     constructor() {
         super()
+        this._refs = {}
         this.state = {
             chatLoading: true,
             message: '',
@@ -32,6 +33,13 @@ class ChatMessage extends React.Component {
             chatId: this.props.chatId
         }
         this.props.dispatch(chatActions.getMessages(payload))
+            .then(() => {
+                this.setState({ chatLoading: false })
+                if (this._refs.body) {
+                    const e = this._refs.body
+                    e.scrollTop = e.scrollHeight
+                }
+            })
     }
 
     @autobind
@@ -45,7 +53,10 @@ class ChatMessage extends React.Component {
                 message: this.state.message,
             }
             this.props.dispatch(chatActions.createMessage(payload))
-                .then(() => this.setState({ message: '' }))
+                .then(() => {
+                    this.setState({ message: '' })
+
+                })
         }
     }
 
@@ -61,17 +72,31 @@ class ChatMessage extends React.Component {
         }
     }
 
+    @autobind
+    handleClickButton() {
+        this.props.dispatch(uiActions.showChatList())
+    }
+
     isSamePerson(nickname) {
         return this.props.nickname === nickname
     }
 
     renderMessages() {
-        const chats = this.props.chat.get('messages')
-        return chats.map(chat => {
+        const { chat } = this.props
+        const chats =  chat.get('messages')
+        if (this.state.chatLoading) {
+            return (
+                <div className={styles.spinner}>
+                    <div className={styles.bounce1}></div>
+                    <div className={styles.bounce2}></div>
+                </div>
+            )
+        }
+        return chats.map((chat,idx) => {
             const isDifferntPerson = !this.isSamePerson(chat.get('nickname'))
             const isAdmin = chat.get('nickname') === 'admin'
             return (
-                    <div className={classNames(styles.item, { [styles.fromMe]: !isDifferntPerson, [styles.admin]: isAdmin })}>
+                    <div key={idx} className={classNames(styles.item, { [styles.fromMe]: !isDifferntPerson, [styles.admin]: isAdmin })}>
                         {
                             isDifferntPerson && !isAdmin
                                ? (<div className={styles.avatar}>{chat.get('nickname')[0]}</div>)
@@ -89,9 +114,10 @@ class ChatMessage extends React.Component {
         return (
             <div className={styles.wrapper}>
                 <div className={styles.header}>
-                    chat with
+                    <div className={classNames("fa fa-arrow-left", styles.button)} onClick={this.handleClickButton} />
+                    <div className={styles.chatTitle}>chat with</div>
                 </div>
-                <div className={styles.body}>
+                <div ref={e => this._refs.body = e} className={styles.body}>
                     <div className={styles.messageWrapper}>
                         {this.renderMessages()}
                     </div>

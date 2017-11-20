@@ -25,14 +25,10 @@ export default keyMirror({
     PUT_CHAT_MESSAGE_SUCCESS: null,
     PUT_CHAT_MESSAGE_ERROR: null,
 
+    UPDATE_MESSAGE: null,
 
-
-   /* UI actions */
-   CLOSE_CHAT: null,
-   SHOW_CHAT_LIST: null,
-   SHOW_CHAT_MESSAGE: null,
-
-
-
-
+    /* UI actions */
+    CLOSE_CHAT: null,
+    SHOW_CHAT_LIST: null,
+    SHOW_CHAT_MESSAGE: null,
 })

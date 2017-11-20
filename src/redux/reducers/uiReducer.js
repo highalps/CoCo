@@ -5,18 +5,18 @@ import Immutable from 'immutable'
 import AT from '../actions/actionTypes'
 import { setToken } from '../../utils/authUtils'
 
-const initialState = {
-    uiState: Immutable.fromJS({
-        chatList: false,
-        chatMessage: false,
-    })
-}
+            const initialState = {
+                uiState: Immutable.fromJS({
+                    chatList: false,
+                    chatMessage: false,
+                })
+            }
 
-const userReducer = (state = initialState, action) => {
-    const { uiState } = state
+            const userReducer = (state = initialState, action) => {
+                const { uiState } = state
 
-    switch (action.type) {
-        case AT.CLOSE_CHAT:
+                switch (action.type) {
+                    case AT.CLOSE_CHAT:
         case AT.LOG_OUT:
             return {
                 uiState: uiState
