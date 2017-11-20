@@ -21,9 +21,9 @@ export default keyMirror({
     GET_CHAT_MESSAGES_SUCCESS: null,
     GET_CHAT_MESSAGES_ERROR: null,
 
-    PUT_CHAT_MESSAGE: null,
-    PUT_CHAT_MESSAGE_SUCCESS: null,
-    PUT_CHAT_MESSAGE_ERROR: null,
+    CREATE_CHAT_MESSAGE: null,
+    CREATE_CHAT_MESSAGE_SUCCESS: null,
+    CREATE_CHAT_MESSAGE_ERROR: null,
 
     UPDATE_MESSAGE: null,
 

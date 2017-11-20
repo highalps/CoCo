@@ -42,7 +42,8 @@ class WebStreamWrapper extends React.Component {
         this.hasWebcam = DetectRTC.hasWebcam
         this.hasMic = DetectRTC.hasMicrophone
         this.localStream = null
-        this.socket = io('external.cocotutor.ml/stream', {secure: true})
+        this.socket = io('https://external.cocotutor.ml/stream', {secure: true})
+        console.log(this.socket)
         this.userId = Math.round(Math.random() * 999999) + 999999;
         this.roomId = '123'
         this.remoteUserId = null

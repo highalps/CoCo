@@ -35,11 +35,15 @@ class ChatMessage extends React.Component {
         this.props.dispatch(chatActions.getMessages(payload))
             .then(() => {
                 this.setState({ chatLoading: false })
-                if (this._refs.body) {
-                    const e = this._refs.body
-                    e.scrollTop = e.scrollHeight
-                }
+                this.scrollDown()
             })
+    }
+
+    scrollDown() {
+        if (this._refs.body) {
+            const e = this._refs.body
+            e.scrollTop = e.scrollHeight
+        }
     }
 
     @autobind
@@ -55,7 +59,7 @@ class ChatMessage extends React.Component {
             this.props.dispatch(chatActions.createMessage(payload))
                 .then(() => {
                     this.setState({ message: '' })
-
+                    this.scrollDown()
                 })
         }
     }
@@ -115,7 +119,7 @@ class ChatMessage extends React.Component {
             <div className={styles.wrapper}>
                 <div className={styles.header}>
                     <div className={classNames("fa fa-arrow-left", styles.button)} onClick={this.handleClickButton} />
-                    <div className={styles.chatTitle}>chat with</div>
+                    <div className={styles.chatTitle}>chat with {this.props.chat.get('person')}</div>
                 </div>
                 <div ref={e => this._refs.body = e} className={styles.body}>
                     <div className={styles.messageWrapper}>
