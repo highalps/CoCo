@@ -11,14 +11,13 @@ class MyClassInfo  extends React.Component {
 
     constructor(props) {
         super(props)
-        this._renderApplicantList = this._renderApplicantList.bind(this)
-        this._renderWriterList = this._renderWriterList.bind(this)
         this.toggle = this.toggle.bind(this)
         this.state = {
             activeTab: '1'
         }
+        this._renderApplicantList = this._renderApplicantList.bind(this)
+        this._renderWriterList = this._renderWriterList.bind(this)
         this._accept = this._accept.bind(this)
-
     }
 
     _accept(num){
@@ -27,7 +26,10 @@ class MyClassInfo  extends React.Component {
                 mode:'on',
                 chatNum: num
             })
-            .then(res =>{console.log(res)})
+            .then(res =>{
+                console.log(res)
+                window.location.reload()
+            })
             .catch(error =>{console.log(error)
             })
         }
@@ -114,8 +116,8 @@ class MyClassInfo  extends React.Component {
                                             <th>제목</th>
                                             <th>언어</th>
                                             <th>신청자</th>
-                                            <th>수락</th>
-                                            <th>거절</th>
+                                            <th>수락하기</th>
+                                            <th>거절하기</th>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -1,8 +1,10 @@
 /* */
 import styles from './Class.scss'
 import ModifyClass from '../ModifyClass'
+import DeleteClass from '../DeleteClass'
 import TutorInfo from '../TutorInfo'
 import client from '../../../redux/base.js'
+import { classAction } from '../../../redux/actions'
 
 
 import { autobind } from 'core-decorators/lib/autobind'
@@ -53,6 +55,7 @@ class  ColComponent extends React.Component {
             modalClass: false,
             modalUser: false,
             modalMatch: false,
+            modalDelete: false,
             tutorInfo: {
                 degree:'내용없음',
                 github:'내용없음',
@@ -70,6 +73,7 @@ class  ColComponent extends React.Component {
                 time:1
             }
         }
+        this._toggleDelete = this._toggleDelete.bind(this)
         this._toggleClass = this._toggleClass.bind(this)
         this._toggleUser = this._toggleUser.bind(this)
         this._toggleMatch = this._toggleMatch.bind(this)
@@ -97,9 +101,16 @@ class  ColComponent extends React.Component {
     _ifUserNickEqualClassNick(){
         if(this.props.colData.nickname === this.props.userNickname){
             return(
-                <Button onClick={this._toggleModify} color="success">정보수정</Button>
+                <span>
+                    <Button onClick={this._toggleDelete} color="danger">삭제</Button>
+                    <span> </span>
+                    <Button onClick={this._toggleModify} color="success">정보수정</Button>
+                </span>
             )
         }
+        return(
+            <Button color="primary" onClick={this._toggleMatch}>{this.props.colData.status === 1? '튜터신청':'수강신청'}</Button>
+        )
     }
     _handleDay(day){
         let _body = this.state.body
@@ -163,7 +174,11 @@ class  ColComponent extends React.Component {
             this._toggleUser()
         })
     }
-
+    _toggleDelete(){
+        this.setState({
+            modalDelete:!this.state.modalDelete
+        })
+    }
     _toggleClass() {
         this.setState({
             modalClass: !this.state.modalClass
@@ -264,10 +279,10 @@ class  ColComponent extends React.Component {
 
                     <ModalFooter>
                         {this._ifUserNickEqualClassNick()}
-                        <Button color="primary" onClick={this._toggleMatch}>{colData.status === 1? '튜터신청':'수강신청'}</Button>
                         <Button color="secondary" onClick={this._toggleClass}>취소</Button>
                     </ModalFooter>
                 </Modal>
+
                 <TutorInfo
                     isModalOpen={this.state.modalUser}
                     tutorData={this.state.tutorInfo}
@@ -275,7 +290,14 @@ class  ColComponent extends React.Component {
                 <ModifyClass
                     isModalOpen={this.state.modalModify}
                     classData={colData}
-                    onToggle={this._toggleModify} />
+                    onToggle={this._toggleModify}
+                    time = {this.state.classInfo.time}
+                    content = {this.state.classInfo.content}
+                />
+                <DeleteClass
+                    isModalOpen={this.state.modalDelete}
+                    classData={colData.num}
+                    onToggle={this._toggleDelete} />
             </div>
         )
     }

@@ -14,13 +14,19 @@ class MyPrivateInfo  extends React.Component {
         super(props)
         this.state = {
             modal:false,
-            tutorInfo:{}
+            tutorInfo: {
+                degree:'내용없음',
+                github:'내용없음',
+                intro:'내용없음',
+                career:'내용없음',
+            }
         }
         this._ifTutorOrNot = this._ifTutorOrNot.bind(this)
         this._getTutorData = this._getTutorData.bind(this)
         this._toggle = this._toggle.bind(this)
 
     }
+
     _getTutorData(){
         client.get('api/user/TutorInfo/'+this.props.id).then(res => {
             this.setState({
@@ -38,16 +44,16 @@ class MyPrivateInfo  extends React.Component {
         })
     }
     _ifTutorOrNot(){
-        if (this.props.tutor == 0) {
+        if (this.props.tutor === 0) {
             return (
-                <Link className to="RegisterTutor">
+                <Link to="RegisterTutor">
                     <span className={styles.name}>튜터 등록 하기</span>
                 </Link>
             )
         }
         return (
             <div>
-                <span className={styles.name}>내 튜터 정보</span>
+                <span className={styles.name} onClick={this._getTutorData}>내 튜터 정보</span>
             </div>
         )
     }

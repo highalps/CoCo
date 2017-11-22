@@ -32,7 +32,4 @@ export default keyMirror({
    SHOW_CHAT_LIST: null,
    SHOW_CHAT_MESSAGE: null,
 
-
-
-
 })

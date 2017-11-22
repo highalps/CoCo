@@ -47,9 +47,11 @@ class CreateClass extends React.Component {
                     {day:'일', startTime:0, endTime:0}
                 ]
             },
-            modal: false
+            modal: false,
+            alert: false
         }
 
+        this._toggleAlert = this._toggleAlert.bind(this)
         this._toggle = this._toggle.bind(this)
         this._create = this._create.bind(this)
         this._handleTitleChange = this._handleTitleChange.bind(this)
@@ -125,6 +127,12 @@ class CreateClass extends React.Component {
             modal: !this.state.modal
         })
     }
+    _toggleAlert(){
+        this.setState({
+            alert: !this.state.alert
+        })
+    }
+
 
     _handleTitleChange(e){
         let _body = { ...this.state.body }
@@ -146,15 +154,11 @@ class CreateClass extends React.Component {
         _body.status = status
         this.setState({ body:_body})
     }
-
     _create(){
         let temp = this.state.body
         if(temp.language === '' || temp.content === '' || temp.status === 0 || temp.title === ''){
-            return (
-                <Alert color="primary">
-                    입력안된 사항이 있습니다.
-                </Alert>
-            )
+            this._toggleAlert()
+            return
         }
         let day = []
         let _body = { ...this.state.body }
@@ -179,7 +183,6 @@ class CreateClass extends React.Component {
     render() {
         return (
             <div className = {styles.wrapper}>
-
                 <div>
                     <h1 className={styles.head}>CoCo 강의 검색</h1>
                     <div className={styles.introBtnWrapper}>
@@ -233,6 +236,15 @@ class CreateClass extends React.Component {
                         <Button color="primary" onClick={this._create}>생성하기</Button>{' '}
                         <Button color="secondary" onClick={this._toggle}>취소</Button>
                     </ModalFooter>
+                </Modal>
+
+                <Modal isOpen={this.state.alert} toggle={this._toggleAlert} className={this.props.className}>
+                    <ModalHeader toggle={this.toggleAlert}>경고</ModalHeader>
+                    <ModalBody>
+                        <div>
+                            입력안된 사항이 있습니다. 확인하세요.  <Button onClick={this._toggleAlert}>확인</Button>
+                        </div>
+                    </ModalBody>
                 </Modal>
             </div>
         )

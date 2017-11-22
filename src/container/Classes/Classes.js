@@ -20,8 +20,6 @@ class Classes  extends React.Component {
     constructor(){
         super()
     }
-    componentWillMount(){
-    }
 
     render(){
         return(

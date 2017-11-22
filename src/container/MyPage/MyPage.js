@@ -51,7 +51,7 @@ class MyPage  extends React.Component {
         ).then(res =>{
             console.log('getApplicant', res.data.list)
             this.setState({
-                getApplicant:res.data
+                getApplicant:res.data.list
             })
         }).catch(error =>{
             console.log(error)

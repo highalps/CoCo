@@ -18,10 +18,11 @@ class ModifyClass extends React.Component {
 
     constructor(props) {
         super(props)
+
         this.state = {
             body:{
                 title : this.props.classData.title,
-                content : this.props.classData.content,
+                content : this.props.content,
                 language : this.props.classData.language,
                 status : this.props.classData.status,
                 time : [
@@ -33,8 +34,12 @@ class ModifyClass extends React.Component {
                     {day:'토', startTime:0, endTime:0},
                     {day:'일', startTime:0, endTime:0}
                 ]
-            }
+            },
+            alert: false
         }
+
+
+        this._toggleAlert = this._toggleAlert.bind(this)
         this._toggle = this._toggle.bind(this)
         this._modify = this._modify.bind(this)
         this._handleTitleChange = this._handleTitleChange.bind(this)
@@ -46,26 +51,40 @@ class ModifyClass extends React.Component {
         this._returnTime = this._returnTime.bind(this)
         this._renderIfTutor = this._renderIfTutor.bind(this)
     }
+    componentWillMount(){
+        // let days = ['월', '화', '수', '목', '금', '토', '일']
+        // let _temp = this.props.time
+        // let _body = {...this.state.body}
+        // for(let i = 0; i < _temp.length; i++){
+        //     let ind = days.indexOF(_temp.day)
+        //     _body.time[ind].startTime = _temp[i].startTime
+        //     _body.time[ind].endTime = _temp[i].endTime
+        // }
+        // this.setState({
+        //     body:_body
+        // })
+    }
     _renderIfTutor(){
         if(this.props.tutor === 1){
             return <Button color="success" onClick={() => this._handleStatusChange(2)} active={this.state.body.status === 2}>튜터</Button>
         }
     }
-    _returnTime(day , index){
+    _returnTime(data , index){
         return(
             <Form inline key={index}>
-                <label className={styles.day}>{day}:</label>
+                <label className={styles.day}>{data.day}:</label>
                 <FormGroup className={styles.time}>
-                    <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,1)} placeholder="1 ~ 24" />
+                    <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,1)} placeholder={data.startTime}/>
                     <label>~</label>
-                    <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,2)} placeholder="1 ~ 24" />
+                    <Input type="number" onChange = {(e) => this._handleTimeChange(index,e,2)} placeholder={data.endTime}/>
                 </FormGroup>
             </Form>
         )
     }
+
     _renderTime(){
-        let days = ['월', '화', '수', '목', '금', '토', '일']
-        let times = days.map((day, index)=>{
+
+        let times = this.state.body.time.map((day, index)=>{
             return this._returnTime(day, index)
         })
         return times
@@ -84,10 +103,14 @@ class ModifyClass extends React.Component {
                 this.setState({ body : _body })
             }
         }
-
     }
     _toggle(){
         this.props.onToggle()
+    }
+    _toggleAlert(){
+        this.setState({
+            alert: !this.state.alert
+        })
     }
 
     _handleTitleChange(e){
@@ -114,11 +137,8 @@ class ModifyClass extends React.Component {
     _modify(){
         let temp = this.state.body
         if(temp.language === '' || temp.content === '' || temp.status === 0 || temp.title === ''){
-            return (
-                <Alert color="primary">
-                    입력안된 사항이 있습니다.
-                </Alert>
-            )
+            this._toggleAlert()
+            return
         }
         let day = []
         let _body = { ...this.state.body }
@@ -130,18 +150,19 @@ class ModifyClass extends React.Component {
         _body.time = day
         this.setState({ body : _body },
             () => {
-                client.post('api/board',
+                client.put('api/board/'+this.props.classData.num,
                     this.state.body
                 ).then(res =>{console.log(res.data)})
                     .catch(error =>{console.log(error)})
                 this._toggle()
+                window.location.reload()
             })
     }
     render() {
         const classData = this.props.classData
         return (
             <Modal size='lg' isOpen={this.props.isModalOpen} toggle={this._toggle} className={this.props.className}>
-                <ModalHeader toggle={this._toggle} className={styles.modalTitle}>클래스를 생성하세요!</ModalHeader>
+                <ModalHeader toggle={this._toggle} className={styles.modalTitle}>클래스 수정!</ModalHeader>
                 <ModalBody>
                     <div className={styles.infoWrapper}>
                         <ButtonGroup className = {styles.statusBtn}>
@@ -156,7 +177,7 @@ class ModifyClass extends React.Component {
 
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 소개</label>
-                            <Input className={styles.area} type="textarea" name = "job" onChange = {(e) => this._handleContentChange(e)} placeholder = {classData.content}/>
+                            <Input className={styles.area} type="textarea" name = "job" onChange = {(e) => this._handleContentChange(e)} placeholder = {this.props.content}/>
                         </div>
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 가능 시간</label>
@@ -185,6 +206,14 @@ class ModifyClass extends React.Component {
                     <Button color="primary" onClick={this._modify}>수정하기</Button>
                     <Button color="secondary" onClick={this._toggle}>취소</Button>
                 </ModalFooter>
+                <Modal isOpen={this.state.alert} toggle={this._toggleAlert} className={this.props.className}>
+                    <ModalHeader toggle={this.toggleAlert}>경고</ModalHeader>
+                    <ModalBody>
+                        <div>
+                            입력안된 사항이 있습니다. 확인하세요.  <Button onClick={this._toggleAlert}>확인</Button>
+                        </div>
+                    </ModalBody>
+                </Modal>
             </Modal>
         )
     }
