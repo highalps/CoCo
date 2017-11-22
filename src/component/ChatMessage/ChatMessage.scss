@@ -16,6 +16,7 @@
   .header {
     z-index: 2147483001;
     position: absolute;
+    display: flex;
     top: 0;
     right: 0;
     left: 0;
@@ -23,20 +24,128 @@
     background-color: #0071b2;
     -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    color: #fff;
+    align-items: center;
+    padding-right: 20px;
+
+    .button {
+      font-size: 30px;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+
+    .chatTitle {
+        flex: 1;
+        text-align: end;
+        padding-right: 15px;
+    }
   }
 
   .body {
     position: absolute;
     top: 75px;
+    bottom: 80px;
     width: 100%;
-    height: 100%;
     background-image: url('https://cdn.dribbble.com/users/133107/screenshots/2436575/interesticons_1x.jpg');
     padding: 30px 35px 40px;
+    overflow-y: auto;
 
-    .messages {
+    .messageWrapper {
+      position: absolute;
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        position: relative;
+        margin-left: 130px;
+        margin-top: 140px;
+
+        .bounce1, .bounce2 {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          background-color: #333;
+          opacity: 0.6;
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+          animation: sk-bounce 2.0s infinite ease-in-out;
+        }
+
+        .bounce2 {
+          -webkit-animation-delay: -1.0s;
+          animation-delay: -1.0s;
+        }
+      }
+
+      @-webkit-keyframes sk-bounce {
+        0%, 100% { -webkit-transform: scale(0.0) }
+        50% { -webkit-transform: scale(1.0) }
+      }
+
+      @keyframes sk-bounce {
+        0%, 100% {
+          transform: scale(0.0);
+          -webkit-transform: scale(0.0);
+        } 50% {
+            transform: scale(1.0);
+            -webkit-transform: scale(1.0);
+          }
+      }
 
       .item {
+         width: 100%;
+         display: flex;
+         float: left;
+         position: relative;
+         margin-bottom: 20px;
+         max-width: 80%;
 
+        &.fromMe {
+          float: right;
+        }
+
+        &.admin {
+          max-width: 90%;
+        }
+
+        .avatar {
+          align-self: flex-end;
+          width: 40px;
+          height: 40px;
+          line-height: 35px;
+          border-radius: 50%;
+          border: 2px solid #fff;
+          background-color: #002b44;
+          color: #fff;
+          text-align: center;
+          font-size: 17.5px;
+          font-weight: 700;
+          margin-bottom: 10px;
+        }
+
+        .message {
+          flex: 1;
+          font-size: 14px;
+          margin-left: 15px;
+          color: #263238;
+          background-color: #f4f7f9;
+          padding: 17px 20px;
+          border-radius: 6px;
+          position: relative;
+
+          &.fromMe {
+            color: #fff;
+            background-color: #0071b2;
+          }
+
+          &.admin {
+            color: #fff;
+            background-color: #00afd7;
+          }
+        }
       }
     }
 
@@ -65,10 +174,17 @@
     }
 
     .send {
+      font-family: monospace;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 80px;
+
+      &.isFilled {
+          cursor: pointer;
+          font-weight: bold;
+          color: #0071b2;
+      }
     }
   }
 }

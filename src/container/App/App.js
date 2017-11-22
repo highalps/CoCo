@@ -8,8 +8,7 @@ import Header from 'component/Header'
 import Body from 'component/Body'
 import Footer from 'component/Footer'
 import { uiActions } from '../../redux/actions/'
-import TerminalSocket from 'service/terminalSocketService'
-import UpdateSocket from 'service/updateSocketService'
+import TerminalSocket from '../../service/terminalSocketService'
 
 const mapStateToProps = (state) => ({
 })
