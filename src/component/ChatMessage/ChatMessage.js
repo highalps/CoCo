@@ -12,6 +12,7 @@ import { chatActions, uiActions } from '../../redux/actions'
 
 const mapStateToProps = (state) => ({
     nickname: state.userReducer.nickname,
+    status:state.chatReducer.status,
     chat: state.chatReducer.chat,
     chatId: state.chatReducer.currentChatId,
 })
@@ -70,6 +71,19 @@ class ChatMessage extends React.Component {
     }
 
     @autobind
+    ifMatchingCompleted() {
+        console.log("ismatched", this.props.status)
+        if(this.props.status === 3) {
+            return (
+                <div className={styles.chatTitle}>참여</div>
+            )
+        }
+        return (
+            <div className={styles.chatTitle}>수락</div>
+        )
+    }
+
+    @autobind
     handleKeyUp(event) {
         if (event.keyCode === 13 && !event.shiftKey) {
            this.sendMessage()
@@ -120,6 +134,7 @@ class ChatMessage extends React.Component {
                 <div className={styles.header}>
                     <div className={classNames("fa fa-arrow-left", styles.button)} onClick={this.handleClickButton} />
                     <div className={styles.chatTitle}>chat with {this.props.chat.get('person')}</div>
+                    {this.ifMatchingCompleted()}
                 </div>
                 <div ref={e => this._refs.body = e} className={styles.body}>
                     <div className={styles.messageWrapper}>

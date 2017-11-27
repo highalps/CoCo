@@ -6,6 +6,7 @@ import AT from '../actions/actionTypes'
 import chatSocket from '../../service/chatSocketService'
 
 const initialState = {
+    status:1,
     chatList: Immutable.List(),
     currentChatId: '',
     chat: Immutable.fromJS({
