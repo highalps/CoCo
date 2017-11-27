@@ -89,4 +89,4 @@ NavBar.defaultProps = {
     isLogged: false,
 }
 
-export default NavBar;
+export default NavBar

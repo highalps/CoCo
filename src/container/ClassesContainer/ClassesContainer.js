@@ -5,12 +5,12 @@ import { Button, ButtonGroup,InputGroup, Input } from 'reactstrap';
 import autobind from 'core-decorators/lib/autobind'
 
 /* */
-import styles from './Classes.scss'
+import styles from './ClassesContainer.scss'
 import Class from '../../component/Classes/Class'
 import CreateClass from '../../component/Classes/CreateClass'
-import NavBar from '../../component/Navbar'
+import NavBar from '../../component/NavBar'
 
-class Classes extends React.Component {
+class ClassesContainer extends React.Component {
     constructor(){
         super()
     }
@@ -145,4 +145,4 @@ class Search  extends React.Component {
         )
     }
 }
-export default Classes
+export default ClassesContainer

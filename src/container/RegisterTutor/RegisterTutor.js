@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
 
 import styles from './RegisterTutor.scss'
-import NavBar from '../../component/Navbar'
+import NavBar from '../../component/NavBar'
 
 const mapStateToProps = (state) => ({
     nickname: state.userReducer.nickname,

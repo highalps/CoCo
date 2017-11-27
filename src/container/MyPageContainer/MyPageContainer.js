@@ -23,7 +23,7 @@ const mapStateToProps = (state) => ({
 })
 
 @connect(mapStateToProps)
-class MyPage  extends React.Component {
+class MyPageContainer  extends React.Component {
 
     constructor(){
         super()
@@ -88,4 +88,4 @@ class MyPage  extends React.Component {
         )
     }
 }
-export default MyPage;
+export default MyPageContainer;

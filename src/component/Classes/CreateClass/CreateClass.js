@@ -27,7 +27,6 @@ const mapStateToProps = (state) => ({
 })
 
 @connect(mapStateToProps)
-
 class CreateClass extends React.Component {
 
     constructor(props) {
