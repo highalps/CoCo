@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './MyPage.scss'
+import styles from './MyPageContainer.scss'
 import client from '../../redux/base.js'
 import { connect } from 'react-redux'
 
