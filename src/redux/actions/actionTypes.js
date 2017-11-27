@@ -38,4 +38,8 @@ export default keyMirror({
     CREATE_CHAT_MESSAGE_ERROR: null,
 
     UPDATE_MESSAGE: null,
+
+
+    /*clssNum*/
+    SET_CLASS_NUM : null,
 })

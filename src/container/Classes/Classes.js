@@ -1,21 +1,13 @@
 import React from 'react'
 import styles from './Classes.scss'
 import { Button, ButtonGroup,InputGroup, Input } from 'reactstrap';
+import autobind from 'core-decorators/lib/autobind'
 
 import Class from 'component/Classes/Class'
 import CreateClass from 'component/Classes/CreateClass'
 import axios from 'axios'
+import NavBar from '../../component/GlobalNavbar'
 
-
-/*
-TODO  redux를 사용하여 데이터를 받아오기 (classData에 저장)
-TODO  처음에 모든 데이터를 받고   그걸 parsing 하는 코드가 필요 (언어 /  Library)
-TODO  form 으로 search 했을 때만 보냄
-
-TODO ROW 를 만들고 그 안에  4개의 column을 만듦
-TODO 이게 유동적으로 이루어져야 한다.
-
-*/
 class Classes  extends React.Component {
     constructor(){
         super()
@@ -24,6 +16,7 @@ class Classes  extends React.Component {
     render(){
         return(
             <div className = {styles.wrapper}>
+                <NavBar/>
                 <CreateClass />
                 <Search/>
             </div>
@@ -44,17 +37,13 @@ class Search  extends React.Component {
             classData:[],
             rows:[]
         }
-        this._onGroupBtnClick = this._onGroupBtnClick.bind(this)
-        this._onLanguageBtnClick = this._onLanguageBtnClick.bind(this)
-        this._handleChange = this._handleChange.bind(this)
-        this._searchClass = this._searchClass.bind(this)
     }
 
     componentWillMount(){
         let url = 'https://external.cocotutor.ml/api/board/'
         this._setClassData(url)
     }
-
+    @autobind
     _setClassData(url) {
         axios.get(url)
             .then(res =>{
@@ -69,6 +58,7 @@ class Search  extends React.Component {
             })
     }
 
+    @autobind
     _rowDataParsing(){
         let data = this.state.classData
         console.log("data", data)
@@ -95,21 +85,25 @@ class Search  extends React.Component {
         })
 
     }
+    @autobind
     _onGroupBtnClick(group) {
         this.setState({ group:group },()=>{
             this._searchClass()
         })
     }
+    @autobind
     _onLanguageBtnClick(language) {
         this.setState({ language:language },()=>{
             this._searchClass()
         })
     }
 
+    @autobind
     _handleChange(e){
         this.setState({ search:e.target.value})
     }
 
+    @autobind
     _searchClass(){
         console.log(this.state)
         let url = 'https://external.cocotutor.ml/api/board/search?group='+this.state.group+'&language='+this.state.language+'&keyword='+this.state.search

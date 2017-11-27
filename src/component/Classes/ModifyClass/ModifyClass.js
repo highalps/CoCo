@@ -5,6 +5,7 @@ import styles from './ModifyClass.scss'
 import {Input, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, ButtonGroup} from 'reactstrap'
 import client from '../../../redux/base.js'
 import { connect } from 'react-redux'
+import autobind from 'core-decorators/lib/autobind'
 
 const mapStateToProps = (state) => ({
     nickname: state.userReducer.nickname,
@@ -37,20 +38,7 @@ class ModifyClass extends React.Component {
             },
             alert: false
         }
-
-
-        this._toggleAlert = this._toggleAlert.bind(this)
-        this._toggle = this._toggle.bind(this)
-        this._modify = this._modify.bind(this)
-        this._handleTitleChange = this._handleTitleChange.bind(this)
-        this._handleContentChange = this._handleContentChange.bind(this)
-        this._handleLanguageChange = this._handleLanguageChange.bind(this)
-        this._handleStatusChange = this._handleStatusChange.bind(this)
-        this._handleTimeChange = this._handleTimeChange.bind(this)
-        this._renderTime = this._renderTime.bind(this)
-        this._returnTime = this._returnTime.bind(this)
-        this._renderIfTutor = this._renderIfTutor.bind(this)
-    }
+}
     componentWillMount(){
         // let days = ['월', '화', '수', '목', '금', '토', '일']
         // let _temp = this.props.time
@@ -64,11 +52,13 @@ class ModifyClass extends React.Component {
         //     body:_body
         // })
     }
+    @autobind
     _renderIfTutor(){
         if(this.props.tutor === 1){
             return <Button color="success" onClick={() => this._handleStatusChange(2)} active={this.state.body.status === 2}>튜터</Button>
         }
     }
+    @autobind
     _returnTime(data , index){
         return(
             <Form inline key={index}>
@@ -82,14 +72,15 @@ class ModifyClass extends React.Component {
         )
     }
 
+    @autobind
     _renderTime(){
-
         let times = this.state.body.time.map((day, index)=>{
             return this._returnTime(day, index)
         })
         return times
     }
 
+    @autobind
     _handleTimeChange(day, e, time){
         if(e.target.value >= 1 && e.target.value <= 24){
             if(time === 1){
@@ -104,36 +95,43 @@ class ModifyClass extends React.Component {
             }
         }
     }
+    @autobind
     _toggle(){
         this.props.onToggle()
     }
+    @autobind
     _toggleAlert(){
         this.setState({
             alert: !this.state.alert
         })
     }
 
+    @autobind
     _handleTitleChange(e){
         let _body = { ...this.state.body }
         _body.title = e.target.value
         this.setState({ body:_body})
     }
+    @autobind
     _handleContentChange(e){
         let _body = { ...this.state.body }
         _body.content = e.target.value
         this.setState({ body:_body})
     }
+    @autobind
     _handleLanguageChange(lang){
         let _body = { ...this.state.body }
         _body.language = lang
         this.setState({ body:_body})
     }
+    @autobind
     _handleStatusChange(status){
         let _body = { ...this.state.body }
         _body.status = status
         this.setState({ body:_body})
     }
 
+    @autobind
     _modify(){
         let temp = this.state.body
         if(temp.language === '' || temp.content === '' || temp.status === 0 || temp.title === ''){

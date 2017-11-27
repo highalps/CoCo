@@ -4,6 +4,7 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 
 import styles from './DeleteClass.scss'
 import client from '../../../redux/base.js'
+import autobind from 'core-decorators/lib/autobind'
 
 
 
@@ -11,12 +12,12 @@ class DeleteClass  extends React.Component {
 
     constructor(props) {
         super(props)
-        this._toggle = this._toggle.bind(this)
-        this._delete = this._delete.bind(this)
     }
+    @autobind
     _toggle(){
         this.props.onToggle()
     }
+    @autobind
     _delete(){
         client.delete('api/board/'+this.props.classData)
             .then(res =>{console.log('삭제 완료')})

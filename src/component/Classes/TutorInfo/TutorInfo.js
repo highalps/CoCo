@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './TutorInfo.scss'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import autobind from 'core-decorators/lib/autobind'
 
 
 
@@ -8,9 +9,8 @@ class TutorInfo  extends React.Component {
 
     constructor(props) {
         super(props)
-        this._toggleUser = this._toggleUser.bind(this)
-
     }
+    @autobind
     _toggleUser(){
         this.props.onToggle()
     }

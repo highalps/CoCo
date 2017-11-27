@@ -7,6 +7,7 @@ import client from '../../../redux/base.js'
 
 /* */
 import styles from './MyPrivateInfo.scss'
+import autobind from 'core-decorators/lib/autobind'
 
 
 class MyPrivateInfo  extends React.Component {
@@ -21,12 +22,9 @@ class MyPrivateInfo  extends React.Component {
                 career:'내용없음',
             }
         }
-        this._ifTutorOrNot = this._ifTutorOrNot.bind(this)
-        this._getTutorData = this._getTutorData.bind(this)
-        this._toggle = this._toggle.bind(this)
-
     }
 
+    @autobind
     _getTutorData(){
         client.get('api/user/TutorInfo/'+this.props.id).then(res => {
             this.setState({
@@ -38,11 +36,13 @@ class MyPrivateInfo  extends React.Component {
         }).catch(error =>{console.log(error)
         })
     }
+    @autobind
     _toggle(){
         this.setState({
             modal:!this.state.modal
         })
     }
+    @autobind
     _ifTutorOrNot(){
         if (this.props.tutor === 0) {
             return (

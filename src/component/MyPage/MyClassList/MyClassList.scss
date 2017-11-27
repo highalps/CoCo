@@ -4,8 +4,8 @@
   background: #000428;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-top: 4%;
+  padding-bottom: 4%;
   opacity: 0.8;
 }
 
@@ -18,8 +18,7 @@
    height: 150px;
    width: 80%;
   margin-left: 10%;
-
-  background-color: #ffffff;
+  background-color: white;
   border-radius: 3rem;
   border: 10px solid transparent;
   -moz-border-image: -moz-linear-gradient(top, #d53445 0%, #d5d569 100%);
@@ -63,6 +62,12 @@
   color:white;
   opacity: 0.9;
 }
+.labels{
+  font-size: 110%;
+  opacity: 0.8;
+  color: #5254ff;
+  font-weight: 800;
+}
 .modalContent{
   font-size: 130%;
   font-family: "맑은 고딕";
@@ -73,7 +78,10 @@
   font-family: "맑은 고딕";
 }
 .modalLanguageLabel{
-  font-size: 150%;
-
-  font-family: "맑은 고딕";
+  font-size: 110%;
+  opacity: 0.8;
+  color: #5254ff;
+  font-weight: 800;}
+.box{
+  padding:5%;
 }

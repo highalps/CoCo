@@ -6,8 +6,14 @@ import styles from './MainEditor.scss'
 import EditorBox from './EditorBox'
 import Terminal from './Terminal'
 import WebStreamWrapper from './WebStreamWrapper'
+import { connect } from 'react-redux'
 
 
+const mapStateToProps = (state) => ({
+    classNum : state.classReducer.classNum,
+})
+
+@connect(mapStateToProps)
 class MainEditor extends React.Component {
 
     constructor() {
@@ -20,7 +26,7 @@ class MainEditor extends React.Component {
             <div className={styles.wrapper}>
                 <Resize handleWidth='5px' handleColor='#777'>
                     <ResizeVertical height='400px' minHeight='100px'>
-                        <EditorBox />
+                        <EditorBox classNum={this.props.classNum}/>
                     </ResizeVertical>
                     <ResizeVertical height='150px'>
                         <Terminal />

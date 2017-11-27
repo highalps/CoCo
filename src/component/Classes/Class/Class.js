@@ -4,10 +4,9 @@ import ModifyClass from '../ModifyClass'
 import DeleteClass from '../DeleteClass'
 import TutorInfo from '../TutorInfo'
 import client from '../../../redux/base.js'
-import { classAction } from '../../../redux/actions'
 
 
-import { autobind } from 'core-decorators/lib/autobind'
+import autobind from 'core-decorators/lib/autobind'
 import {Input, Button,Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Form, FormGroup} from 'reactstrap'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -73,20 +72,8 @@ class  ColComponent extends React.Component {
                 time:1
             }
         }
-        this._toggleDelete = this._toggleDelete.bind(this)
-        this._toggleClass = this._toggleClass.bind(this)
-        this._toggleUser = this._toggleUser.bind(this)
-        this._toggleMatch = this._toggleMatch.bind(this)
-        this._toggleDrop = this._toggleDrop.bind(this)
-        this._getClassData = this._getClassData.bind(this)
-        this._getTutorData = this._getTutorData.bind(this)
-        this._renderTime = this._renderTime.bind(this)
-        this._matching = this._matching.bind(this)
-        this._handleDay = this._handleDay.bind(this)
-        this._handleTime = this._handleTime.bind(this)
-        this._ifUserNickEqualClassNick = this._ifUserNickEqualClassNick.bind(this)
-        this._toggleModify = this._toggleModify.bind(this)
     }
+    @autobind
     _initBody(){
         let _body = {
             writer:this.props.colData.nickname,
@@ -98,6 +85,7 @@ class  ColComponent extends React.Component {
             body:_body
         })
     }
+    @autobind
     _ifUserNickEqualClassNick(){
         if(this.props.colData.nickname === this.props.userNickname){
             return(
@@ -112,6 +100,7 @@ class  ColComponent extends React.Component {
             <Button color="primary" onClick={this._toggleMatch}>{this.props.colData.status === 1? '튜터신청':'수강신청'}</Button>
         )
     }
+    @autobind
     _handleDay(day){
         let _body = this.state.body
         _body.day = day
@@ -119,6 +108,7 @@ class  ColComponent extends React.Component {
             body:_body
         })
     }
+    @autobind
     _handleTime(e) {
         let _body = this.state.body
         _body.time = e.target.value
@@ -126,6 +116,7 @@ class  ColComponent extends React.Component {
             body: _body
         })
     }
+    @autobind
     _matching(){
         let _body = {...this.state.body}
         _body.time = _body.day + '' + _body.time
@@ -141,6 +132,7 @@ class  ColComponent extends React.Component {
             console.log(error)
         })
     }
+    @autobind
     _renderTime(data, index){
         return(
             <div key={index} className={styles.timeWrapper}>
@@ -151,6 +143,7 @@ class  ColComponent extends React.Component {
             </div>
         )
     }
+    @autobind
     _getClassData(){
         client.get('api/board/class/'+ this.props.colData.num).then(res =>{
             this.setState({
@@ -163,6 +156,7 @@ class  ColComponent extends React.Component {
             this._toggleClass()
         })
     }
+    @autobind
     _getTutorData(){
         client.get('api/user/getTutor/'+this.props.colData.nickname).then(res => {
             this.setState({
@@ -174,31 +168,37 @@ class  ColComponent extends React.Component {
             this._toggleUser()
         })
     }
+    @autobind
     _toggleDelete(){
         this.setState({
             modalDelete:!this.state.modalDelete
         })
     }
+    @autobind
     _toggleClass() {
         this.setState({
             modalClass: !this.state.modalClass
         })
     }
+    @autobind
     _toggleUser() {
         this.setState({
             modalUser: !this.state.modalUser
         })
     }
+    @autobind
     _toggleMatch() {
         this.setState({
             modalMatch: !this.state.modalMatch
         })
     }
+    @autobind
     _toggleDrop() {
         this.setState({
             dropdownOpen: !this.state.dropdownOpen
         })
     }
+    @autobind
     _toggleModify() {
         this.setState({ modalModify: !this.state.modalModify })
     }

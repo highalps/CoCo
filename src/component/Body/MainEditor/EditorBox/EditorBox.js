@@ -44,7 +44,7 @@ class EditorBox extends React.Component {
         return (
             <div className={styles.wrapper}>
                 {this.renderTab()}
-                <TextEditor name={this.state.name} />
+                <TextEditor name={this.state.name}  classNum={this.props.classNum}/>
             </div>
         )
     }
