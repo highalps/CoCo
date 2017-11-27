@@ -29,6 +29,9 @@ class MyClassList extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
+                <div className = {styles.head}>
+                    클래스 정보
+                </div>
                 {this._renderCol()}
             </div>
         )
@@ -64,7 +67,6 @@ class ColComponent extends React.Component {
             modalPlus: !this.state.modalPlus
         })
     }
-
     @autobind
     _renderEntireList(data, index){
         return (

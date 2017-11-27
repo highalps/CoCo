@@ -35,6 +35,7 @@ class TerminalComponent extends React.Component {
 
     initailize() {
         // this.term.write('terminal')
+        // TODO: class Number로 connect 하기
         webSocket.connect('8025')
         // add event listener
         this.term.on('key', this.handleKeyDown)
