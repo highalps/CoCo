@@ -84,9 +84,6 @@ class MyPage  extends React.Component {
                 <MyPrivateInfo nickname={this.props.nickname} tutor={this.props.tutor}
                                getWriter={this.state.getWriter.length} getApplicant={this.state.getApplicant.length}
                                email={this.props.email} id={this.props.id}/>
-                <div className = {styles.head}>
-                    클래스 정보
-                </div>
                 <MyClassList getClass={this.state.getClass}/>
                 <MyClassInfo getMyList={this.state.getMyList} getWriter={this.state.getWriter} getApplicant={this.state.getApplicant}/>
             </div>

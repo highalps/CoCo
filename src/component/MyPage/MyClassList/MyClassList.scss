@@ -1,9 +1,8 @@
 .wrapper {
+  margin-top: 5%;
   width: 100%;
   min-width: 1200px;
-  background: #000428;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-color: #e6e6e6;
   padding-top: 4%;
   padding-bottom: 4%;
   opacity: 0.8;
@@ -19,12 +18,8 @@
    width: 80%;
   margin-left: 10%;
   background-color: white;
-  border-radius: 3rem;
-  border: 10px solid transparent;
-  -moz-border-image: -moz-linear-gradient(top, #d53445 0%, #d5d569 100%);
-  -webkit-border-image: -webkit-linear-gradient(top, #d53445 0%, #d5d569 100%);
-  border-image: linear-gradient(to bottom, #d53445 0%, #d5d569 100%);
-  border-image-slice: 1;
+  border-radius: 1rem;
+  border: 1px solid transparent;
 }
 .colData:hover{
   opacity: 0.9;
@@ -56,11 +51,9 @@
 
 .modalHeader{
 
-  background: #DA22FF;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #9733EE, #DA22FF);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #9733EE, #DA22FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+ background-color: blue;
   color:white;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 .labels{
   font-size: 110%;
@@ -84,4 +77,12 @@
   font-weight: 800;}
 .box{
   padding:5%;
+}
+.head{
+  padding-top: 25px;
+  padding-bottom: 25px;
+  text-align: center;
+  font-size: 300%;
+  font-weight: bold;
+  font-family: "맑은 고딕" ;
 }

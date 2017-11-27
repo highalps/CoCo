@@ -20,10 +20,7 @@ class MyClassInfo  extends React.Component {
     @autobind
     _accept(num){
         return () => {
-            client.put('api/chat/request',{
-                mode:'on',
-                chatNum: num
-            })
+            client.put('api/chat/request/'+num)
             .then(res =>{
                 console.log(res)
                 window.location.reload()
@@ -68,6 +65,7 @@ class MyClassInfo  extends React.Component {
             </tr>
         )
     }
+
     @autobind
     _cancel(chatNum){
         return () => {
