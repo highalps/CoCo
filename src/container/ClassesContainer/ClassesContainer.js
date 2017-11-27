@@ -10,7 +10,7 @@ import Class from '../../component/Classes/Class'
 import CreateClass from '../../component/Classes/CreateClass'
 import NavBar from '../../component/Navbar'
 
-class Classes  extends React.Component {
+class Classes extends React.Component {
     constructor(){
         super()
     }

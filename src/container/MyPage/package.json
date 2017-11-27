@@ -1,7 +1,7 @@
 
 {
-  "name": "MyPage",
+  "name": "MyPageContainer",
   "version": "0.0.0",
   "private": true,
-  "main": "./MyPage.js"
+  "main": "./MyPageContainer.js"
 }
