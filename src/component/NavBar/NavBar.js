@@ -3,13 +3,19 @@ import React from 'react';
 import autobind from 'core-decorators/lib/autobind'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 /* */
 import styles from './NavBar.scss';
 import { userActions } from '../../redux/actions'
 
-@connect()
+const mapStateToProps = (state) => ({
+    isLogged: state.userReducer.isLogged,
+    ifTutor: state.userReducer.tutor,
+})
+
+@withRouter
+@connect(mapStateToProps)
 class NavBar extends React.Component {
   constructor() {
       super()
@@ -21,6 +27,7 @@ class NavBar extends React.Component {
   @autobind
   handleClickLogout() {
       this.props.dispatch(userActions.logout())
+      this.props.history.push('/')
   }
 
   renderLoginButton() {
@@ -52,9 +59,11 @@ class NavBar extends React.Component {
   render() {
     return (
         <div className={styles.wrapper}>
-          <div className={styles.logo}>
-            CoCo tutor
-          </div>
+            <Link to="RegisterTutor">
+              <div className={styles.logo}>
+                  CoCo tutor
+              </div>
+            </Link>
           <div className={styles.menu}>
               {this.renderTutorButton()}
               <Link className={styles.button} to="Classes">
@@ -80,4 +89,4 @@ NavBar.defaultProps = {
     isLogged: false,
 }
 
-export default NavBar;
+export default NavBar

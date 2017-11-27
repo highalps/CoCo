@@ -27,7 +27,6 @@ export default keyMirror({
     PUT_CHAT_MESSAGE_ERROR: null,
 
 
-
    /* UI actions */
    CLOSE_CHAT: null,
    SHOW_CHAT_LIST: null,
@@ -39,7 +38,7 @@ export default keyMirror({
 
     UPDATE_MESSAGE: null,
 
-
-    /*clssNum*/
-    SET_CLASS_NUM : null,
+    GET_DIRECTORY: null,
+    GET_DIRECTORY_SUCCESS: null,
+    GET_DIRECTORY_ERROR: null,
 })

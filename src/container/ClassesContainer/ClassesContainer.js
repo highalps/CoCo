@@ -1,14 +1,16 @@
+/* */
 import React from 'react'
-import styles from './Classes.scss'
+import axios from 'axios'
 import { Button, ButtonGroup,InputGroup, Input } from 'reactstrap';
 import autobind from 'core-decorators/lib/autobind'
 
-import Class from 'component/Classes/Class'
-import CreateClass from 'component/Classes/CreateClass'
-import axios from 'axios'
-import NavBar from '../../component/GlobalNavbar'
+/* */
+import styles from './ClassesContainer.scss'
+import Class from '../../component/Classes/Class'
+import CreateClass from '../../component/Classes/CreateClass'
+import NavBar from '../../component/NavBar'
 
-class Classes  extends React.Component {
+class ClassesContainer extends React.Component {
     constructor(){
         super()
     }
@@ -24,8 +26,6 @@ class Classes  extends React.Component {
 
     }
 }
-
-
 class Search  extends React.Component {
 
     constructor(props) {
@@ -145,4 +145,4 @@ class Search  extends React.Component {
         )
     }
 }
-export default Classes
+export default ClassesContainer

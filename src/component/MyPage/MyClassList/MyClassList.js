@@ -1,12 +1,13 @@
 /* */
 import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
-import styles from './MyClassList.scss'
-import {Table,Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
+import { Table,Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import { connect } from 'react-redux'
-import { classActions} from '../../../redux/actions'
+import { withRouter } from 'react-router'
 
-
+/* */
+import styles from './MyClassList.scss'
+import { classActions } from '../../../redux/actions'
 
 class MyClassList extends React.Component {
     constructor(props){
@@ -24,8 +25,7 @@ class MyClassList extends React.Component {
             return <ColComponent colData={colData} key={index} index={index} entire={this.props.getClass}/>})
         return cols
     }
-
-
+    
     render() {
         return (
             <div className={styles.wrapper}>
@@ -38,9 +38,8 @@ class MyClassList extends React.Component {
     }
 }
 
-
-const mapStateToProps = (state) => ({})
-@connect(mapStateToProps)
+@withRouter
+@connect()
 class ColComponent extends React.Component {
     constructor(props){
         super(props)
@@ -51,12 +50,8 @@ class ColComponent extends React.Component {
     }
 
     @autobind
-    _participate(){
-        console.log('classNum', this.props.colData.num)
-        const payload = {
-            classNum: this.props.colData.num
-        }
-        this.props.dispatch(classActions.setClassNum(payload))
+    handleClickParticipate() {
+        this.props.history.push(`/editor/${this.props.colData.num}`)
     }
 
     @autobind
@@ -79,7 +74,7 @@ class ColComponent extends React.Component {
                 <th scope="row">{index+1}</th>
                 <td>{data.title}</td>
                 <td>{data.language}</td>
-                <td><Button onClick={this._participate}>참여하기</Button></td>
+                <td><Button onClick={this.handleClickParticipate}>참여하기</Button></td>
             </tr>
         )
     }
@@ -109,7 +104,7 @@ class ColComponent extends React.Component {
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this._participate}>참여하기</Button>
+                        <Button color="primary" onClick={this.handleClickParticipate}>참여하기</Button>
                         <Button color="secondary" onClick={this._toggleInfo}>취소</Button>
                     </ModalFooter>
                 </Modal>
@@ -137,8 +132,8 @@ class ColComponent extends React.Component {
                     </ModalFooter>
                 </Modal>
             </div>
-            
-            
+
+
         )
     }
 }

@@ -1,14 +1,12 @@
 import React from 'react'
-import styles from './MyPage.scss'
+import styles from './MyPageContainer.scss'
 import client from '../../redux/base.js'
 import { connect } from 'react-redux'
 
-import MyPrivateInfo from 'component/MyPage/MyPrivateInfo'
-import MyClassInfo from 'component/MyPage/MyClassInfo'
-import MyClassList from 'component/MyPage/MyClassList'
-import NavBar from '../../component/GlobalNavbar'
-
-
+import MyPrivateInfo from '../../component/MyPage/MyPrivateInfo'
+import MyClassInfo from '../../component/MyPage/MyClassInfo'
+import MyClassList from '../../component/MyPage/MyClassList'
+import NavBar from '../../component/NavBar'
 
 /*
 getWriter 신청 받은거
@@ -25,7 +23,7 @@ const mapStateToProps = (state) => ({
 })
 
 @connect(mapStateToProps)
-class MyPage  extends React.Component {
+class MyPageContainer  extends React.Component {
 
     constructor(){
         super()
@@ -90,4 +88,4 @@ class MyPage  extends React.Component {
         )
     }
 }
-export default MyPage;
+export default MyPageContainer;
