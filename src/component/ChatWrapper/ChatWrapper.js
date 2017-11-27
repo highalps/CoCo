@@ -27,7 +27,7 @@ class ChatWrapper extends React.Component {
     }
 
     renderChatButton() {
-        if (this.props.isLogged && ``) {
+        if (this.props.isLogged && !this.props.location.pathname.includes('/editor')) {
             return (
                 <ChatButton
                     showChatList={this.props.showChatList}
