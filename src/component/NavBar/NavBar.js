@@ -9,7 +9,11 @@ import { Link } from 'react-router-dom'
 import styles from './NavBar.scss';
 import { userActions } from '../../redux/actions'
 
-@connect()
+const mapStateToProps = (state) => ({
+    isLogged: state.userReducer.isLogged,
+})
+
+@connect(mapStateToProps)
 class NavBar extends React.Component {
   constructor() {
       super()
@@ -43,9 +47,11 @@ class NavBar extends React.Component {
   render() {
     return (
         <div className={styles.wrapper}>
-          <div className={styles.logo}>
-            CoCo tutor
-          </div>
+            <Link to="RegisterTutor">
+              <div className={styles.logo}>
+                  CoCo tutor
+              </div>
+            </Link>
           <div className={styles.menu}>
               <Link className={styles.button} to="RegisterTutor">
                   <i className="fa fa-star" />

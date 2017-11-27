@@ -1,10 +1,11 @@
 import userActions from './userActions'
 import uiActions from './uiActions'
 import chatActions from './chatActions'
-import classActions from './classActions'
+import editorActions from './editorActions'
+
 export {
     userActions,
     uiActions,
     chatActions,
-    classActions,
+    editorActions,
 }

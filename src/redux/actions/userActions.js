@@ -3,13 +3,7 @@
 /* */
 import AT from '../actions/actionTypes'
 import client from '../base'
-
-function createAction(actionType) {
-    return (payload) => ({
-        type: actionType,
-        payload,
-    })
-}
+import { createAction } from './utils'
 
 export default {
     signIn: (payload) => {

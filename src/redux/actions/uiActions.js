@@ -2,13 +2,7 @@
 
 /* */
 import AT from '../actions/actionTypes'
-
-function createAction(actionType) {
-    return (payload) => ({
-        type: actionType,
-        payload,
-    })
-}
+import { createAction } from './utils'
 
 export default {
     closeChat: () => createAction(AT.CLOSE_CHAT)(),

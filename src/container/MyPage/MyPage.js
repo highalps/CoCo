@@ -3,12 +3,10 @@ import styles from './MyPage.scss'
 import client from '../../redux/base.js'
 import { connect } from 'react-redux'
 
-import MyPrivateInfo from 'component/MyPage/MyPrivateInfo'
-import MyClassInfo from 'component/MyPage/MyClassInfo'
-import MyClassList from 'component/MyPage/MyClassList'
-import NavBar from '../../component/GlobalNavbar'
-
-
+import MyPrivateInfo from '../../component/MyPage/MyPrivateInfo'
+import MyClassInfo from '../../component/MyPage/MyClassInfo'
+import MyClassList from '../../component/MyPage/MyClassList'
+import NavBar from '../../component/NavBar'
 
 /*
 getWriter 신청 받은거

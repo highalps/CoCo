@@ -16,7 +16,7 @@ class Body extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-              <SideBar />
+              <SideBar directory={this.props.directory} />
               <MainEditor />
             </div>
         )

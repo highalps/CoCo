@@ -44,7 +44,7 @@ class TextEditor extends React.Component {
     connect(props) {
         this.setState({ isLoading: false })
         // TODO: tobechange를 project의 _id로 변경
-        const fileName = 'tobechange/' + props.name
+        const fileName = '/' + props.name
         const doc = this.shareConnection.get('files', fileName)
         shareDBCodeMirror.attachDocToCodeMirror(doc, this.codeMirror, {
             key: 'content',

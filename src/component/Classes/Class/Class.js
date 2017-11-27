@@ -1,15 +1,16 @@
 /* */
+import React from 'react'
+import { connect } from 'react-redux'
+import autobind from 'core-decorators/lib/autobind'
+import { Input, Button, Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter,
+    ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Form, FormGroup } from 'reactstrap'
+
+/* */
 import styles from './Class.scss'
 import ModifyClass from '../ModifyClass'
 import DeleteClass from '../DeleteClass'
 import TutorInfo from '../TutorInfo'
 import client from '../../../redux/base.js'
-
-
-import autobind from 'core-decorators/lib/autobind'
-import {Input, Button,Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Form, FormGroup} from 'reactstrap'
-import React from 'react'
-import { connect } from 'react-redux'
 
 
 class Class extends React.Component {

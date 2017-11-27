@@ -1,19 +1,16 @@
 /* */
 import React from 'react'
 import { connect } from 'react-redux'
-import client from '../../redux/base.js'
+
 /* */
 import styles from './App.scss'
-import Header from 'component/Header'
-import Body from 'component/Body'
-import Footer from 'component/Footer'
-import { uiActions } from '../../redux/actions/'
-import TerminalSocket from '../../service/terminalSocketService'
-
-
+import Header from '../../component/Header'
+import Body from '../../component/Body'
+import Footer from '../../component/Footer'
+import { uiActions, editorActions } from '../../redux/actions/'
 
 const mapStateToProps = (state) => ({
-    classNum : state.classReducer.classNum
+    directory: state.editorReducer.directory,
 })
 
 @connect(mapStateToProps)
@@ -21,28 +18,45 @@ class App extends React.Component {
 
     constructor() {
         super()
+        this.state = {
+            isLoading: true,
+        }
     }
-    componentWillMount(){
-        client.get('api/pad/compile/'+this.props.classNum).
-        then(res =>{
-            console.log(res)
-            TerminalSocket.connect(this.props.classNum)
-        }).then(error => {
 
-        })
-    }
     componentDidMount() {
         this.props.dispatch(uiActions.closeChat())
+        const payload = {
+            chatId: this.props.chatId || 8025,
+        }
+        this.props.dispatch(editorActions.getDirectory(payload))
+            .then(() => this.setState({ isLoading: false }))
+    }
+
+    renderEditor() {
+        if (this.state.isLoading) {
+            return (
+                <div className={styles.wrapper}>
+                    <div className={styles.loading}>
+                        <div className={styles.header}>
+                        </div>
+                        <div className={styles.body}>
+
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+       return (
+           <div className={styles.wrapper}>
+               <Header />
+               <Body directory={this.props.directory} />
+               <Footer />
+           </div>
+       )
     }
 
     render() {
-        return (
-            <div className={styles.wrapper}>
-               <Header />
-               <Body />
-               <Footer />
-            </div>
-        )
+        return this.renderEditor()
     }
 }
 

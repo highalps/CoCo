@@ -18,7 +18,7 @@ export default () => (
             <ChatWrapper />
             <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path="/editor" component={App} />
+                <Route path="/editor/:number" component={App} />
                 <Route path="/classes" component={Classes} />
                 <Route path="/signUp" component={SignUp} />
                 <Route path="/signIn" component={SignIn} />

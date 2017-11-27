@@ -39,6 +39,16 @@ class ChatMessage extends React.Component {
             })
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.chat.size) {
+            const prevChat = prevProps.chat.get('messages')
+            const curChat =  this.props.chat.get('messages')
+            if (prevChat.size !== curChat.size) {
+                this.scrollDown()
+            }
+        }
+    }
+
     scrollDown() {
         if (this._refs.body) {
             const e = this._refs.body

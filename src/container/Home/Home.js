@@ -7,17 +7,12 @@ import { connect } from 'react-redux'
 import styles from './Home.scss'
 import NavBar from '../../component/NavBar'
 
-const mapStateToProps = (state) => ({
-    isLogged: state.userReducer.isLogged,
-})
-
-@connect(mapStateToProps)
 class Home extends React.Component {
 
     render() {
         return (
             <div className={styles.wrapper}>
-               <NavBar isLogged={this.props.isLogged} />
+               <NavBar />
                 <div className={styles.main} />
             </div>
         )

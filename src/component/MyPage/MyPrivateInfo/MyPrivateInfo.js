@@ -2,12 +2,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {Button,Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import client from '../../../redux/base.js'
-
+import autobind from 'core-decorators/lib/autobind'
 
 /* */
 import styles from './MyPrivateInfo.scss'
-import autobind from 'core-decorators/lib/autobind'
+import client from '../../../redux/base.js'
 
 
 class MyPrivateInfo  extends React.Component {
