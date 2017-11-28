@@ -65,7 +65,6 @@ class TerminalComponent extends React.Component {
             this.setState({ bashText: this.state.bashText.substring(0, this.state.bashText.length - 1) })
 
         } else if (printable) {
-        } else if (printable) {
             this.setState({
                 bashText: this.state.bashText + key
             }, () => this.term.write(key))

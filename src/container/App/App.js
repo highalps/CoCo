@@ -39,15 +39,17 @@ class App extends React.Component {
             return (
                 <div className={styles.wrapper}>
                     <div className={styles.loading}>
-                        <div className={styles.header}>
-                        </div>
                         <div className={styles.body}>
-
+                            <img className={styles.image} src={require('../../styles/icon/editor_loading.gif')} />
+                        </div>
+                        <div className={styles.description}>
+                            도커 컨테이너 가동 및 디렉토리 정보를 받아오는 중입니다...
                         </div>
                     </div>
                 </div>
             )
         }
+
        return (
            <div className={styles.wrapper}>
                <Header />
