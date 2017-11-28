@@ -2,7 +2,6 @@
 import React from 'react'
 import classNames from 'classnames'
 import Immutable from 'immutable'
-import PropTypes from 'prop-types'
 
 /* */
 import styles from './EditorBox.scss'
@@ -45,20 +44,10 @@ class EditorBox extends React.Component {
         return (
             <div className={styles.wrapper}>
                 {this.renderTab()}
-                <TextEditor
-                    name={this.state.name}
-                    classId={this.props.classId} />
+                <TextEditor name={this.state.name}  classNum={this.props.classNum}/>
             </div>
         )
     }
-}
-
-EditorBox.propTypes = {
-    classId: PropTypes.number,
-}
-
-EditorBox.defaultProps = {
-    classId: 0,
 }
 
 export default EditorBox

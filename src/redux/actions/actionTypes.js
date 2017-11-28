@@ -1,8 +1,7 @@
 import keyMirror from 'keymirror'
 
 export default keyMirror({
-    /* user Actions */
-    INIT_USER: null,
+   INIT_USER: null,
 
     SIGN_IN: null,
     SIGN_IN_SUCCESS: null,
@@ -14,7 +13,6 @@ export default keyMirror({
 
     LOG_OUT: null,
 
-    /* chat Actions */
     GET_CHAT_LIST: null,
     GET_CHAT_LIST_SUCCESS: null,
     GET_CHAT_LIST_ERROR: null,
@@ -23,9 +21,16 @@ export default keyMirror({
     GET_CHAT_MESSAGES_SUCCESS: null,
     GET_CHAT_MESSAGES_ERROR: null,
 
+
     PUT_CHAT_MESSAGE: null,
     PUT_CHAT_MESSAGE_SUCCESS: null,
     PUT_CHAT_MESSAGE_ERROR: null,
+
+
+   /* UI actions */
+   CLOSE_CHAT: null,
+   SHOW_CHAT_LIST: null,
+   SHOW_CHAT_MESSAGE: null,
 
     CREATE_CHAT_MESSAGE: null,
     CREATE_CHAT_MESSAGE_SUCCESS: null,
@@ -33,17 +38,7 @@ export default keyMirror({
 
     UPDATE_MESSAGE: null,
 
-    /* editor Actions */
     GET_DIRECTORY: null,
     GET_DIRECTORY_SUCCESS: null,
     GET_DIRECTORY_ERROR: null,
-
-    JOIN_CLASS: null,
-    EXIT_CLASS: null,
-
-    /* UI actions */
-    CLOSE_CHAT: null,
-    SHOW_CHAT_LIST: null,
-    SHOW_CHAT_MESSAGE: null,
-
 })

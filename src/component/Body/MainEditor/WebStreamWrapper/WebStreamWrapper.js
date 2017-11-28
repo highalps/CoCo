@@ -4,7 +4,7 @@ import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
 import io from 'socket.io-client'
 import Detectrtc from 'detectrtc'
-import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './WebStreamWrapper.scss'
@@ -18,6 +18,7 @@ import styles from './WebStreamWrapper.scss'
 
  */
 
+@withRouter
 class WebStreamWrapper extends React.Component {
 
     constructor(props) {
@@ -34,11 +35,9 @@ class WebStreamWrapper extends React.Component {
             token: '',
             href: '#',
         }
-    }
-
-    componentDidMount() {
+        this.setRoomToken()
         this.initValue()
-        this.initSocket()
+        this.initSocket(props)
     }
 
     initValue(props) {
@@ -47,7 +46,7 @@ class WebStreamWrapper extends React.Component {
         this.localStream = null
         this.socket = io('https://external.cocotutor.ml/stream', { secure: true })
         this.userId = Math.round(Math.random() * 999999) + 999999;
-        this.roomId = this.props.classId
+        this.roomId = props.location.pathname.split('editor/')[1]
         this.remoteUserId = null
         this.localStream = null
         this.localSmallStream = null
@@ -331,6 +330,15 @@ class WebStreamWrapper extends React.Component {
         }
     }
 
+    setRoomToken() {
+        //console.log('setRoomToken', arguments);
+        if (location.hash.length > 2) {
+            this.setState({ href: location.href })
+        } else {
+            location.hash = '#' + (Math.random() * new Date().getTime()).toString(32).toUpperCase().replace(/\./g, '-');
+            }
+    }
+
     @autobind
     toggleVideo() {
         console.log('pauseVideo', arguments)
@@ -429,11 +437,11 @@ class WebStreamWrapper extends React.Component {
 }
 
 WebStreamWrapper.propTypes = {
-    classId: PropTypes.number,
+
 }
 
 WebStreamWrapper.defaultProps = {
-    classId: 0,
+
 }
 
 export default WebStreamWrapper

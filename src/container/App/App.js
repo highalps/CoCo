@@ -12,7 +12,6 @@ import { uiActions, editorActions } from '../../redux/actions/'
 
 const mapStateToProps = (state) => ({
     directory: state.editorReducer.directory,
-    classId: state.editorReducer.joinClassId
 })
 
 @withRouter
@@ -28,13 +27,11 @@ class App extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(uiActions.closeChat())
-        if (this.props.classId) {
-            const payload = {
-                classId: this.props.classId
-            }
-            this.props.dispatch(editorActions.getDirectory(payload))
-                .then(() => this.setState({isLoading: false}))
+        const payload = {
+            chatId: this.props.chatId || this.props.location.pathname.split('editor/')[1],
         }
+        this.props.dispatch(editorActions.getDirectory(payload))
+            .then(() => this.setState({ isLoading: false }))
     }
 
     renderEditor() {
@@ -54,9 +51,7 @@ class App extends React.Component {
        return (
            <div className={styles.wrapper}>
                <Header />
-               <Body
-                   classId={this.props.classId}
-                   directory={this.props.directory} />
+               <Body directory={this.props.directory} />
                <Footer />
            </div>
        )

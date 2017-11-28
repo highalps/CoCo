@@ -7,7 +7,7 @@ import { withRouter } from 'react-router'
 
 /* */
 import styles from './MyClassList.scss'
-import { editorActions } from '../../../redux/actions'
+import { classActions } from '../../../redux/actions'
 
 class MyClassList extends React.Component {
     constructor(props){
@@ -51,10 +51,6 @@ class ColComponent extends React.Component {
 
     @autobind
     handleClickParticipate() {
-        const payload = {
-            classId : this.props.colData.num
-        }
-        this.props.dispatch(editorActions.joinClass(payload))
         this.props.history.push(`/editor/${this.props.colData.num}`)
     }
 

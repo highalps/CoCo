@@ -9,9 +9,10 @@ export default {
     getDirectory: (payload) => {
         return (dispatch) => {
             dispatch(createAction(AT.GET_DIRECTORY)(payload))
-            const { classId } = payload
-            return client.get(`/api/pad/${classId}`)
+            const { chatId } = payload
+            return client.get(`/api/pad/${chatId}`)
                 .then(response => {
+                    console.log("RE", response.data)
                     dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(({ directory: response.data })))
                 })
                 .catch(error => {
@@ -20,7 +21,5 @@ export default {
                 })
         }
     },
-
-    joinClass: (payload) => createAction(AT.JOIN_CLASS)(payload)
 }
 
