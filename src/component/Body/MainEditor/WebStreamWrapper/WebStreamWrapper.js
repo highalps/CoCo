@@ -4,6 +4,7 @@ import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
 import io from 'socket.io-client'
 import Detectrtc from 'detectrtc'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './WebStreamWrapper.scss'
@@ -17,10 +18,11 @@ import styles from './WebStreamWrapper.scss'
 
  */
 
+@withRouter
 class WebStreamWrapper extends React.Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this._refs = {}
         this.state = {
             isSuccessGetMedia: false,
@@ -35,18 +37,16 @@ class WebStreamWrapper extends React.Component {
         }
         this.setRoomToken()
         this.initValue()
-        this.initSocket()
+        this.initSocket(props)
     }
 
-    initValue() {
+    initValue(props) {
         this.hasWebcam = DetectRTC.hasWebcam
         this.hasMic = DetectRTC.hasMicrophone
         this.localStream = null
-        this.socket = io('https://external.cocotutor.ml/stream', {secure: true})
-        console.log(this.socket)
+        this.socket = io('https://external.cocotutor.ml/stream', { secure: true })
         this.userId = Math.round(Math.random() * 999999) + 999999;
-        // TODO: class Number로 connect 하기
-        this.roomId = '8025'
+        this.roomId = props.location.pathname.split('editor/')[1]
         this.remoteUserId = null
         this.localStream = null
         this.localSmallStream = null
