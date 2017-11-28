@@ -37,6 +37,7 @@ class TextEditor extends React.Component {
             this.connect(nextProps)
         }
     }
+
     componentDidMount() {
         this.codeMirror = CodeMirror.fromTextArea(this._refs.textArea, option);
         this.shareConnection = new shareDB.Connection(new WebSocket("wss://" + 'external.cocotutor.ml'));
@@ -45,7 +46,7 @@ class TextEditor extends React.Component {
 
     connect(props) {
         this.setState({ isLoading: false })
-        const classNum = this.props.location.pathname.split('editor')[1]
+        const classNum = this.props.match.params.classId
         const fileName = classNum + '/' + props.name
         const doc = this.shareConnection.get('files', fileName)
         shareDBCodeMirror.attachDocToCodeMirror(doc, this.codeMirror, {

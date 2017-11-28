@@ -36,7 +36,7 @@ class TerminalComponent extends React.Component {
     }
 
     initailize() {
-        const classNum = this.props.location.pathname.split('editor/')[1]
+        const classNum = this.props.match.params.classId
         webSocket.connect(classNum)
 
         // add event listener

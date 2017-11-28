@@ -9,10 +9,9 @@ export default {
     getDirectory: (payload) => {
         return (dispatch) => {
             dispatch(createAction(AT.GET_DIRECTORY)(payload))
-            const { chatId } = payload
-            return client.get(`/api/pad/${chatId}`)
+            const { classId } = payload
+            return client.get(`/api/pad/${classId}`)
                 .then(response => {
-                    console.log("RE", response.data)
                     dispatch(createAction(AT.GET_DIRECTORY_SUCCESS)(({ directory: response.data })))
                 })
                 .catch(error => {

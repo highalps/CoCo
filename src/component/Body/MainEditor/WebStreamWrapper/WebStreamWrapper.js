@@ -35,18 +35,20 @@ class WebStreamWrapper extends React.Component {
             token: '',
             href: '#',
         }
-        this.setRoomToken()
-        this.initValue()
-        this.initSocket(props)
     }
 
-    initValue(props) {
+    componentDidMount() {
+        this.initValue()
+        this.initSocket()
+    }
+
+    initValue() {
         this.hasWebcam = DetectRTC.hasWebcam
         this.hasMic = DetectRTC.hasMicrophone
         this.localStream = null
         this.socket = io('https://external.cocotutor.ml/stream', { secure: true })
         this.userId = Math.round(Math.random() * 999999) + 999999;
-        this.roomId = props.location.pathname.split('editor/')[1]
+        this.roomId = this.props.match.params.classId
         this.remoteUserId = null
         this.localStream = null
         this.localSmallStream = null
@@ -328,15 +330,6 @@ class WebStreamWrapper extends React.Component {
         else {
             window.prompt("Copy to clipboard: Ctrl+C, Enter", link); // Copy to clipboard: Ctrl+C, Enter
         }
-    }
-
-    setRoomToken() {
-        //console.log('setRoomToken', arguments);
-        if (location.hash.length > 2) {
-            this.setState({ href: location.href })
-        } else {
-            location.hash = '#' + (Math.random() * new Date().getTime()).toString(32).toUpperCase().replace(/\./g, '-');
-            }
     }
 
     @autobind
