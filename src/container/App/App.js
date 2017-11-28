@@ -26,7 +26,7 @@ class App extends React.Component {
     componentDidMount() {
         this.props.dispatch(uiActions.closeChat())
         const payload = {
-            chatId: this.props.chatId || 8025,
+            chatId: this.props.chatId || this.props.location.pathname.split('editor/')[1],
         }
         this.props.dispatch(editorActions.getDirectory(payload))
             .then(() => this.setState({ isLoading: false }))
