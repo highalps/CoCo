@@ -36,7 +36,7 @@ class TerminalComponent extends React.Component {
     }
 
     initailize() {
-        const classNum = this.props.location.pathname.split('editor/')[1]
+        const classNum = this.props.match.params.classId
         webSocket.connect(classNum)
 
         // add event listener
@@ -64,7 +64,6 @@ class TerminalComponent extends React.Component {
             }
             this.setState({ bashText: this.state.bashText.substring(0, this.state.bashText.length - 1) })
 
-        } else if (printable) {
         } else if (printable) {
             this.setState({
                 bashText: this.state.bashText + key

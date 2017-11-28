@@ -12,7 +12,7 @@ class Home extends React.Component {
         return (
             <div className={styles.wrapper}>
                <NavBar />
-                <div className={styles.main} />
+               <div className={styles.main} />
             </div>
         )
     }

@@ -1,6 +1,7 @@
 /* */
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './App.scss'
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => ({
     directory: state.editorReducer.directory,
 })
 
+@withRouter
 @connect(mapStateToProps)
 class App extends React.Component {
 
@@ -26,7 +28,7 @@ class App extends React.Component {
     componentDidMount() {
         this.props.dispatch(uiActions.closeChat())
         const payload = {
-            chatId: this.props.chatId || 8025,
+            classId: this.props.match.params.classId,
         }
         this.props.dispatch(editorActions.getDirectory(payload))
             .then(() => this.setState({ isLoading: false }))
@@ -37,15 +39,17 @@ class App extends React.Component {
             return (
                 <div className={styles.wrapper}>
                     <div className={styles.loading}>
-                        <div className={styles.header}>
-                        </div>
                         <div className={styles.body}>
-
+                            <img className={styles.image} src={require('../../styles/icon/editor_loading.gif')} />
+                        </div>
+                        <div className={styles.description}>
+                            도커 컨테이너 가동 및 디렉토리 정보를 받아오는 중입니다...
                         </div>
                     </div>
                 </div>
             )
         }
+
        return (
            <div className={styles.wrapper}>
                <Header />
