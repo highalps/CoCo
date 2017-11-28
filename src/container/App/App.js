@@ -1,6 +1,7 @@
 /* */
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './App.scss'
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => ({
     directory: state.editorReducer.directory,
 })
 
+@withRouter
 @connect(mapStateToProps)
 class App extends React.Component {
 
