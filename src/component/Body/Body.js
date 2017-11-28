@@ -1,5 +1,6 @@
 /* */
 import React from 'react'
+import PropTypes from 'prop-types'
 
 /* */
 import styles from './Body.scss'
@@ -17,10 +18,18 @@ class Body extends React.Component {
         return (
             <div className={styles.wrapper}>
               <SideBar directory={this.props.directory} />
-              <MainEditor />
+              <MainEditor classId={this.props.classId} />
             </div>
         )
     }
+}
+
+Body.propTypes = {
+    classId: PropTypes.number,
+}
+
+Body.defaultProps = {
+    classId: 0,
 }
 
 export default Body

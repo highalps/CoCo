@@ -1,6 +1,6 @@
 /* */
 import React from 'react'
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 /* */
 import styles from './MainEditor.scss'
@@ -8,7 +8,6 @@ import EditorBox from './EditorBox'
 import Terminal from './Terminal'
 import WebStreamWrapper from './WebStreamWrapper'
 
-@connect()
 class MainEditor extends React.Component {
 
     constructor() {
@@ -19,12 +18,20 @@ class MainEditor extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <EditorBox />
-                <Terminal />
-                <WebStreamWrapper />
+                <EditorBox classId={this.props.classId} />
+                <Terminal classId={this.props.classId} />
+                <WebStreamWrapper classId={this.props.classId} />
             </div>
         )
     }
+}
+
+MainEditor.propTypes = {
+    classId: PropTypes.number,
+}
+
+MainEditor.defaultProps = {
+    classId: 0,
 }
 
 export default MainEditor

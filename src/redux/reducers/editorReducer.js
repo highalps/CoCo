@@ -7,6 +7,7 @@ import { setToken } from '../../utils/authUtils'
 
 const initialState = {
     directory: Immutable.Map(),
+    joinClassId: '',
 }
 
 //type name contents
@@ -35,8 +36,18 @@ const userReducer = (state = initialState, action) => {
             }
         }
 
+        case AT.JOIN_CLASS:
+            const { classId } = action.payload
+            return {
+                ...state,
+                joinClassId: classId,
+            }
+
+        case AT.EXIT_CLASS:
+            return initialState
+
         default:
-            return state;
+            return state
     }
 }
 

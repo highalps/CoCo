@@ -1,7 +1,7 @@
 /* */
 import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
-import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 /* */
 import styles from './Terminal.scss'
@@ -16,7 +16,6 @@ const option = {
     bellStyle: 'sound',
 }
 
-@withRouter
 class TerminalComponent extends React.Component {
 
     constructor() {
@@ -32,13 +31,11 @@ class TerminalComponent extends React.Component {
     componentDidMount() {
         this.term = terminalService.initialize(this._refs.terminal, option)
         this.term.focus()
-        this.initailize()
+        this.initailize(this.props.classId)
     }
 
-    initailize() {
-        const classNum = this.props.location.pathname.split('editor/')[1]
-        webSocket.connect(classNum)
-
+    initailize(classId) {
+        webSocket.connect(classId)
         // add event listener
         this.term.on('key', this.handleKeyDown)
         this.term.on('paste', this.handlePaste)
@@ -85,6 +82,14 @@ class TerminalComponent extends React.Component {
             </div>
         )
     }
+}
+
+TerminalComponent.propTypes = {
+    classId: PropTypes.number,
+}
+
+TerminalComponent.defaultProps = {
+    classId: 0,
 }
 
 export default TerminalComponent
