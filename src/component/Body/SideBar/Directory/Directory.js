@@ -4,7 +4,7 @@ import SortableTree from 'react-sortable-tree';
 import FileExplorerTheme from 'react-sortable-tree-theme-file-explorer'
 import Immutable from 'immutable'
 import autobind from 'core-decorators/lib/autobind'
-import classNames from 'classnames'
+import propTypes from 'prop-types'
 
 /* */
 import styles from './Directory.scss'
@@ -14,14 +14,22 @@ class Directory extends React.Component {
     constructor(props) {
         super(props)
         this._refs = {}
+        this.dirMap = Immutable.Map()
         this.state = {
-            directory: props.directory.toJS()
+            directory: props.directory.toJS(),
+            dirStatus: Immutable.Map()
         }
     }
 
     @autobind
     onChangeDirectory(directory) {
         this.setState({ directory })
+    }
+
+    @autobind
+    getNodeKey({ treeIndex, node }) {
+        // this.setState({ dirStatus: this.state.dirStatus.set(treeIndex, node) })
+        this.dirMap = this.dirMap.set(treeIndex, node)
     }
 
     directoryStyles(file) {
@@ -53,11 +61,13 @@ class Directory extends React.Component {
     nodeRenderer(file) {
         if (file.node.type === 'directory') {
             return {
-                icons:  [<div style={this.directoryStyles(file)} />]
+                icons:  [<div style={this.directoryStyles(file)} />],
+                onDoubleClick: this.props.handleDoubleClick(file),
             }
         }
         return {
-            icons: [<div style={this.fileStyles()}>{file.node.title.split('.')[1][0]}</div>]
+            icons: [<div style={this.fileStyles()}>{file.node.title.split('.')[1][0]}</div>],
+            onDoubleClick: this.props.handleDoubleClick(file),
         }
     }
 
@@ -65,18 +75,25 @@ class Directory extends React.Component {
         return (
             <div className={styles.wrapper}>
                 <SortableTree
+                    className={styles.directory}
                     theme={FileExplorerTheme}
                     onChange={this.onChangeDirectory}
                     treeData={this.state.directory}
                     canDrag={false}
+                    getNodeKey={this.getNodeKey}
                     generateNodeProps={this.nodeRenderer} />
             </div>
         );
     }
 }
 
+Directory.propTypes = {
+    handleDoubleClick: propTypes.func
+}
+
 Directory.defaultProps = {
     directory: Immutable.Map(),
+    handleDoubleClick: () => {},
 }
 
 export default Directory

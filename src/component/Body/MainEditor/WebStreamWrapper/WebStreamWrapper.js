@@ -275,43 +275,48 @@ class WebStreamWrapper extends React.Component {
     @autobind
     handleClickButton(isOffer) {
         return () => {
-            window.navigator.getUserMedia({
-                audio: true,
-                video: {
-                    mandatory: {
-                        // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
-                        // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
-                        maxWidth: 1280,
-                        maxHeight: 720,
-                        minWidth: 1280,
-                        minHeight: 720,
-                        maxFrameRate: 24,
-                        minFrameRate: 18,
-                        maxAspectRatio: 1.778,
-                        minAspectRatio: 1.777
+            if (this.hasWebcam && this.hasMic) {
+                window.navigator.getUserMedia({
+                    audio: true,
+                    video: {
+                        mandatory: {
+                            // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
+                            // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
+                            maxWidth: 1280,
+                            maxHeight: 720,
+                            minWidth: 1280,
+                            minHeight: 720,
+                            maxFrameRate: 24,
+                            minFrameRate: 18,
+                            maxAspectRatio: 1.778,
+                            minAspectRatio: 1.777
+                        },
+                        optional: [
+                            {googNoiseReduction: true}, // Likely removes the noise in the captured video stream at the expense of computational effort.
+                            {facingMode: "user"}        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
+                        ]
                     },
-                    optional: [
-                        { googNoiseReduction: true }, // Likely removes the noise in the captured video stream at the expense of computational effort.
-                        { facingMode: "user" }        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
-                    ]
-                },
-            }, (stream) => {
-                this.localStream = stream
-                this.setState({ isSuccessGetMedia: true })
-                const el = this._refs['local-video']
-                if (el) {
-                    el.srcObject = this.localStream
-                }
+                }, (stream) => {
+                    this.localStream = stream
+                    this.setState({isSuccessGetMedia: true})
+                    const el = this._refs['local-video']
+                    if (el) {
+                        el.srcObject = this.localStream
+                    }
 
-                if (isOffer) {
-                    console.log("나는 오퍼다")
-                    this.createPeerConnection()
-                    this.createOffer()
-                }
+                    if (isOffer) {
+                        console.log("나는 오퍼다")
+                        this.createPeerConnection()
+                        this.createOffer()
+                    }
 
-            }, () => {
-                this.setState({ isErrorGetMedia: true })
-            })
+                }, () => {
+                    this.setState({isErrorGetMedia: true})
+                })
+            }
+            else {
+                window.alert("웹캠과 마이크가 필요합니다")
+            }
         }
     }
 
