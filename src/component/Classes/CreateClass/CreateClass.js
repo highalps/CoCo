@@ -1,11 +1,13 @@
 /* */
-import React from 'react'
 import styles from './CreateClass.scss'
-import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
 import client from '../../../redux/base.js'
+
+
+/* */
 import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
-
+import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
+import React from 'react'
 /*
 body = {
 		nickname: 작성자
@@ -175,8 +177,7 @@ class CreateClass extends React.Component {
                     this.state.body
                 ).then(res =>{console.log(res.data)})
                     .catch(error =>{console.log(error)})
-                this._toggle()
-                this._initState()
+                window.location.reload()
             })
     }
 

@@ -115,8 +115,8 @@ class Search  extends React.Component {
                 <div className = {styles.btnWrapper}>
                     <ButtonGroup className = {styles.groupBtn}>
                         <Button size= "lg" color="primary" onClick={() => this._onGroupBtnClick(0)} active={this.state.group === 0}>전체</Button>
-                        <Button size= "lg" color="primary" onClick={() => this._onGroupBtnClick(1)} active={this.state.group === 1}>튜터</Button>
-                        <Button size= "lg" color="primary" onClick={() => this._onGroupBtnClick(2)} active={this.state.group === 2}>학생</Button>
+                        <Button size= "lg" color="primary" onClick={() => this._onGroupBtnClick(2)} active={this.state.group === 2}>튜터</Button>
+                        <Button size= "lg" color="primary" onClick={() => this._onGroupBtnClick(1)} active={this.state.group === 1}>학생</Button>
                     </ButtonGroup>
                     <ButtonGroup className = {styles.languageBtn}>
                         <Button size= "lg" color="primary" onClick={() => this._onLanguageBtnClick(0)} active={this.state.language === 0}>전체</Button>

@@ -1,8 +1,9 @@
+/* */
 import React from 'react'
 import styles from './MyPageContainer.scss'
 import client from '../../redux/base.js'
 import { connect } from 'react-redux'
-
+/* */
 import MyPrivateInfo from '../../component/MyPage/MyPrivateInfo'
 import MyClassInfo from '../../component/MyPage/MyClassInfo'
 import MyClassList from '../../component/MyPage/MyClassList'

@@ -154,19 +154,18 @@ class  ColComponent extends React.Component {
                 this._toggleClass()
             })
         }).catch(error =>{console.log(error)
-            this._toggleClass()
         })
     }
     @autobind
     _getTutorData(){
         client.get('api/user/getTutor/'+this.props.colData.nickname).then(res => {
+            console.log('tutorinfo', res.data.tutor)
             this.setState({
                 tutorInfo:res.data.tutor
             },()=>{
                 this._toggleUser()
             })
         }).catch(error =>{console.log(error)
-            this._toggleUser()
         })
     }
     @autobind
@@ -303,4 +302,5 @@ class  ColComponent extends React.Component {
         )
     }
 }
+
 export default Class

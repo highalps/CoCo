@@ -1,10 +1,12 @@
-import styles from './MyClassInfo.scss'
-
+/* */
 import React from 'react'
 import {Table, TabContent, TabPane, Nav, NavItem, NavLink, Button} from 'reactstrap'
 import classnames from 'classnames'
 import client from '../../../redux/base.js'
 import autobind from 'core-decorators/lib/autobind'
+
+/* */
+import styles from './MyClassInfo.scss'
 
 
 

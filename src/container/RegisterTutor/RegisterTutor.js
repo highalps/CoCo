@@ -1,9 +1,11 @@
+/* */
 import React from 'react'
 import { Button,Input, FormGroup, Label } from 'reactstrap'
 import client from '../../redux/base.js'
 import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
 
+/* */
 import styles from './RegisterTutor.scss'
 import NavBar from '../../component/NavBar'
 

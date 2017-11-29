@@ -1,11 +1,12 @@
 /* */
 import React from 'react'
-/* */
-import styles from './ModifyClass.scss'
 import {Input, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, ButtonGroup} from 'reactstrap'
-import client from '../../../redux/base.js'
 import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
+
+/* */
+import styles from './ModifyClass.scss'
+import client from '../../../redux/base.js'
 
 const mapStateToProps = (state) => ({
     nickname: state.userReducer.nickname,

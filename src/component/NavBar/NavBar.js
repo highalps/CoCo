@@ -59,7 +59,7 @@ class NavBar extends React.Component {
   render() {
     return (
         <div className={styles.wrapper}>
-            <Link to="RegisterTutor">
+            <Link to="">
               <div className={styles.logo}>
                   CoCo tutor
               </div>

@@ -1,7 +1,8 @@
+/* */
 import React from 'react'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 
-
+/* */
 import styles from './DeleteClass.scss'
 import client from '../../../redux/base.js'
 import autobind from 'core-decorators/lib/autobind'

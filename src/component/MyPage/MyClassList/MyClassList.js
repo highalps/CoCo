@@ -90,6 +90,7 @@ class ColComponent extends React.Component {
                         <div className={styles.classLanguage}>{colData.language !== ''? 'Language | '+ colData.language:'더보기'}</div>
                     </div>
                 </div>
+
                 <Modal isOpen={this.state.modalInfo} toggle={this._toggleInfo}>
                     <ModalHeader toggle={this._toggleInfo} className = {styles.modalHeader}>{colData.title}</ModalHeader>
                     <ModalBody className={styles.modalBodyStyle}>
@@ -132,7 +133,6 @@ class ColComponent extends React.Component {
                     </ModalFooter>
                 </Modal>
             </div>
-
 
         )
     }
