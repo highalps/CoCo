@@ -79,17 +79,31 @@ class ChatMessage extends React.Component {
     handleOnChange(event) {
         this.setState({ message: event.target.value })
     }
-
+    @autobind
+    handleClickParticipate() {
+        this.props.history.push(`/editor/${this.props.chatId}`)
+    }
+    @autobind
+    accept(){
+        return () => {
+            client.put('api/chat/request/'+this.props.chatId)
+                .then(res =>{
+                    console.log(res)
+                })
+                .catch(error =>{console.log(error)
+                })
+        }
+    }
     @autobind
     ifMatchingCompleted() {
         console.log("ismatched", this.props.status)
         if(this.props.status === 3) {
             return (
-                <div className={styles.chatTitle}>참여</div>
+                <div className={styles.chatTitle} onClick={this.handleClickParticipate}>참여</div>
             )
         }
         return (
-            <div className={styles.chatTitle}>수락</div>
+            <div className={styles.chatTitle} onClick={this.accept}>수락</div>
         )
     }
 
