@@ -1,9 +1,13 @@
+/* */
 import React from 'react'
 import { Button,Input, FormGroup, Label } from 'reactstrap'
 import client from '../../redux/base.js'
 import { connect } from 'react-redux'
+import autobind from 'core-decorators/lib/autobind'
 
+/* */
 import styles from './RegisterTutor.scss'
+import NavBar from '../../component/NavBar'
 
 const mapStateToProps = (state) => ({
     nickname: state.userReducer.nickname,
@@ -24,14 +28,8 @@ class RegisterTutor  extends React.Component {
             career: '',
             language: new Set()
         }
-        this._handleDegreeChange = this._handleDegreeChange.bind(this)
-        this._handleGitChange = this._handleGitChange.bind(this)
-        this._handleCareerChange = this._handleCareerChange.bind(this)
-        this._handleLanguageChange = this._handleLanguageChange.bind(this)
-        this._handleIntroChange = this._handleIntroChange.bind(this)
-        this._registerTutor = this._registerTutor.bind(this)
-        this._initState = this._initState.bind(this)
     }
+    @autobind
     _initState(){
         this.setState({
             degree: '',
@@ -42,18 +40,23 @@ class RegisterTutor  extends React.Component {
         })
     }
 
+    @autobind
     _handleDegreeChange(e){
         this.setState({ degree:e.target.value})
     }
+    @autobind
     _handleIntroChange(e){
         this.setState({ intro:e.target.value})
     }
+    @autobind
     _handleGitChange(e){
         this.setState({ git:e.target.value})
     }
+    @autobind
     _handleCareerChange(e){
         this.setState({ career:e.target.value})
     }
+    @autobind
     _handleLanguageChange(lang){
         let language = this.state.language
         if(language.has(lang)){
@@ -64,6 +67,7 @@ class RegisterTutor  extends React.Component {
         }
         this.setState({ language:language})
     }
+    @autobind
     _registerTutor(){
         let lang = Array.from(this.state.language)
         console.log('language', lang)
@@ -90,6 +94,7 @@ class RegisterTutor  extends React.Component {
     render(){
         return(
             <div className = {styles.wrapper}>
+                <NavBar/>
                 <div className={styles.head}>
                     CoCo 튜터 등록
                 </div>

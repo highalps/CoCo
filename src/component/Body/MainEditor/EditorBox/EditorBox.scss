@@ -2,7 +2,7 @@
   position: absolute;
   min-height: 60px;
   width: 70%;
-  height: 100%;
+  height: calc(100% - 200px);
   top: 0;
   right: 0;
   left: 0;
@@ -14,15 +14,27 @@
     height: 24px;
 
     .item {
-      margin: 0 5px;
-      padding: 3px;
-      border: solid 1px;
-      border-bottom: none;
-      color: #adadad;
-      cursor: pointer;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
 
-      &.selected {
-        color: rgba(255, 255, 255, 0.85);
+      .file {
+        margin: 0 5px;
+        padding: 3px;
+        border-bottom: none;
+        color: #adadad;
+        cursor: pointer;
+
+        &.selected {
+          color: rgba(255, 255, 255, 0.85);
+        }
+      }
+
+      .cancel {
+          cursor: pointer;
+          color: rgba(255, 255, 255, 0.35);
       }
     }
   }

@@ -1,39 +1,45 @@
 /* */
 import React from 'react'
+import autobind from 'core-decorators/lib/autobind'
+import { Table,Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+
+/* */
 import styles from './MyClassList.scss'
-import {Table,Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
+import { classActions } from '../../../redux/actions'
+
 class MyClassList extends React.Component {
     constructor(props){
         super(props)
         this._renderCol = this._renderCol.bind(this)
     }
     _renderCol(){
-
         let temp = this.props.getClass
         let plus = { num:4, title:'강의 전체 보기', language:''}
         if(temp.length >= 4) {
             temp = []
             temp.push(this.props.getClass[0],this.props.getClass[1],this.props.getClass[2], plus)
         }
-        const col =temp.map((colData, index) => {
+        let cols = temp.map((colData, index) => {
             return <ColComponent colData={colData} key={index} index={index} entire={this.props.getClass}/>})
-        return col
+        return cols
     }
-
-
+    
     render() {
         return (
             <div className={styles.wrapper}>
+                <div className = {styles.head}>
+                    클래스 정보
+                </div>
                 {this._renderCol()}
             </div>
         )
     }
 }
 
-/*
-TODO 전체 리스트 목록 가져오기
-TODO 클래스 정보 보여주기
-*/
+@withRouter
+@connect()
 class ColComponent extends React.Component {
     constructor(props){
         super(props)
@@ -41,29 +47,34 @@ class ColComponent extends React.Component {
             modalPlus: false,
             modalInfo: false,
         }
-        this._toggleInfo = this._toggleInfo.bind(this)
-        this._togglePlus = this._togglePlus.bind(this)
-        this._renderEntireList = this._renderEntireList.bind(this)
-        
     }
 
+    @autobind
+    handleClickParticipate() {
+        this.props.history.push(`/editor/${this.props.colData.num}`)
+    }
+
+    @autobind
     _toggleInfo() {
         this.setState({
             modalInfo: !this.state.modalInfo
         })
     }
+
+    @autobind
     _togglePlus(){
         this.setState({
             modalPlus: !this.state.modalPlus
         })
     }
+    @autobind
     _renderEntireList(data, index){
         return (
             <tr key={index}>
-                <th scope="row">{data.num}</th>
+                <th scope="row">{index+1}</th>
                 <td>{data.title}</td>
                 <td>{data.language}</td>
-                <td><Button>참여하기</Button></td>
+                <td><Button onClick={this.handleClickParticipate}>참여하기</Button></td>
             </tr>
         )
     }
@@ -79,18 +90,22 @@ class ColComponent extends React.Component {
                         <div className={styles.classLanguage}>{colData.language !== ''? 'Language | '+ colData.language:'더보기'}</div>
                     </div>
                 </div>
+
                 <Modal isOpen={this.state.modalInfo} toggle={this._toggleInfo}>
                     <ModalHeader toggle={this._toggleInfo} className = {styles.modalHeader}>{colData.title}</ModalHeader>
                     <ModalBody className={styles.modalBodyStyle}>
-                        <h3>수업 내용</h3>
-                        <hr/>
-                        <div className = {styles.modalContent}>{colData.content}</div>
-                        <hr/>
-                        <span className = {styles.modalLanguageLabel}>언어: </span>
-                        <span className = {styles.modalLanguage}>{colData.language}</span>
+                        <div className={styles.box}>
+                            <div className = {styles.labels}>수업 내용</div>
+                            <br/>
+                            <div className = {styles.modalContent}>{colData.content}</div>
+                        </div>
+                        <div className={styles.box}>
+                            <span className = {styles.modalLanguageLabel}>언어: </span>
+                            <span className = {styles.modalLanguage}>{colData.language}</span>
+                        </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this._toggleInfo}>참여하기</Button>
+                        <Button color="primary" onClick={this.handleClickParticipate}>참여하기</Button>
                         <Button color="secondary" onClick={this._toggleInfo}>취소</Button>
                     </ModalFooter>
                 </Modal>
@@ -112,15 +127,13 @@ class ColComponent extends React.Component {
                                 {this.props.entire.map((data, index)=>{return this._renderEntireList(data, index)})}
                             </tbody>
                         </Table>
-
                     </ModalBody>
                     <ModalFooter>
                         <Button color="secondary" onClick={this._togglePlus}>취소</Button>
                     </ModalFooter>
                 </Modal>
             </div>
-            
-            
+
         )
     }
 }

@@ -1,6 +1,7 @@
 /* */
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 import otText from 'ot-text'
 import shareDB from 'sharedb/lib/client'
 import shareDBCodeMirror from 'sharedb-codemirror'
@@ -21,6 +22,7 @@ const option = {
     scrollbarStyle: null
 }
 
+@withRouter
 class TextEditor extends React.Component {
     constructor(props) {
         super(props)
@@ -44,8 +46,8 @@ class TextEditor extends React.Component {
 
     connect(props) {
         this.setState({ isLoading: false })
-        // TODO: tobechange를 project의 _id로 변경
-        const fileName = 'tobechange/' + props.name
+        const classNum = this.props.match.params.classId
+        const fileName = classNum + '/' + props.name
         const doc = this.shareConnection.get('files', fileName)
         shareDBCodeMirror.attachDocToCodeMirror(doc, this.codeMirror, {
             key: 'content',

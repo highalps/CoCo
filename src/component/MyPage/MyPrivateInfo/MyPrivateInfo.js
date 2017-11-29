@@ -2,11 +2,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {Button,Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import client from '../../../redux/base.js'
-
+import autobind from 'core-decorators/lib/autobind'
 
 /* */
 import styles from './MyPrivateInfo.scss'
+import client from '../../../redux/base.js'
 
 
 class MyPrivateInfo  extends React.Component {
@@ -14,13 +14,16 @@ class MyPrivateInfo  extends React.Component {
         super(props)
         this.state = {
             modal:false,
-            tutorInfo:{}
+            tutorInfo: {
+                degree:'내용없음',
+                github:'내용없음',
+                intro:'내용없음',
+                career:'내용없음',
+            }
         }
-        this._ifTutorOrNot = this._ifTutorOrNot.bind(this)
-        this._getTutorData = this._getTutorData.bind(this)
-        this._toggle = this._toggle.bind(this)
-
     }
+
+    @autobind
     _getTutorData(){
         client.get('api/user/TutorInfo/'+this.props.id).then(res => {
             this.setState({
@@ -32,22 +35,24 @@ class MyPrivateInfo  extends React.Component {
         }).catch(error =>{console.log(error)
         })
     }
+    @autobind
     _toggle(){
         this.setState({
             modal:!this.state.modal
         })
     }
+    @autobind
     _ifTutorOrNot(){
-        if (this.props.tutor == 0) {
+        if (this.props.tutor === 0) {
             return (
-                <Link className to="RegisterTutor">
+                <Link to="RegisterTutor">
                     <span className={styles.name}>튜터 등록 하기</span>
                 </Link>
             )
         }
         return (
             <div>
-                <span className={styles.name}>내 튜터 정보</span>
+                <span className={styles.name} onClick={this._getTutorData}>내 튜터 정보</span>
             </div>
         )
     }

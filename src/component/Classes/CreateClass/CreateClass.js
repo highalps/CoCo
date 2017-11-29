@@ -1,10 +1,13 @@
 /* */
-import React from 'react'
 import styles from './CreateClass.scss'
-import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
 import client from '../../../redux/base.js'
-import { connect } from 'react-redux'
 
+
+/* */
+import { connect } from 'react-redux'
+import autobind from 'core-decorators/lib/autobind'
+import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
+import React from 'react'
 /*
 body = {
 		nickname: 작성자
@@ -26,7 +29,6 @@ const mapStateToProps = (state) => ({
 })
 
 @connect(mapStateToProps)
-
 class CreateClass extends React.Component {
 
     constructor(props) {
@@ -47,26 +49,18 @@ class CreateClass extends React.Component {
                     {day:'일', startTime:0, endTime:0}
                 ]
             },
-            modal: false
+            modal: false,
+            alert: false
         }
 
-        this._toggle = this._toggle.bind(this)
-        this._create = this._create.bind(this)
-        this._handleTitleChange = this._handleTitleChange.bind(this)
-        this._handleContentChange = this._handleContentChange.bind(this)
-        this._handleLanguageChange = this._handleLanguageChange.bind(this)
-        this._handleStatusChange = this._handleStatusChange.bind(this)
-        this._handleTimeChange = this._handleTimeChange.bind(this)
-        this._renderTime = this._renderTime.bind(this)
-        this._returnTime = this._returnTime.bind(this)
-        this._renderIfTutor = this._renderIfTutor.bind(this)
-
     }
+    @autobind
     _renderIfTutor(){
         if(this.props.tutor === 1){
             return <Button color="success" onClick={() => this._handleStatusChange(2)} active={this.state.body.status === 2}>튜터</Button>
         }
     }
+    @autobind
     _initState(){
         let _body = {
             title : '',
@@ -85,6 +79,7 @@ class CreateClass extends React.Component {
         }
         this.setState({body:_body}, ()=>{console.log('init',this.state)})
     }
+    @autobind
     _returnTime(day , index){
         return(
                 <Form key={index} inline>
@@ -97,6 +92,7 @@ class CreateClass extends React.Component {
                 </Form>
         )
     }
+    @autobind
     _renderTime(){
         let days = ['월', '화', '수', '목', '금', '토', '일']
         let times = days.map((day, index)=>{
@@ -105,6 +101,7 @@ class CreateClass extends React.Component {
         return times
     }
 
+    @autobind
     _handleTimeChange(day, e, time){
         if(e.target.value >= 1 && e.target.value <= 24){
             if(time === 1){
@@ -120,41 +117,50 @@ class CreateClass extends React.Component {
         }
 
     }
+    @autobind
     _toggle(){
         this.setState({
             modal: !this.state.modal
         })
     }
+    @autobind
+    _toggleAlert(){
+        this.setState({
+            alert: !this.state.alert
+        })
+    }
 
+
+    @autobind
     _handleTitleChange(e){
         let _body = { ...this.state.body }
         _body.title = e.target.value
         this.setState({ body:_body})
     }
+    @autobind
     _handleContentChange(e){
         let _body = { ...this.state.body }
         _body.content = e.target.value
         this.setState({ body:_body})
     }
+    @autobind
     _handleLanguageChange(lang){
         let _body = { ...this.state.body }
         _body.language = lang
         this.setState({ body:_body})
     }
+    @autobind
     _handleStatusChange(status){
         let _body = { ...this.state.body }
         _body.status = status
         this.setState({ body:_body})
     }
-
+    @autobind
     _create(){
         let temp = this.state.body
         if(temp.language === '' || temp.content === '' || temp.status === 0 || temp.title === ''){
-            return (
-                <Alert color="primary">
-                    입력안된 사항이 있습니다.
-                </Alert>
-            )
+            this._toggleAlert()
+            return
         }
         let day = []
         let _body = { ...this.state.body }
@@ -171,15 +177,13 @@ class CreateClass extends React.Component {
                     this.state.body
                 ).then(res =>{console.log(res.data)})
                     .catch(error =>{console.log(error)})
-                this._toggle()
-                this._initState()
+                window.location.reload()
             })
     }
 
     render() {
         return (
             <div className = {styles.wrapper}>
-
                 <div>
                     <h1 className={styles.head}>CoCo 강의 검색</h1>
                     <div className={styles.introBtnWrapper}>
@@ -233,6 +237,15 @@ class CreateClass extends React.Component {
                         <Button color="primary" onClick={this._create}>생성하기</Button>{' '}
                         <Button color="secondary" onClick={this._toggle}>취소</Button>
                     </ModalFooter>
+                </Modal>
+
+                <Modal isOpen={this.state.alert} toggle={this._toggleAlert} className={this.props.className}>
+                    <ModalHeader toggle={this.toggleAlert}>경고</ModalHeader>
+                    <ModalBody>
+                        <div>
+                            입력안된 사항이 있습니다. 확인하세요.  <Button onClick={this._toggleAlert}>확인</Button>
+                        </div>
+                    </ModalBody>
                 </Modal>
             </div>
         )

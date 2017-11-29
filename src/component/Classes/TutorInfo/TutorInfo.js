@@ -1,16 +1,17 @@
 import React from 'react'
-import styles from './TutorInfo.scss'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import autobind from 'core-decorators/lib/autobind'
 
+/* */
+import styles from './TutorInfo.scss'
 
 
 class TutorInfo  extends React.Component {
 
     constructor(props) {
         super(props)
-        this._toggleUser = this._toggleUser.bind(this)
-
     }
+    @autobind
     _toggleUser(){
         this.props.onToggle()
     }
@@ -34,7 +35,11 @@ class TutorInfo  extends React.Component {
                     </div>
                     <div className={styles.userBox}>
                         <label className={styles.labels}>경력</label><br/>
-                        <div className={styles.career}>{tutor.career}</div>
+                        <div className={styles.career}>{tutor.career}</div><hr/>
+                    </div>
+                    <div className={styles.userBox}>
+                        <label className={styles.labels}>선호 언어</label><br/>
+                        <div className={styles.career}>{tutor.language}</div>
                     </div>
                 </ModalBody>
                 <ModalFooter>

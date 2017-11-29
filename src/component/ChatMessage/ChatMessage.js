@@ -12,6 +12,7 @@ import { chatActions, uiActions } from '../../redux/actions'
 
 const mapStateToProps = (state) => ({
     nickname: state.userReducer.nickname,
+    status:state.chatReducer.status,
     chat: state.chatReducer.chat,
     chatId: state.chatReducer.currentChatId,
 })
@@ -21,6 +22,7 @@ class ChatMessage extends React.Component {
 
     constructor() {
         super()
+        this._refs = {}
         this.state = {
             chatLoading: true,
             message: '',
@@ -32,6 +34,27 @@ class ChatMessage extends React.Component {
             chatId: this.props.chatId
         }
         this.props.dispatch(chatActions.getMessages(payload))
+            .then(() => {
+                this.setState({ chatLoading: false })
+                this.scrollDown()
+            })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.chat.size) {
+            const prevChat = prevProps.chat.get('messages')
+            const curChat =  this.props.chat.get('messages')
+            if (prevChat.size !== curChat.size) {
+                this.scrollDown()
+            }
+        }
+    }
+
+    scrollDown() {
+        if (this._refs.body) {
+            const e = this._refs.body
+            e.scrollTop = e.scrollHeight
+        }
     }
 
     @autobind
@@ -45,7 +68,10 @@ class ChatMessage extends React.Component {
                 message: this.state.message,
             }
             this.props.dispatch(chatActions.createMessage(payload))
-                .then(() => this.setState({ message: '' }))
+                .then(() => {
+                    this.setState({ message: '' })
+                    this.scrollDown()
+                })
         }
     }
 
@@ -55,10 +81,28 @@ class ChatMessage extends React.Component {
     }
 
     @autobind
+    ifMatchingCompleted() {
+        console.log("ismatched", this.props.status)
+        if(this.props.status === 3) {
+            return (
+                <div className={styles.chatTitle}>참여</div>
+            )
+        }
+        return (
+            <div className={styles.chatTitle}>수락</div>
+        )
+    }
+
+    @autobind
     handleKeyUp(event) {
         if (event.keyCode === 13 && !event.shiftKey) {
            this.sendMessage()
         }
+    }
+
+    @autobind
+    handleClickButton() {
+        this.props.dispatch(uiActions.showChatList())
     }
 
     isSamePerson(nickname) {
@@ -66,12 +110,21 @@ class ChatMessage extends React.Component {
     }
 
     renderMessages() {
-        const chats = this.props.chat.get('messages')
-        return chats.map(chat => {
+        const { chat } = this.props
+        const chats =  chat.get('messages')
+        if (this.state.chatLoading) {
+            return (
+                <div className={styles.spinner}>
+                    <div className={styles.bounce1}></div>
+                    <div className={styles.bounce2}></div>
+                </div>
+            )
+        }
+        return chats.map((chat,idx) => {
             const isDifferntPerson = !this.isSamePerson(chat.get('nickname'))
             const isAdmin = chat.get('nickname') === 'admin'
             return (
-                    <div className={classNames(styles.item, { [styles.fromMe]: !isDifferntPerson, [styles.admin]: isAdmin })}>
+                    <div key={idx} className={classNames(styles.item, { [styles.fromMe]: !isDifferntPerson, [styles.admin]: isAdmin })}>
                         {
                             isDifferntPerson && !isAdmin
                                ? (<div className={styles.avatar}>{chat.get('nickname')[0]}</div>)
@@ -89,9 +142,11 @@ class ChatMessage extends React.Component {
         return (
             <div className={styles.wrapper}>
                 <div className={styles.header}>
-                    chat with
+                    <div className={classNames("fa fa-arrow-left", styles.button)} onClick={this.handleClickButton} />
+                    <div className={styles.chatTitle}>chat with {this.props.chat.get('person')}</div>
+                    {this.ifMatchingCompleted()}
                 </div>
-                <div className={styles.body}>
+                <div ref={e => this._refs.body = e} className={styles.body}>
                     <div className={styles.messageWrapper}>
                         {this.renderMessages()}
                     </div>

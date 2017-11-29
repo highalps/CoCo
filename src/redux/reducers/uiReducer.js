@@ -19,23 +19,26 @@ const userReducer = (state = initialState, action) => {
         case AT.CLOSE_CHAT:
         case AT.LOG_OUT:
             return {
-                uiState: uiState
-                    .set('chatList', false)
-                    .set('chatMessage', false)
+                uiState: uiState.withMutations(ui => {
+                    ui.set('chatList', false)
+                    ui.set('chatMessage', false)
+                })
             }
 
         case AT.SHOW_CHAT_LIST:
             return {
-                uiState: uiState
-                    .set('chatList', true)
-                    .set('chatMessage', false)
+                uiState: uiState.withMutations(ui => {
+                    ui.set('chatList', true)
+                    ui.set('chatMessage', false)
+                })
             }
 
         case AT.SHOW_CHAT_MESSAGE:
             return {
-                uiState: uiState
-                    .set('chatList', false)
-                    .set('chatMessage', true)
+                uiState: uiState.withMutations(ui => {
+                    ui.set('chatList', false)
+                    ui.set('chatMessage', true)
+                })
             }
 
 

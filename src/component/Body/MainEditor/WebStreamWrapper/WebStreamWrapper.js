@@ -4,6 +4,7 @@ import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
 import io from 'socket.io-client'
 import Detectrtc from 'detectrtc'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './WebStreamWrapper.scss'
@@ -17,10 +18,11 @@ import styles from './WebStreamWrapper.scss'
 
  */
 
+@withRouter
 class WebStreamWrapper extends React.Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this._refs = {}
         this.state = {
             isSuccessGetMedia: false,
@@ -33,7 +35,9 @@ class WebStreamWrapper extends React.Component {
             token: '',
             href: '#',
         }
-        this.setRoomToken()
+    }
+
+    componentDidMount() {
         this.initValue()
         this.initSocket()
     }
@@ -42,9 +46,9 @@ class WebStreamWrapper extends React.Component {
         this.hasWebcam = DetectRTC.hasWebcam
         this.hasMic = DetectRTC.hasMicrophone
         this.localStream = null
-        this.socket = io('external.cocotutor.ml/stream', {secure: true})
+        this.socket = io('https://external.cocotutor.ml/stream', { secure: true })
         this.userId = Math.round(Math.random() * 999999) + 999999;
-        this.roomId = '123'
+        this.roomId = this.props.match.params.classId
         this.remoteUserId = null
         this.localStream = null
         this.localSmallStream = null
@@ -271,43 +275,48 @@ class WebStreamWrapper extends React.Component {
     @autobind
     handleClickButton(isOffer) {
         return () => {
-            window.navigator.getUserMedia({
-                audio: true,
-                video: {
-                    mandatory: {
-                        // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
-                        // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
-                        maxWidth: 1280,
-                        maxHeight: 720,
-                        minWidth: 1280,
-                        minHeight: 720,
-                        maxFrameRate: 24,
-                        minFrameRate: 18,
-                        maxAspectRatio: 1.778,
-                        minAspectRatio: 1.777
+            if (this.hasWebcam && this.hasMic) {
+                window.navigator.getUserMedia({
+                    audio: true,
+                    video: {
+                        mandatory: {
+                            // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
+                            // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
+                            maxWidth: 1280,
+                            maxHeight: 720,
+                            minWidth: 1280,
+                            minHeight: 720,
+                            maxFrameRate: 24,
+                            minFrameRate: 18,
+                            maxAspectRatio: 1.778,
+                            minAspectRatio: 1.777
+                        },
+                        optional: [
+                            {googNoiseReduction: true}, // Likely removes the noise in the captured video stream at the expense of computational effort.
+                            {facingMode: "user"}        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
+                        ]
                     },
-                    optional: [
-                        { googNoiseReduction: true }, // Likely removes the noise in the captured video stream at the expense of computational effort.
-                        { facingMode: "user" }        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
-                    ]
-                },
-            }, (stream) => {
-                this.localStream = stream
-                this.setState({ isSuccessGetMedia: true })
-                const el = this._refs['local-video']
-                if (el) {
-                    el.srcObject = this.localStream
-                }
+                }, (stream) => {
+                    this.localStream = stream
+                    this.setState({isSuccessGetMedia: true})
+                    const el = this._refs['local-video']
+                    if (el) {
+                        el.srcObject = this.localStream
+                    }
 
-                if (isOffer) {
-                    console.log("나는 오퍼다")
-                    this.createPeerConnection()
-                    this.createOffer()
-                }
+                    if (isOffer) {
+                        console.log("나는 오퍼다")
+                        this.createPeerConnection()
+                        this.createOffer()
+                    }
 
-            }, () => {
-                this.setState({ isErrorGetMedia: true })
-            })
+                }, () => {
+                    this.setState({isErrorGetMedia: true})
+                })
+            }
+            else {
+                window.alert("웹캠과 마이크가 필요합니다")
+            }
         }
     }
 
@@ -326,15 +335,6 @@ class WebStreamWrapper extends React.Component {
         else {
             window.prompt("Copy to clipboard: Ctrl+C, Enter", link); // Copy to clipboard: Ctrl+C, Enter
         }
-    }
-
-    setRoomToken() {
-        //console.log('setRoomToken', arguments);
-        if (location.hash.length > 2) {
-            this.setState({ href: location.href })
-        } else {
-            location.hash = '#' + (Math.random() * new Date().getTime()).toString(32).toUpperCase().replace(/\./g, '-');
-            }
     }
 
     @autobind

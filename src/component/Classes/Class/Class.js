@@ -1,14 +1,16 @@
 /* */
-import styles from './Class.scss'
-import ModifyClass from '../ModifyClass'
-import TutorInfo from '../TutorInfo'
-import client from '../../../redux/base.js'
-
-
-import { autobind } from 'core-decorators/lib/autobind'
-import {Input, Button,Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Form, FormGroup} from 'reactstrap'
 import React from 'react'
 import { connect } from 'react-redux'
+import autobind from 'core-decorators/lib/autobind'
+import { Input, Button, Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFooter,
+    ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Form, FormGroup } from 'reactstrap'
+
+/* */
+import styles from './Class.scss'
+import ModifyClass from '../ModifyClass'
+import DeleteClass from '../DeleteClass'
+import TutorInfo from '../TutorInfo'
+import client from '../../../redux/base.js'
 
 
 class Class extends React.Component {
@@ -53,6 +55,7 @@ class  ColComponent extends React.Component {
             modalClass: false,
             modalUser: false,
             modalMatch: false,
+            modalDelete: false,
             tutorInfo: {
                 degree:'내용없음',
                 github:'내용없음',
@@ -70,19 +73,8 @@ class  ColComponent extends React.Component {
                 time:1
             }
         }
-        this._toggleClass = this._toggleClass.bind(this)
-        this._toggleUser = this._toggleUser.bind(this)
-        this._toggleMatch = this._toggleMatch.bind(this)
-        this._toggleDrop = this._toggleDrop.bind(this)
-        this._getClassData = this._getClassData.bind(this)
-        this._getTutorData = this._getTutorData.bind(this)
-        this._renderTime = this._renderTime.bind(this)
-        this._matching = this._matching.bind(this)
-        this._handleDay = this._handleDay.bind(this)
-        this._handleTime = this._handleTime.bind(this)
-        this._ifUserNickEqualClassNick = this._ifUserNickEqualClassNick.bind(this)
-        this._toggleModify = this._toggleModify.bind(this)
     }
+    @autobind
     _initBody(){
         let _body = {
             writer:this.props.colData.nickname,
@@ -94,13 +86,22 @@ class  ColComponent extends React.Component {
             body:_body
         })
     }
+    @autobind
     _ifUserNickEqualClassNick(){
         if(this.props.colData.nickname === this.props.userNickname){
             return(
-                <Button onClick={this._toggleModify} color="success">정보수정</Button>
+                <span>
+                    <Button onClick={this._toggleDelete} color="danger">삭제</Button>
+                    <span> </span>
+                    <Button onClick={this._toggleModify} color="success">정보수정</Button>
+                </span>
             )
         }
+        return(
+            <Button color="primary" onClick={this._toggleMatch}>{this.props.colData.status === 1? '튜터신청':'수강신청'}</Button>
+        )
     }
+    @autobind
     _handleDay(day){
         let _body = this.state.body
         _body.day = day
@@ -108,6 +109,7 @@ class  ColComponent extends React.Component {
             body:_body
         })
     }
+    @autobind
     _handleTime(e) {
         let _body = this.state.body
         _body.time = e.target.value
@@ -115,6 +117,7 @@ class  ColComponent extends React.Component {
             body: _body
         })
     }
+    @autobind
     _matching(){
         let _body = {...this.state.body}
         _body.time = _body.day + '' + _body.time
@@ -130,6 +133,7 @@ class  ColComponent extends React.Component {
             console.log(error)
         })
     }
+    @autobind
     _renderTime(data, index){
         return(
             <div key={index} className={styles.timeWrapper}>
@@ -140,6 +144,7 @@ class  ColComponent extends React.Component {
             </div>
         )
     }
+    @autobind
     _getClassData(){
         client.get('api/board/class/'+ this.props.colData.num).then(res =>{
             this.setState({
@@ -149,41 +154,51 @@ class  ColComponent extends React.Component {
                 this._toggleClass()
             })
         }).catch(error =>{console.log(error)
-            this._toggleClass()
         })
     }
+    @autobind
     _getTutorData(){
         client.get('api/user/getTutor/'+this.props.colData.nickname).then(res => {
+            console.log('tutorinfo', res.data.tutor)
             this.setState({
                 tutorInfo:res.data.tutor
             },()=>{
                 this._toggleUser()
             })
         }).catch(error =>{console.log(error)
-            this._toggleUser()
         })
     }
-
+    @autobind
+    _toggleDelete(){
+        this.setState({
+            modalDelete:!this.state.modalDelete
+        })
+    }
+    @autobind
     _toggleClass() {
         this.setState({
             modalClass: !this.state.modalClass
         })
     }
+    @autobind
     _toggleUser() {
         this.setState({
             modalUser: !this.state.modalUser
         })
     }
+    @autobind
     _toggleMatch() {
         this.setState({
             modalMatch: !this.state.modalMatch
         })
     }
+    @autobind
     _toggleDrop() {
         this.setState({
             dropdownOpen: !this.state.dropdownOpen
         })
     }
+    @autobind
     _toggleModify() {
         this.setState({ modalModify: !this.state.modalModify })
     }
@@ -264,10 +279,10 @@ class  ColComponent extends React.Component {
 
                     <ModalFooter>
                         {this._ifUserNickEqualClassNick()}
-                        <Button color="primary" onClick={this._toggleMatch}>{colData.status === 1? '튜터신청':'수강신청'}</Button>
                         <Button color="secondary" onClick={this._toggleClass}>취소</Button>
                     </ModalFooter>
                 </Modal>
+
                 <TutorInfo
                     isModalOpen={this.state.modalUser}
                     tutorData={this.state.tutorInfo}
@@ -275,9 +290,17 @@ class  ColComponent extends React.Component {
                 <ModifyClass
                     isModalOpen={this.state.modalModify}
                     classData={colData}
-                    onToggle={this._toggleModify} />
+                    onToggle={this._toggleModify}
+                    time = {this.state.classInfo.time}
+                    content = {this.state.classInfo.content}
+                />
+                <DeleteClass
+                    isModalOpen={this.state.modalDelete}
+                    classData={colData.num}
+                    onToggle={this._toggleDelete} />
             </div>
         )
     }
 }
+
 export default Class

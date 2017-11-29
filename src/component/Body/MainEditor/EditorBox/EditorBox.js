@@ -13,7 +13,7 @@ class EditorBox extends React.Component {
     constructor() {
         super()
         this.state = {
-            name: 'jane',
+            name: Math.random().toString(36).substring(7),
         }
         this._refs = {}
     }
@@ -26,15 +26,18 @@ class EditorBox extends React.Component {
         this.setState({ name })
     }
 
+
     renderTab() {
         return (
             <div className={styles.tab}>
-                {dummyTab.map(tap => (
-                    <div
-                        key={tap}
-                        className={classNames({ [styles.selected]: tap === this.state.name }, styles.item)}
-                        onClick={() => this.handleTabClick(tap)}>
-                        {`${tap}.cpp`}
+                {this.props.tabList.map(tab => (
+                    <div key={`${tab.index}${tab.title}`} className={styles.item}>
+                        <div
+                            className={classNames({ [styles.selected]: tab.title === this.state.name }, styles.file)}
+                            onClick={() => this.handleTabClick(tab.title)}>
+                            {tab.title}
+                        </div>
+                        <span className={styles.cancel} onClick={() => this.props.handleCancelClick(tab)}>x</span>
                     </div>
                 ))}
             </div>
@@ -44,7 +47,7 @@ class EditorBox extends React.Component {
         return (
             <div className={styles.wrapper}>
                 {this.renderTab()}
-                <TextEditor name={this.state.name} />
+                <TextEditor name={this.state.name}  classNum={this.props.classNum}/>
             </div>
         )
     }

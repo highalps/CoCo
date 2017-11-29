@@ -1,6 +1,7 @@
 /* */
 import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './Terminal.scss'
@@ -15,6 +16,7 @@ const option = {
     bellStyle: 'sound',
 }
 
+@withRouter
 class TerminalComponent extends React.Component {
 
     constructor() {
@@ -34,13 +36,13 @@ class TerminalComponent extends React.Component {
     }
 
     initailize() {
-        // this.term.write('terminal')
+        const classNum = this.props.match.params.classId
+        webSocket.connect(classNum)
 
         // add event listener
         this.term.on('key', this.handleKeyDown)
         this.term.on('paste', this.handlePaste)
         this.term.writeln('')
-
     }
 
     @autobind
@@ -51,9 +53,6 @@ class TerminalComponent extends React.Component {
     @autobind
     handleKeyDown(key, e) {
         const printable = !e.altKey && !e.altGraphKey && !e.ctrlKey && !e.metaKey
-
-        console.log("A", key)
-        console.log("B", e)
         if (e.keyCode === 13) {
             webSocket.sendCommand(this.state.bashText)
             this.setState({ bashText: '' }, () => this.term.write('\r\n'))

@@ -1,13 +1,14 @@
 /* */
 import React from 'react'
-import {Resize, ResizeVertical} from 'react-resize-layout'
+import { connect } from 'react-redux'
+
 /* */
 import styles from './MainEditor.scss'
 import EditorBox from './EditorBox'
 import Terminal from './Terminal'
 import WebStreamWrapper from './WebStreamWrapper'
 
-
+@connect()
 class MainEditor extends React.Component {
 
     constructor() {
@@ -18,14 +19,10 @@ class MainEditor extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <Resize handleWidth='5px' handleColor='#777'>
-                    <ResizeVertical height='400px' minHeight='100px'>
-                        <EditorBox />
-                    </ResizeVertical>
-                    <ResizeVertical height='150px'>
-                        <Terminal />
-                    </ResizeVertical>
-                </Resize>
+                <EditorBox
+                    tabList={this.props.tabList}
+                    handleCancelClick={this.props.handleCancelClick} />
+                <Terminal />
                 <WebStreamWrapper />
             </div>
         )

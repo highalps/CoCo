@@ -3,13 +3,19 @@ import React from 'react';
 import autobind from 'core-decorators/lib/autobind'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 /* */
 import styles from './NavBar.scss';
 import { userActions } from '../../redux/actions'
 
-@connect()
+const mapStateToProps = (state) => ({
+    isLogged: state.userReducer.isLogged,
+    ifTutor: state.userReducer.tutor,
+})
+
+@withRouter
+@connect(mapStateToProps)
 class NavBar extends React.Component {
   constructor() {
       super()
@@ -21,6 +27,7 @@ class NavBar extends React.Component {
   @autobind
   handleClickLogout() {
       this.props.dispatch(userActions.logout())
+      this.props.history.push('/')
   }
 
   renderLoginButton() {
@@ -39,18 +46,26 @@ class NavBar extends React.Component {
         </div>
     )
   }
-
+    renderTutorButton() {
+        if (!this.props.ifTutor) {
+            return (
+                <Link className={styles.button} to="RegisterTutor">
+                    <i className="fa fa-star" />
+                    <span className={styles.name}>튜터등록</span>
+                </Link>
+            )
+        }
+    }
   render() {
     return (
         <div className={styles.wrapper}>
-          <div className={styles.logo}>
-            CoCo tutor
-          </div>
+            <Link to="">
+              <div className={styles.logo}>
+                  CoCo tutor
+              </div>
+            </Link>
           <div className={styles.menu}>
-              <Link className={styles.button} to="RegisterTutor">
-                  <i className="fa fa-star" />
-                  <span className={styles.name}>튜터등록</span>
-              </Link>
+              {this.renderTutorButton()}
               <Link className={styles.button} to="Classes">
                   <i className="fa fa-search" />
                   <span className={styles.name}>강의검색</span>
@@ -74,4 +89,4 @@ NavBar.defaultProps = {
     isLogged: false,
 }
 
-export default NavBar;
+export default NavBar
