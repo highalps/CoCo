@@ -7,13 +7,11 @@ import Immutable from 'immutable'
 import styles from './EditorBox.scss'
 import TextEditor from '../TextEditor'
 
-const dummyTab = Immutable.List(['jane','chan'])
-
 class EditorBox extends React.Component {
     constructor() {
         super()
         this.state = {
-            name: Math.random().toString(36).substring(7),
+            name: '',
         }
         this._refs = {}
     }
