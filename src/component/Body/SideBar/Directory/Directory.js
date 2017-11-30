@@ -83,7 +83,7 @@ class Directory extends React.Component {
                     getNodeKey={this.getNodeKey}
                     generateNodeProps={this.nodeRenderer} />
             </div>
-        );
+        )
     }
 }
 
