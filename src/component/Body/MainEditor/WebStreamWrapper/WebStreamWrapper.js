@@ -276,7 +276,7 @@ class WebStreamWrapper extends React.Component {
     @autobind
     handleClickButton(isOffer) {
         return () => {
-            if (this.hasWebcam && this.hasMic) {
+           // if (this.hasWebcam && this.hasMic) {
                 window.navigator.getUserMedia({
                     audio: true,
                     video: {
@@ -314,10 +314,10 @@ class WebStreamWrapper extends React.Component {
                 }, () => {
                     this.setState({isErrorGetMedia: true})
                 })
-            }
-            else {
-                window.alert("웹캠과 마이크가 필요합니다")
-            }
+            // }
+            // else {
+            //     window.alert("웹캠과 마이크가 필요합니다")
+            // }
         }
     }
 
@@ -404,6 +404,7 @@ class WebStreamWrapper extends React.Component {
     }
 
     render() {
+        console.log('web', this.hasWebcam, this.hasMic)
         return (
             <div className={styles.wrapper}>
                 {this.renderJoinComponent()}

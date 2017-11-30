@@ -26,6 +26,7 @@ export default keyMirror({
     PUT_CHAT_MESSAGE_SUCCESS: null,
     PUT_CHAT_MESSAGE_ERROR: null,
 
+    UPDATE_STATUS: null,
 
    /* UI actions */
    CLOSE_CHAT: null,

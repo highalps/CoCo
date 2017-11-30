@@ -19,6 +19,7 @@ class MyPrivateInfo  extends React.Component {
                 github:'내용없음',
                 intro:'내용없음',
                 career:'내용없음',
+                language:'내용없음',
             }
         }
     }
@@ -94,20 +95,24 @@ class MyPrivateInfo  extends React.Component {
                                 <ModalHeader toggle={this._toggle} className = {styles.modalHeader}>튜터 소개</ModalHeader>
                                 <ModalBody className={styles.modalBodyStyle}>
                                     <div className={styles.userBox}>
-                                        <label>튜터 소개</label><br/>
+                                        <label className={styles.labels}>튜터 소개</label><br/>
                                         <div>{this.state.tutorInfo.intro}</div><hr/>
                                     </div>
                                     <div className={styles.userBox}>
-                                        <label>학위 정보</label><br/>
+                                        <label className={styles.labels}>학위 정보</label><br/>
                                         <div>{this.state.tutorInfo.degree}</div><hr/>
                                     </div>
                                     <div className={styles.userBox}>
-                                        <label>Github주소</label><br/>
+                                        <label className={styles.labels}>Github주소</label><br/>
                                         <div>{this.state.tutorInfo.github}</div><hr/>
                                     </div>
                                     <div className={styles.userBox}>
-                                        <label>경력</label><br/>
-                                        <div>{this.state.tutorInfo.career}</div>
+                                        <label className={styles.labels}>Github주소</label><br/>
+                                        <div>{this.state.tutorInfo.career}</div><hr />
+                                    </div>
+                                    <div className={styles.userBox}>
+                                        <label className={styles.labels}>선호 언어</label><br/>
+                                        <div>{this.state.tutorInfo.language}</div>
                                     </div>
                                 </ModalBody>
                                 <ModalFooter>
