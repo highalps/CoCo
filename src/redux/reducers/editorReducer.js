@@ -18,7 +18,7 @@ function changekey(obj) {
     return JSON.parse(directory)
 }
 
-const userReducer = (state = initialState, action) => {
+const editorReducer = (state = initialState, action) => {
     switch (action.type) {
         case AT.GET_DIRECTORY_SUCCESS: {
             const { directory } = action.payload
@@ -33,4 +33,4 @@ const userReducer = (state = initialState, action) => {
     }
 }
 
-export default userReducer
+export default editorReducer

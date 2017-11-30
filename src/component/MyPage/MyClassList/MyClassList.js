@@ -25,7 +25,6 @@ class MyClassList extends React.Component {
             return <ColComponent colData={colData} key={index} index={index} entire={this.props.getClass}/>})
         return cols
     }
-    
     render() {
         return (
             <div className={styles.wrapper}>
@@ -50,8 +49,9 @@ class ColComponent extends React.Component {
     }
 
     @autobind
-    handleClickParticipate() {
-        this.props.history.push(`/editor/${this.props.colData.num}`)
+    handleClickParticipate(num) {
+        console.log('num', num)
+        this.props.history.push(`/editor/${num}`)
     }
 
     @autobind
@@ -74,7 +74,7 @@ class ColComponent extends React.Component {
                 <th scope="row">{index+1}</th>
                 <td>{data.title}</td>
                 <td>{data.language}</td>
-                <td><Button onClick={this.handleClickParticipate}>참여하기</Button></td>
+                <td><Button onClick={()=>this.handleClickParticipate(data.num)}>참여하기</Button></td>
             </tr>
         )
     }
@@ -105,7 +105,7 @@ class ColComponent extends React.Component {
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.handleClickParticipate}>참여하기</Button>
+                        <Button color="primary" onClick={()=>this.handleClickParticipate(colData.num)}>참여하기</Button>
                         <Button color="secondary" onClick={this._toggleInfo}>취소</Button>
                     </ModalFooter>
                 </Modal>

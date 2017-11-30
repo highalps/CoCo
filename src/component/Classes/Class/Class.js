@@ -97,9 +97,20 @@ class  ColComponent extends React.Component {
                 </span>
             )
         }
-        return(
-            <Button color="primary" onClick={this._toggleMatch}>{this.props.colData.status === 1? '튜터신청':'수강신청'}</Button>
-        )
+        if(this.props.tutor === 0){
+            if(this.props.colData.status === 1){
+                return
+            }
+            return(
+                <Button color="primary" onClick={this._toggleMatch}>{this.props.colData.status === 1? '튜터신청':'수강신청'}</Button>
+            )
+        }
+        if(this.props.tutor === 1){
+            return(
+                <Button color="primary" onClick={this._toggleMatch}>{this.props.colData.status === 1? '튜터신청':'수강신청'}</Button>
+            )
+        }
+
     }
     @autobind
     _handleDay(day){
@@ -119,6 +130,7 @@ class  ColComponent extends React.Component {
     }
     @autobind
     _matching(){
+
         let _body = {...this.state.body}
         _body.time = _body.day + '' + _body.time
         delete _body.day

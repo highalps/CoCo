@@ -1,6 +1,8 @@
 /* */
 import React from 'react'
 import classNames from 'classnames'
+import autobind from 'core-decorators/lib/autobind'
+import webSocket from 'service/terminalSocketService'
 
 /* */
 import styles from './Header.scss'
@@ -11,6 +13,13 @@ class Header extends React.Component {
         this._refs = {}
     }
 
+
+    @autobind
+    compile(){
+        webSocket.requestCompile()
+    }
+
+
     render() {
         return (
             <div className={styles.wrapper}>
@@ -18,7 +27,7 @@ class Header extends React.Component {
                     CoCo
                 </div>
                 <div className={styles.option}>
-                    <div className={styles.runOption}>
+                    <div className={styles.runOption} onClick={this.compile}>
                         <i className={classNames(styles.runIcon, "fa fa-play-circle-o")} />
                         <div className={styles.text}>Run</div>
                     </div>

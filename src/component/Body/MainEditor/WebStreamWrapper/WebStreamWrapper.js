@@ -404,7 +404,6 @@ class WebStreamWrapper extends React.Component {
     }
 
     render() {
-        console.log('web', this.hasWebcam, this.hasMic)
         return (
             <div className={styles.wrapper}>
                 {this.renderJoinComponent()}

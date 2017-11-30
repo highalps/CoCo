@@ -20,7 +20,7 @@ const initialState = {
 
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
-        case AT.SET_UPDATE:
+        case AT.UPDATE_STATUS:
             return {
                 ...state,
                 status:action.payload
