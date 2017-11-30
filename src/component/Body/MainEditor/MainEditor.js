@@ -21,7 +21,9 @@ class MainEditor extends React.Component {
             <div className={styles.wrapper}>
                 <EditorBox
                     tabList={this.props.tabList}
-                    handleCancelClick={this.props.handleCancelClick} />
+                    currentFileName={this.props.currentFileName}
+                    handleCancelClick={this.props.handleCancelClick}
+                    handleTabClick={this.props.handleTabClick} />
                 <Terminal />
                 <WebStreamWrapper />
             </div>

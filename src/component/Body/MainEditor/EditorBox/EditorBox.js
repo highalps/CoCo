@@ -10,18 +10,11 @@ import TextEditor from '../TextEditor'
 class EditorBox extends React.Component {
     constructor() {
         super()
-        this.state = {
-            name: '',
-        }
         this._refs = {}
     }
 
     componentDidMount() {
 
-    }
-
-    handleTabClick(name) {
-        this.setState({ name })
     }
 
 
@@ -31,8 +24,8 @@ class EditorBox extends React.Component {
                 {this.props.tabList.map(tab => (
                     <div key={`${tab.index}${tab.title}`} className={styles.item}>
                         <div
-                            className={classNames({ [styles.selected]: tab.title === this.state.name }, styles.file)}
-                            onClick={() => this.handleTabClick(tab.title)}>
+                            className={classNames({ [styles.selected]: tab.title === this.props.currentFileName }, styles.file)}
+                            onClick={() => this.props.handleTabClick(tab.title)}>
                             {tab.title}
                         </div>
                         <span className={styles.cancel} onClick={() => this.props.handleCancelClick(tab)}>x</span>
@@ -45,7 +38,7 @@ class EditorBox extends React.Component {
         return (
             <div className={styles.wrapper}>
                 {this.renderTab()}
-                <TextEditor name={this.state.name}  classNum={this.props.classNum}/>
+                <TextEditor currentFileName={this.props.currentFileName} classNum={this.props.classNum}/>
             </div>
         )
     }
