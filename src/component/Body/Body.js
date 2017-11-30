@@ -14,7 +14,8 @@ class Body extends React.Component {
         super()
         this._refs = {}
         this.state = {
-            tabList: immutable.List()
+            tabList: immutable.List(),
+            currentFileName: '',
         }
     }
 
@@ -24,8 +25,11 @@ class Body extends React.Component {
             if (file.node.type !== 'directory') {
                 if (this.state.tabList.findIndex(tab => tab.title === file.node.title) === -1) {
                     this.setState({
-                        tabList: this.state.tabList.push({ index: file.treeIndex, title: file.node.title })
+                        tabList: this.state.tabList.push({ index: file.treeIndex, title: file.node.title }),
+                        currentFileName: file.node.title
                     })
+                } else {
+                    this.setState({ currentFileName: file.node.title })
                 }
             }
             event.preventDefault()
@@ -40,6 +44,11 @@ class Body extends React.Component {
         }
     }
 
+    @autobind
+    handleTabClick(currentFileName) {
+        this.setState({ currentFileName })
+    }
+
     render() {
         return (
             <div className={styles.wrapper}>
@@ -48,7 +57,9 @@ class Body extends React.Component {
                   handleDoubleClick={this.handleDoubleClick} />
               <MainEditor
                   tabList={this.state.tabList}
-                  handleCancelClick={this.handleCancelClick} />
+                  currentFileName={this.state.currentFileName}
+                  handleCancelClick={this.handleCancelClick}
+                  handleTabClick={this.handleTabClick} />
             </div>
         )
     }
