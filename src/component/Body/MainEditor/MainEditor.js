@@ -19,7 +19,9 @@ class MainEditor extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <EditorBox />
+                <EditorBox
+                    tabList={this.props.tabList}
+                    handleCancelClick={this.props.handleCancelClick} />
                 <Terminal />
                 <WebStreamWrapper />
             </div>

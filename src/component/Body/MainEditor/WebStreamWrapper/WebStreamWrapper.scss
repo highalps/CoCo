@@ -22,6 +22,15 @@
       border-radius: 50%;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+
+      &:hover {
+        border-color: white;
+
+        i {
+          color: white;
+        }
+      }
 
       i {
         color: #0000af;
@@ -47,11 +56,12 @@
     }
 
     .local-video, .remote-video {
+      width: 100%;
       height: 300px;
       width: 100%;
 
       &.isVisible {
-        display: none;
+        visibility: none;
       }
     }
   }
