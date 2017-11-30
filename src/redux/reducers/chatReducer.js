@@ -6,6 +6,8 @@ import AT from '../actions/actionTypes'
 import chatSocket from '../../service/chatSocketService'
 
 const initialState = {
+    classNum:-1,
+    isWriter:false,
     status:1,
     chatList: Immutable.List(),
     currentChatId: '',
@@ -16,12 +18,17 @@ const initialState = {
     }),
 }
 
-const userReducer = (state = initialState, action) => {
+const chatReducer = (state = initialState, action) => {
     switch (action.type) {
+        case AT.SET_UPDATE:
+            return {
+                ...state,
+                status:action.payload
+            }
         case AT.GET_CHAT_LIST_SUCCESS:
             return {
                 ...state,
-                chatList: Immutable.fromJS(action.payload.list).sortBy(chat => chat.get('date'))
+                chatList: Immutable.fromJS(action.payload.list).sortBy(chat => chat.get('date')),
             }
 
         case AT.SHOW_CHAT_MESSAGE:
@@ -31,10 +38,14 @@ const userReducer = (state = initialState, action) => {
             }
 
         case AT.GET_CHAT_MESSAGES_SUCCESS:
-            const { mode, log, nickname } = action.payload
+            const { classNum, status, isWriter, mode, log, nickname } = action.payload
+            console.log('chat status', action.payload)
             chatSocket.join(state.currentChatId)
             return {
                 ...state,
+                classNum:classNum,
+                status:status,
+                isWriter:isWriter,
                 chat: state.chat
                     .set('mode', mode)
                     .set('person', nickname)
@@ -63,4 +74,4 @@ const userReducer = (state = initialState, action) => {
     }
 }
 
-export default userReducer
+export default chatReducer

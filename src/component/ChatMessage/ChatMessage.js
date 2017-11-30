@@ -5,18 +5,22 @@ import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './ChatMessage.scss'
 import { chatActions, uiActions } from '../../redux/actions'
+import client from '../../redux/base.js'
 
 const mapStateToProps = (state) => ({
+    classNum:state.chatReducer.classNum,
+    isWriter: state.chatReducer.isWriter,
     nickname: state.userReducer.nickname,
     status:state.chatReducer.status,
     chat: state.chatReducer.chat,
     chatId: state.chatReducer.currentChatId,
 })
-
+@withRouter
 @connect(mapStateToProps)
 class ChatMessage extends React.Component {
 
@@ -81,14 +85,16 @@ class ChatMessage extends React.Component {
     }
     @autobind
     handleClickParticipate() {
-        this.props.history.push(`/editor/${this.props.chatId}`)
+        this.props.history.push(`/editor/${this.props.classNum}`)
     }
     @autobind
     accept(){
+        console.log('accept')
         return () => {
             client.put('api/chat/request/'+this.props.chatId)
                 .then(res =>{
                     console.log(res)
+                    this.props.dispatch(chatActions.setStatus(3))
                 })
                 .catch(error =>{console.log(error)
                 })
@@ -99,12 +105,14 @@ class ChatMessage extends React.Component {
         console.log("ismatched", this.props.status)
         if(this.props.status === 3) {
             return (
-                <div className={styles.chatTitle} onClick={this.handleClickParticipate}>참여</div>
+                <div className={styles.chatTitle} onClick={this.handleClickParticipate}>참여하기</div>
             )
         }
-        return (
-            <div className={styles.chatTitle} onClick={this.accept}>수락</div>
-        )
+        else if(this.props.isWriter === true){
+            return (
+                <div className={styles.chatTitle} onClick={this.accept()}>수락</div>
+            )
+        }
     }
 
     @autobind

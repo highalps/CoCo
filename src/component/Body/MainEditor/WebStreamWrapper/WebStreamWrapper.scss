@@ -48,6 +48,7 @@
 
     .local-video, .remote-video {
       height: 300px;
+      width: 100%;
 
       &.isVisible {
         display: none;
