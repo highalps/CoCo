@@ -3,11 +3,12 @@ import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
 import io from 'socket.io-client'
-import Detectrtc from 'detectrtc'
 import { withRouter } from 'react-router'
 
 /* */
 import styles from './WebStreamWrapper.scss'
+
+const DetectRTC = require('detectrtc')
 
 /*
     학생과 튜터 webRTC 연결이 맺어지는 과정

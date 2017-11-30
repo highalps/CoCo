@@ -7,6 +7,7 @@ import shareDB from 'sharedb/lib/client'
 import shareDBCodeMirror from 'sharedb-codemirror'
 import CodeMirror from 'codemirror'
 import io from 'socket.io-client'
+import classNames from 'classnames'
 
 /* */
 import styles from './TextEditor.scss'
@@ -58,6 +59,7 @@ class TextEditor extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
+                <div className={classNames(styles.blackBoard, { [styles.hidden]: this.props.name} )} />
                 <textarea
                     className={styles.textArea}
                     ref={e => this._refs.textArea = e} />
