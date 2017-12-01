@@ -44,14 +44,14 @@ const mapStateToProps = (state) => ({
 })
 
 const userImg = {
-    student:'http://kr.seaicons.com/wp-content/uploads/2015/11/student-icon.png',
+    student:'https://image.flaticon.com/icons/svg/201/201811.svg',
     tutor:"https://lh3.googleusercontent.com/ZKnXr2EsaS94RngP88WCdGhDgM2rITbMkKm-U2mgD15R_fnmbyg6tY8Bu1IjdhZdqsIS=w300-rw"
 }
 const classImg = {
     c:"http://cfile21.uf.tistory.com/image/996BDB3359D3170C07DCA4",
     java:"https://fossbytes.com/wp-content/uploads/2017/09/Why-is-Java-the-best-programming-Language.png",
     python:"http://dashh.in/wp-content/uploads/2017/03/the-python-programming-language-explained.gif",
-    cpp:"https://lh3.googleusercontent.com/9OdC-OwwFX1l0fmbSCDm_WIvBxxhtEYRkU1ZbS6rO4TNMiZJDwub5AB0wKSIAMtCzTU=w300-rw"
+    cpp:"https://udemy-images.udemy.com/course/750x422/890364_d184_2.jpg"
 }
 
 @connect(mapStateToProps)
