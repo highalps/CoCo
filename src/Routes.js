@@ -1,6 +1,6 @@
 /* */
 import React from 'react'
-import { HashRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 /* */
 import Home from './container/Home'
@@ -13,7 +13,7 @@ import MyPageContainer from './container/MyPageContainer'
 import ChatWrapper from './component/ChatWrapper'
 
 export default () => (
-    <HashRouter>
+    <BrowserRouter>
         <div style={{ width: "100%", height: "100%" }}>
             <ChatWrapper />
             <Switch>
@@ -26,5 +26,5 @@ export default () => (
                 <Route path="/MyPage" component={MyPageContainer} />
             </Switch>
         </div>
-    </HashRouter>
+    </BrowserRouter>
 )
