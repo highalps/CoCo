@@ -7,7 +7,7 @@ import { withRouter } from 'react-router'
 import styles from './App.scss'
 import Header from '../../component/Header'
 import Body from '../../component/Body'
-import Footer from '../../component/Footer'
+import Footer from '../../component/Modal'
 import { uiActions, editorActions } from '../../redux/actions/'
 
 const mapStateToProps = (state) => ({

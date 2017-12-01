@@ -1,0 +1,106 @@
+.modal {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  position: relative;
+
+  .bar {
+    height: 8px;
+    background: linear-gradient(to right,#30a1c1,#9dd5ba);
+  }
+
+  .close {
+    cursor: pointer;
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
+    font-size: 1.5rem;
+  }
+
+
+  .content {
+    margin-top: 1.5rem;
+    padding: 2rem;
+    h3 {
+      font-weight: 400;
+      color: #616161;
+      margin-top: 0;
+    }
+    .login {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .login-foot {
+      font-size: 0.85rem;
+      display: flex;
+    }
+    .separator {
+      display: block;
+      background: #EEEEEE;
+      width: 100%;
+      height: 1px;
+      margin-top: 1rem;
+      position: relative;
+      margin-bottom: 1.5rem;
+      .or {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        font-weight: 900;
+        color: #9E9E9E;
+        font-size: 0.8rem;
+      }
+    }
+
+    .form {
+      .input {
+        width: 100%;
+        border-radius: 2px;
+        border: 1px solid #BDBDBD;
+        padding: 0.5rem;
+        font-size: 1.25rem;
+        font-family: Arial;
+        transition: color .3s, border-color .3s;
+        &:focus {
+          border: 1px solid #00897b;
+          color: #009688;
+
+          &::placeholder {
+            color: #26A69A;
+          }
+        }
+      }
+
+      .input + .input {
+        margin-top: 0.5rem;
+      }
+    }
+
+    .foot {
+
+      .mode {
+        float: right;
+        padding-bottom: 0.15rem;
+        border-bottom: 1px solid transparent;
+        cursor: pointer;
+        &.right {
+          margin-left: auto;
+        }
+        &:hover {
+          color: #26A69A;
+          border-bottom: 1px solid #00897B;
+        }
+        &:active {
+          color: #00796B;
+          border-bottom: 1px solid #00796B;
+        }
+      }
+    }
+
+  }
+}

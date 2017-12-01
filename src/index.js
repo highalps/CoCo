@@ -11,6 +11,7 @@ import { initAuth } from './utils/authUtils'
 // import global styles
 import './styles/global.scss'
 import './styles/xterm.scss'
+import './styles/fonts/NanumSquare/font.css'
 
 // import codemirror mode & style
 import 'codemirror/mode/javascript/javascript.js'

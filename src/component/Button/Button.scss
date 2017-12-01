@@ -1,0 +1,112 @@
+
+.button {
+  display: inline-block;
+  font-size: 1rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  color: #fff;
+
+  // default
+  background: #4db6ac;
+  &:hover {
+    background: #EEEEEE;
+  }
+  &:active {
+    background: #E0E0E0;
+  }
+
+  &.invert {
+    border: 2px solid white;
+    color: white;
+    background: transparent;
+    transition: box-shadow .15s ease-in;
+
+    &:active {
+      background: rgb(230,230,230);
+      border: 2px solid rgb(230,230,230);
+      color: #424242;
+    }
+  }
+
+  &.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  &.flex + &.flex {
+    margin-left: 1rem;
+  }
+
+  &.flat {
+    border-radius: 2px;
+    transition: all .15s ease-in;
+
+    &.white {
+      background: white;
+      border: 1px solid #F5F5F5;
+
+      &:hover {
+        background: #F5F5F5;
+      }
+      &:active {
+        background: #F5F5F5;
+      }
+    }
+    &.teal {
+      color: white;
+      background: #4DB6AC;
+      &:hover {
+        background: #6dd0c6;
+      }
+      &:active {
+        background: #4DB6AC;
+      }
+    }
+
+    &.dark {
+      color: white;
+      background: #616161;
+      &:hover {
+        background: #757575;
+      }
+      &:active {
+        background: #424242;
+      }
+    }
+
+    &.disabled {
+      background: #E0E0E0;
+      color: #9E9E9E;
+      cursor: default;
+      &:hover {
+        box-shadow: none;
+        background: #E0E0E0;
+      }
+      &:active {
+        background: #E0E0E0;
+      }
+    }
+  }
+  &.outline {
+    background: transparent;
+    border: 1px solid #E0E0E0;
+    &:hover {
+      border: 1px solid transparent;
+      background: #F5F5F5;
+    }
+    &:active {
+      background: #EEEEEE;
+    }
+  }
+
+
+}
