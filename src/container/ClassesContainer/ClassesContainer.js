@@ -62,20 +62,20 @@ class Search  extends React.Component {
     _rowDataParsing(){
         let data = this.state.classData
         console.log("data", data)
-        let tmp1 = parseInt(data.length / 5)
-        let tmp2 = parseInt(data.length % 5)
+        let tmp1 = parseInt(data.length / 4)
+        let tmp2 = parseInt(data.length % 4)
         let row = []
         let rows = []
         for(let i = 0; i < tmp1; i++){
             row = []
-            for(let j=i*5; j<i*5+5; j++){
+            for(let j=i*4; j<i*4+4; j++){
                 row.push(data[j])
             }
             rows.push(row)
         }
         if(tmp2 != 0){
             row = []
-            for(let k=(tmp1)*5; k < data.length; k++){
+            for(let k=(tmp1)*4; k < data.length; k++){
                 row.push(data[k])
             }
             rows.push(row)
