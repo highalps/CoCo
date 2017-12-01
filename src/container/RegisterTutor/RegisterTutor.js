@@ -85,8 +85,11 @@ class RegisterTutor  extends React.Component {
                 language:temp
             }
         ).then(res =>{console.log(res.data)
-            this._initState()
-        }).catch(error =>{console.log(error)})
+            window.alert("튜터 등록요청을 완료했습니다.")
+        }).catch(error =>{
+            window.alert("다시 요청해주세요.")
+            console.log(error)
+        })
 
     }
 

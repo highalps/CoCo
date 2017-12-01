@@ -43,6 +43,17 @@ const mapStateToProps = (state) => ({
     id : state.userReducer.id
 })
 
+const userImg = {
+    student:'https://image.flaticon.com/icons/svg/201/201811.svg',
+    tutor:"https://lh3.googleusercontent.com/ZKnXr2EsaS94RngP88WCdGhDgM2rITbMkKm-U2mgD15R_fnmbyg6tY8Bu1IjdhZdqsIS=w300-rw"
+}
+const classImg = {
+    c:"http://cfile21.uf.tistory.com/image/996BDB3359D3170C07DCA4",
+    java:"https://fossbytes.com/wp-content/uploads/2017/09/Why-is-Java-the-best-programming-Language.png",
+    python:"http://dashh.in/wp-content/uploads/2017/03/the-python-programming-language-explained.gif",
+    cpp:"https://udemy-images.udemy.com/course/750x422/890364_d184_2.jpg"
+}
+
 @connect(mapStateToProps)
 class  ColComponent extends React.Component {
 
@@ -50,6 +61,8 @@ class  ColComponent extends React.Component {
     constructor(props){
         super(props)
         this.state = {
+            classImg:'',
+            userImg:'',
             dropdownOpen:false,
             modalModify: false,
             modalClass: false,
@@ -73,6 +86,19 @@ class  ColComponent extends React.Component {
                 time:1
             }
         }
+    }
+    componentWillMount(){
+        switch(this.props.colData.language){
+            case 'c':this.setState({classImg:classImg.c});break
+            case 'java':this.setState({classImg:classImg.java});break
+            case 'python':this.setState({classImg:classImg.python});break
+            case 'c++':this.setState({classImg:classImg.cpp});break
+        }
+        switch(this.props.colData.status){
+            case 1:this.setState({userImg:userImg.student});break
+            case 2:this.setState({userImg:userImg.tutor});break
+        }
+
     }
     @autobind
     _initBody(){
@@ -214,18 +240,21 @@ class  ColComponent extends React.Component {
     _toggleModify() {
         this.setState({ modalModify: !this.state.modalModify })
     }
+
+
     render() {
         const colData = this.props.colData
         return (
             <div className={styles.cardWrapper}>
                 <Card>
+                    <img className={styles.classImg}  onClick={this._getClassData} src={this.state.classImg}/>
+                    <img className={styles.userImg}  onClick={this._getClassData} src={this.state.userImg}/>
                     <div className={styles.classTitle} onClick={this._getClassData}>{colData.title}</div>
                     <div className={styles.classNickName} onClick={this._getTutorData}>
                         {colData.nickname}
                     </div>
                     <div className={styles.classLanguage}>Language | {colData.language}</div>
                 </Card>
-
                 <Modal isOpen={this.state.modalClass} toggle={this._toggleClass}>
                     <ModalHeader toggle={this._toggleClass} className = {styles.modalHeader}>{colData.title}</ModalHeader>
                     <ModalBody className={styles.modalBodyStyle}>
