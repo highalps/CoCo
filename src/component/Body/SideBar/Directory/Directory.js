@@ -72,6 +72,7 @@ class Directory extends React.Component {
     }
 
     render() {
+        console.log(this.state.directory)
         return (
             <div className={styles.wrapper}>
                 <SortableTree

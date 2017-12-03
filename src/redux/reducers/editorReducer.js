@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 
 /* */
 import AT from '../actions/actionTypes'
-import { insertPath, changekey } from './reducerUtils'
+import { insertPath } from './reducerUtils'
 
 const initialState = {
     directory: Immutable.Map(),
@@ -13,7 +13,7 @@ const editorReducer = (state = initialState, action) => {
     switch (action.type) {
         case AT.GET_DIRECTORY_SUCCESS: {
             const directory = action.payload.directory.dir
-            insertPath(changekey(directory))
+            insertPath(directory)
             return {
                 ...state,
                 directory: Immutable.fromJS(directory),

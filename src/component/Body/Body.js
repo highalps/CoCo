@@ -19,17 +19,27 @@ class Body extends React.Component {
         }
     }
 
+    makeFileName(path, title) {
+        if (path === '/') {
+            return `/${title}`
+        }
+        return `${path}/${title}`
+    }
+
     @autobind
     handleDoubleClick(file) {
         return (event) => {
             if (file.node.type !== 'directory') {
-                if (this.state.tabList.findIndex(tab => tab.title === file.node.title) === -1) {
+                const fileName = this.makeFileName(file.node.path, file.node.title)
+                if (this.state.tabList.findIndex(tab => tab.fileName === fileName) === -1) {
                     this.setState({
-                        tabList: this.state.tabList.push({ index: file.treeIndex, title: file.node.title }),
-                        currentFileName: file.node.title
+                        tabList: this.state.tabList.push({
+                            index: file.treeIndex, fileName,
+                        }),
+                        currentFileName: fileName
                     })
                 } else {
-                    this.setState({ currentFileName: file.node.title })
+                    this.setState({ currentFileName: fileName })
                 }
             }
             event.preventDefault()
@@ -38,7 +48,7 @@ class Body extends React.Component {
 
     @autobind
     handleCancelClick(tab) {
-        const index = this.state.tabList.findIndex(t => t.title === tab.title)
+        const index = this.state.tabList.findIndex(t => t.fileName === tab.fileName)
         if (index !== -1) {
             this.setState({ tabList: this.state.tabList.delete(index) })
         }

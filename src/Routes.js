@@ -1,6 +1,6 @@
 /* */
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, Route, Switch } from 'react-router-dom'
 
 /* */
 import Home from './container/Home'
@@ -13,7 +13,7 @@ import SignModal from './component/SignModal'
 import ScreenCover from './component/ScreenCover'
 
 export default () => (
-    <BrowserRouter>
+    <HashRouter>
         <div style={{ width: "100%", height: "100%", 'font-family': 'Nanum Square' }}>
             <Switch>
                 <Route exact path="/" component={Home} />
@@ -26,5 +26,5 @@ export default () => (
             <SignModal />
             <ScreenCover />
         </div>
-    </BrowserRouter>
+    </HashRouter>
 )
