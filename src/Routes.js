@@ -5,8 +5,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 /* */
 import Home from './container/Home'
 import App from './container/App'
-import SignUp from './container/SignUp'
-import SignIn from './container/SignIn'
 import ClassesContainer from './container/ClassesContainer'
 import RegisterTutor from './container/RegisterTutor'
 import MyPageContainer from './container/MyPageContainer'
