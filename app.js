@@ -16,6 +16,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(compression());
 app.use('/', express.static(__dirname + '/build'));
+app.get('/*', function(req, res){
+    res.sendFile(__dirname + '/build/index.html');
+});
+
 
 if(process.env.NODE_ENV === 'development'){
     console.log('webpack is running on development mode');
@@ -27,10 +31,6 @@ if(process.env.NODE_ENV === 'development'){
         console.log('webpack-dev-server is listening on port', devPort);
     });
 };
-
-app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/build');
-});
 
 server.listen(port, function (err) {
     if (err) {
