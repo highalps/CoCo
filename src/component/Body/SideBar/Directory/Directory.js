@@ -61,17 +61,18 @@ class Directory extends React.Component {
     nodeRenderer(file) {
         if (file.node.type === 'directory') {
             return {
-                icons:  [<div style={this.directoryStyles(file)} />],
+                icons:  [<div key={file.node.key} style={this.directoryStyles(file)} />],
                 onDoubleClick: this.props.handleDoubleClick(file),
             }
         }
         return {
-            icons: [<div style={this.fileStyles()}>F</div>],
+            icons: [<div key={file.node.key} style={this.fileStyles()}>F</div>],
             onDoubleClick: this.props.handleDoubleClick(file),
         }
     }
 
     render() {
+        console.log("A", this.state.directory)
         return (
             <div className={styles.wrapper}>
                 <SortableTree

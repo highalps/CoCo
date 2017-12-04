@@ -14,10 +14,18 @@ export function insertPath(directory) {
     }
 }
 
+function makeFileName(path, title) {
+    if (path === '/') {
+        return `/${title}`
+    }
+    return `${path}/${title}`
+}
+
 function _insert(obj, prevPath) {
     _.forIn(obj, function (val, key) {
         let path = prevPath
         obj['path'] = path || '/';
+        obj['key'] = makeFileName(obj.path, obj.title)
         if (_.isArray(val)) { // children
             val.forEach(function(el) {
                 if (_.isObject(el)) {

@@ -19,13 +19,6 @@ class Body extends React.Component {
         }
     }
 
-    makeFileName(path, title) {
-        if (path === '/') {
-            return `/${title}`
-        }
-        return `${path}/${title}`
-    }
-
     findIndex(index) {
         if (index === 0) {
             return this.state.tabList.size >= 2 ? index + 1 : -1;
@@ -38,13 +31,13 @@ class Body extends React.Component {
     handleDoubleClick(file) {
         return (event) => {
             if (file.node.type !== 'directory') {
-                const fileName = this.makeFileName(file.node.path, file.node.title)
+                const fileName = file.node.key
                 if (this.state.tabList.findIndex(tab => tab.fileName === fileName) === -1) {
                     this.setState({
                         tabList: this.state.tabList.push({
-                            index: file.treeIndex, fileName,
+                            index: file.treeIndex, fileName: file.node.key,
                         }),
-                        currentFileName: fileName
+                        currentFileName: fileName,
                     })
                 } else {
                     this.setState({ currentFileName: fileName })
@@ -58,10 +51,12 @@ class Body extends React.Component {
     handleCancelClick(tab) {
         const index = this.state.tabList.findIndex(t => t.fileName === tab.fileName)
         if (index !== -1) {
-            const nextIndex = this.findIndex(index)
+            const curIndex = this.state.tabList.findIndex(t => t.fileName === this.state.currentFileName)
+            const fIndex = this.findIndex(index)
+            const nextIndex = fIndex === curIndex ? fIndex : curIndex
             this.setState({
                 tabList: this.state.tabList.delete(index),
-                currentFileName: nextIndex === -1 ? '' : this.state.tabList.get(nextIndex).fileName,
+                currentFileName: fIndex === -1 ? '' : this.state.tabList.get(nextIndex).fileName,
             })
         }
     }
