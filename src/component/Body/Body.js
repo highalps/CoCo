@@ -35,7 +35,7 @@ class Body extends React.Component {
                 if (this.state.tabList.findIndex(tab => tab.fileName === fileName) === -1) {
                     this.setState({
                         tabList: this.state.tabList.push({
-                            index: file.treeIndex, fileName: file.node.key,
+                            index: file.treeIndex, fileName: fileName,
                         }),
                         currentFileName: fileName,
                     })
