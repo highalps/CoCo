@@ -13,20 +13,25 @@ class EditorBox extends React.Component {
         this._refs = {}
     }
 
-    componentDidMount() {
-
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.tabList.size !== this.props.tabList.size) {
+        }
     }
 
 
+    handleTabClick(tab) {
+        this.props.handleTabClick(tab.title)
+    }
+
     renderTab() {
         return (
-            <div className={styles.tab}>
+            <div ref={e => this._refs.tab = e} className={styles.tab}>
                 {this.props.tabList.map(tab => (
-                    <div key={`${tab.index}${tab.title}`} className={styles.item}>
+                    <div key={tab.fileName} ref={e => this._refs[tab.fileName] = e} className={styles.item}>
                         <div
-                            className={classNames({ [styles.selected]: tab.title === this.props.currentFileName }, styles.file)}
-                            onClick={() => this.props.handleTabClick(tab.title)}>
-                            {tab.title}
+                            className={classNames({ [styles.selected]: tab.fileName === this.props.currentFileName }, styles.file)}
+                            onClick={() => this.handleTabClick(tab)}>
+                            {tab.fileName.split('/').pop()}
                         </div>
                         <span className={styles.cancel} onClick={() => this.props.handleCancelClick(tab)}>x</span>
                     </div>

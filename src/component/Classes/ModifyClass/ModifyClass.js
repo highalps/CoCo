@@ -39,20 +39,8 @@ class ModifyClass extends React.Component {
             },
             alert: false
         }
-}
-    componentWillMount(){
-        // let days = ['월', '화', '수', '목', '금', '토', '일']
-        // let _temp = this.props.time
-        // let _body = {...this.state.body}
-        // for(let i = 0; i < _temp.length; i++){
-        //     let ind = days.indexOF(_temp.day)
-        //     _body.time[ind].startTime = _temp[i].startTime
-        //     _body.time[ind].endTime = _temp[i].endTime
-        // }
-        // this.setState({
-        //     body:_body
-        // })
     }
+
     @autobind
     _renderIfTutor(){
         if(this.props.tutor === 1){
@@ -171,12 +159,11 @@ class ModifyClass extends React.Component {
 
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>제목</label>
-                            <Input type="text" name = "job" onChange = {(e) => this._handleTitleChange(e)} placeholder = {classData.title}/>
                         </div>
 
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 소개</label>
-                            <Input className={styles.area} type="textarea" name = "job" onChange = {(e) => this._handleContentChange(e)} placeholder = {this.props.content}/>
+                            <Input className={styles.area} type="textarea" name = "job" onChange = {(e) => this._handleContentChange(e)} value = {this.state.body.content}/>
                         </div>
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 가능 시간</label>

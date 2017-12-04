@@ -1,30 +1,22 @@
 /* */
 import Immutable from 'immutable'
-import _ from 'lodash'
 
 /* */
 import AT from '../actions/actionTypes'
-import { setToken } from '../../utils/authUtils'
+import { insertPath } from './reducerUtils'
 
 const initialState = {
     directory: Immutable.Map(),
 }
 
-// rename json key
-function changekey(obj) {
-    var directory = JSON.stringify(obj)
-    directory.replace('name', 'title')
-    directory.replace('contents', 'children')
-    return JSON.parse(directory)
-}
-
-const userReducer = (state = initialState, action) => {
+const editorReducer = (state = initialState, action) => {
     switch (action.type) {
         case AT.GET_DIRECTORY_SUCCESS: {
-            const { directory } = action.payload
+            const directory = action.payload.directory.dir
+            insertPath(directory)
             return {
                 ...state,
-                directory: Immutable.fromJS(directory.dir),
+                directory: Immutable.fromJS(directory),
             }
         }
 
@@ -33,4 +25,4 @@ const userReducer = (state = initialState, action) => {
     }
 }
 
-export default userReducer
+export default editorReducer

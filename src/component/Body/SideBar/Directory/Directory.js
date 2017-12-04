@@ -66,12 +66,13 @@ class Directory extends React.Component {
             }
         }
         return {
-            icons: [<div style={this.fileStyles()}>{file.node.title.split('.')[1][0]}</div>],
+            icons: [<div style={this.fileStyles()}>F</div>],
             onDoubleClick: this.props.handleDoubleClick(file),
         }
     }
 
     render() {
+        console.log(this.state.directory)
         return (
             <div className={styles.wrapper}>
                 <SortableTree

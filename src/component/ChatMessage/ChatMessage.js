@@ -93,8 +93,8 @@ class ChatMessage extends React.Component {
         return () => {
             client.put('api/chat/request/'+this.props.chatId)
                 .then(res =>{
-                    console.log(res)
-                    this.props.dispatch(chatActions.setStatus(3))
+                    console.log('accept', res)
+                    this.props.dispatch(chatActions.updateStatus(3))
                 })
                 .catch(error =>{console.log(error)
                 })
@@ -103,15 +103,8 @@ class ChatMessage extends React.Component {
     @autobind
     ifMatchingCompleted() {
         console.log("ismatched", this.props.status)
-        if(this.props.status === 3) {
-            return (
-                <div className={styles.chatTitle} onClick={this.handleClickParticipate}>참여하기</div>
-            )
-        }
-        else if(this.props.isWriter === true){
-            return (
-                <div className={styles.chatTitle} onClick={this.accept()}>수락</div>
-            )
+        if(this.props.isWriter === true){
+            return this.props.status === 3? <div className={styles.chatTitle} onClick={this.handleClickParticipate}>참여하기</div>:<div className={styles.chatTitle} onClick={this.accept()}>수락</div>
         }
     }
 

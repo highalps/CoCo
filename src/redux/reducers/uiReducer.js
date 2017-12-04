@@ -9,6 +9,7 @@ const initialState = {
     uiState: Immutable.fromJS({
         chatList: false,
         chatMessage: false,
+        signModal: false,
     })
 }
 
@@ -41,6 +42,15 @@ const userReducer = (state = initialState, action) => {
                 })
             }
 
+        case AT.SIGN_MODAL_OPEN:
+            return {
+                uiState: uiState.set('signModal', true)
+            }
+
+        case AT.SIGN_MODAL_CLOSE:
+            return {
+                uiState: uiState.set('signModal', false)
+            }
 
         default:
             return state;

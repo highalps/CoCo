@@ -1,10 +1,15 @@
 .wrapper {
   margin-top: 5%;
   width: 100%;
+
+  min-height: 361px;
   min-width: 1200px;
-  background-color: #e6e6e6;
+  background-color: #EFBB6F;
+  background-image: url('../../../styles/background/myClassListBG.jpg');
+  background-size: 100% 100%;
   padding-top: 4%;
   padding-bottom: 4%;
+  opacity: 0.8;
 }
 
 .colWrapper{
@@ -13,11 +18,11 @@
   text-align: center;
 }
 .colData{
-   height: 150px;
+   height: 200px;
    width: 80%;
   margin-left: 10%;
   background-color: white;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   border: 1px solid transparent;
 }
 .colData:hover{
@@ -31,11 +36,12 @@
   font-family: "맑은 고딕";
 }
 .classTitle{
-  margin-top: 10%;
+  height: 90px;
+  margin-top: 12%;
   overflow: hidden;
   text-align: center;
   font-family: "맑은 고딕";
-  font-size: 180%;
+  font-size: 200%;
 }
 
 .plusBtn{
@@ -49,10 +55,9 @@
 }
 
 .modalHeader{
-
- background-color: blue;
+  background-color: blue;
   color:white;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 .labels{
   font-size: 110%;
@@ -78,10 +83,11 @@
   padding:5%;
 }
 .head{
-  padding-top: 25px;
+  padding-top: 20px;
   padding-bottom: 25px;
   text-align: center;
   font-size: 300%;
   font-weight: bold;
+  color: white;
   font-family: "맑은 고딕" ;
 }
