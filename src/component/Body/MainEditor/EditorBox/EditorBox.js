@@ -20,7 +20,8 @@ class EditorBox extends React.Component {
 
 
     handleTabClick(tab) {
-        this.props.handleTabClick(tab.title)
+        console.log('A', tab)
+        this.props.handleTabClick(tab.fileName)
     }
 
     renderTab() {
@@ -43,7 +44,10 @@ class EditorBox extends React.Component {
         return (
             <div className={styles.wrapper}>
                 {this.renderTab()}
-                <TextEditor currentFileName={this.props.currentFileName} classNum={this.props.classNum}/>
+                <TextEditor
+                    isTabEmpty={!this.props.tabList.size}
+                    currentFileName={this.props.currentFileName}
+                    classNum={this.props.classNum} />
             </div>
         )
     }

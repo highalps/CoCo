@@ -31,7 +31,7 @@ class App extends React.Component {
             classId: this.props.match.params.classId,
         }
         this.props.dispatch(editorActions.getDirectory(payload))
-            .then(() => this.setState({ isLoading: false }))
+            .then(() => setTimeout(() => this.setState({ isLoading: false }), 3000))
     }
 
     renderEditor() {

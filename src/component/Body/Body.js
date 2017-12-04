@@ -26,6 +26,14 @@ class Body extends React.Component {
         return `${path}/${title}`
     }
 
+    findIndex(index) {
+        if (index === 0) {
+            return this.state.tabList.size >= 2 ? index + 1 : -1;
+        } else {
+            return index - 1;
+        }
+    }
+
     @autobind
     handleDoubleClick(file) {
         return (event) => {
@@ -50,7 +58,11 @@ class Body extends React.Component {
     handleCancelClick(tab) {
         const index = this.state.tabList.findIndex(t => t.fileName === tab.fileName)
         if (index !== -1) {
-            this.setState({ tabList: this.state.tabList.delete(index) })
+            const nextIndex = this.findIndex(index)
+            this.setState({
+                tabList: this.state.tabList.delete(index),
+                currentFileName: nextIndex === -1 ? '' : this.state.tabList.get(nextIndex).fileName,
+            })
         }
     }
 
