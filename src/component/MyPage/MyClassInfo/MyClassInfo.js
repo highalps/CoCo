@@ -25,9 +25,12 @@ class MyClassInfo  extends React.Component {
             client.put('api/chat/request/'+num)
             .then(res =>{
                 console.log(res)
+                window.alert('수락을 완료했습니다.')
                 window.location.reload()
-            })
-            .catch(error =>{console.log(error)
+
+            }).catch(error =>{
+                console.log(error)
+                window.alert('수락 실패')
             })
         }
     }
@@ -74,9 +77,11 @@ class MyClassInfo  extends React.Component {
             client.delete('api/chat/'+chatNum)
                 .then(res =>{
                     console.log(res)
+                    window.alert('신청을 거절했습니다.')
                     window.location.reload()
-                })
-                .catch(error =>{console.log(error)
+                }).catch(error =>{
+                    console.log(error)
+                    window.alert('거절 실패')
                 })
         }
     }
@@ -86,9 +91,11 @@ class MyClassInfo  extends React.Component {
             client.delete('api/board/'+num)
                 .then(res =>{
                     console.log(res)
+                    window.alert('클래스를 삭제 했습니다.')
                     window.location.reload()
-                })
-                .catch(error =>{console.log(error)
+                }).catch(error =>{
+                    console.log(error)
+                    window.alert('클래스 삭제 실패')
                 })
         }
     }
