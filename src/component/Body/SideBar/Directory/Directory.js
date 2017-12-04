@@ -34,26 +34,26 @@ class Directory extends React.Component {
 
     directoryStyles(file) {
         return {
-            borderLeft: 'solid 8px gray',
-            borderBottom: 'solid 10px gray',
-            marginRight: 10,
-            width: 16,
-            height: 12,
-            filter: file.node.expanded
+            'border-left': 'solid 8px gray',
+            'border-bottom': 'solid 10px gray',
+            'margin-right': 10,
+            'width': 16,
+            'height': 12,
+            'filter': file.node.expanded
                 ? 'drop-shadow(1px 0 0 gray) drop-shadow(0 1px 0 gray) drop-shadow(0 -1px 0 gray) drop-shadow(-1px 0 0 gray)'
                 : 'none',
-            borderColor: file.node.expanded ? 'white' : 'gray',
+            'border-color': file.node.expanded ? 'white' : 'gray',
         }
     }
 
     fileStyles() {
         return {
-            border: 'solid 1px black',
-            fontSize: 8,
-            textAlign: 'center',
-            marginRight: 10,
-            width: 12,
-            height: 16,
+            'border': 'solid 1px black',
+            'font-size': 8,
+            'text-align': 'center',
+            'margin-right': 10,
+            'width': 12,
+            'height': 16,
         }
     }
 
@@ -89,12 +89,14 @@ class Directory extends React.Component {
 }
 
 Directory.propTypes = {
-    handleDoubleClick: propTypes.func
+    handleDoubleClick: propTypes.func,
+    currentFileName: propTypes.string,
 }
 
 Directory.defaultProps = {
     directory: Immutable.Map(),
     handleDoubleClick: () => {},
+    currentFileName: '',
 }
 
 export default Directory

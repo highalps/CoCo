@@ -71,6 +71,7 @@ class Body extends React.Component {
             <div className={styles.wrapper}>
               <SideBar
                   directory={this.props.directory}
+                  currentFileName={this.state.currentFileName}
                   handleDoubleClick={this.handleDoubleClick} />
               <MainEditor
                   tabList={this.state.tabList}

@@ -23,18 +23,17 @@ function makeFileName(path, title) {
 
 function _insert(obj, prevPath) {
     _.forIn(obj, function (val, key) {
-        let path = prevPath
-        obj['path'] = path || '/';
+        obj['path'] = prevPath || '/'
         obj['key'] = makeFileName(obj.path, obj.title)
         if (_.isArray(val)) { // children
             val.forEach(function(el) {
                 if (_.isObject(el)) {
-                    _insert(el, (path ? '' : '/') + obj['title'])
+                    _insert(el, prevPath + '/' + obj['title'])
                 }
             });
         }
         if (_.isObject(key)) {
-            _insert(obj[key], (path ? '' : '/') + obj['title'])
+            _insert(obj[key], prevPath || '/' + obj['title'])
         }
     });
 }
