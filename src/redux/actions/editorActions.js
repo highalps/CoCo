@@ -20,5 +20,19 @@ export default {
                 })
         }
     },
+    saveDirectory: (payload) => {
+        return (dispatch) => {
+            dispatch(createAction(AT.SAVE_DIRECTORY)(payload))
+            const { classId } = payload
+            return client.put(`/api/pad/${classId}`)
+                .then(response => {
+                    dispatch(createAction(AT.SAVE_DIRECTORY_SUCCESS)(response.data))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.SAVE_DIRECTORY_ERROR)(error))
+                    return Promise.reject(error.response)
+                })
+        }
+    },
 }
 

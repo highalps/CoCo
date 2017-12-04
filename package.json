@@ -34,7 +34,6 @@
     "react-addons-transition-group": "^15.6.0",
     "react-bootstrap": "^0.31.3",
     "react-dom": "^16.0.0",
-    "react-overlays": "^0.8.3",
     "react-redux": "^5.0.6",
     "react-resize-layout": "^0.1.7",
     "react-router": "^4.2.0",

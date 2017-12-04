@@ -17,11 +17,13 @@
   }
 
   .option {
+    display: flex;
 
     .runOption {
       display: flex;
       align-items: center;
-      margin-left: 10px;
+      margin: 0 10px 0 10px;
+      cursor: pointer;
 
       .runIcon {
         color: #00af00;
