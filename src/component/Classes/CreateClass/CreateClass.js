@@ -175,9 +175,13 @@ class CreateClass extends React.Component {
             () => {
                 client.post('api/board',
                     this.state.body
-                ).then(res =>{console.log(res.data)})
-                    .catch(error =>{console.log(error)})
-                window.location.reload()
+                ).then(res =>{console.log(res.data)
+                    window.alert('클래스 생성을 완료했습니다.')
+                    window.location.reload()
+                }).catch(error =>{
+                    console.log(error)
+                    window.alert('클래스 생성 실패')
+                })
             })
     }
 

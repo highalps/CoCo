@@ -139,10 +139,15 @@ class ModifyClass extends React.Component {
             () => {
                 client.put('api/board/'+this.props.classData.num,
                     this.state.body
-                ).then(res =>{console.log(res.data)})
-                    .catch(error =>{console.log(error)})
+                ).then(res =>{
+                    window.alert('수정을 완료했습니다.')
+                    window.location.reload()
+                    console.log(res.data)
+                }).catch(error =>{
+                    console.log(error)
+                    window.alert('수정 실패')
+                })
                 this._toggle()
-                window.location.reload()
             })
     }
     render() {
