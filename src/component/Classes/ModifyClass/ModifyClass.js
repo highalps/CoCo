@@ -150,8 +150,8 @@ class ModifyClass extends React.Component {
                 this._toggle()
             })
     }
+
     render() {
-        const classData = this.props.classData
         return (
             <Modal size='lg' isOpen={this.props.isModalOpen} toggle={this._toggle} className={this.props.className}>
                 <ModalHeader toggle={this._toggle} className={styles.modalTitle}>클래스 수정!</ModalHeader>
@@ -164,11 +164,12 @@ class ModifyClass extends React.Component {
 
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>제목</label>
+                            <Input type="text" onChange = {(e) => this._handleTitleChange(e)} value = {this.state.body.title}/>
                         </div>
 
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 소개</label>
-                            <Input className={styles.area} type="textarea" name = "job" onChange = {(e) => this._handleContentChange(e)} value = {this.state.body.content}/>
+                            <Input className={styles.area} type="textarea" onChange = {(e) => this._handleContentChange(e)} placeholder = {this.props.content}/>
                         </div>
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 가능 시간</label>
