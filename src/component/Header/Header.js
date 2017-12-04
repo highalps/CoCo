@@ -20,6 +20,14 @@ class Header extends React.Component {
     }
 
 
+    _handleClick = (event) => {
+        const { visible } = this.state;
+        const wasOutside = !(event.target.contains === this.root);
+
+        if (wasOutside && visible) this.setState({ visible: false, });
+    };
+
+
     render() {
         return (
             <div className={styles.wrapper}>
