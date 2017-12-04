@@ -57,7 +57,6 @@ class TerminalComponent extends React.Component {
             webSocket.sendCommand(this.state.bashText)
             this.setState({ bashText: '' }, () => this.term.write('\r\n'))
         } else if (e.keyCode === 8) {
-            console.log("bash", this.state.bashText, this.state.bashText.substring(0, this.state.bashText.length - 1))
             // Do not delete the prompt
             if (this.state.bashText) {
                 this.term.write('\b \b')
