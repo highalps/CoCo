@@ -1,7 +1,7 @@
 /* */
 import styles from './CreateClass.scss'
 import client from '../../../redux/base.js'
-
+import { withRouter } from 'react-router'
 
 /* */
 import { connect } from 'react-redux'
@@ -28,6 +28,7 @@ const mapStateToProps = (state) => ({
     id : state.userReducer.id
 })
 
+@withRouter
 @connect(mapStateToProps)
 class CreateClass extends React.Component {
 
@@ -130,6 +131,10 @@ class CreateClass extends React.Component {
         })
     }
 
+    @autobind
+    handleTutorButtonClick() {
+        this.props.history.push('/RegisterTutor')
+    }
 
     @autobind
     _handleTitleChange(e){
@@ -191,8 +196,8 @@ class CreateClass extends React.Component {
                 <div>
                     <h1 className={styles.head}>CoCo 강의 검색</h1>
                     <div className={styles.introBtnWrapper}>
-                        <Button size='lg' color="secondary" className={styles.introBtn} onClick = {()=>window.location.href = 'https://cocotutor.ml/#/RegisterTutor'}>튜터 등록</Button>
-                        <Button size='lg' color="secondary" className={styles.introBtn} onClick = {this._toggle}>클래스 생성</Button>
+                        <Button size='lg' color="secondary" className={styles.introBtn} onClick={this.handleTutorButtonClick}>튜터 등록</Button>
+                        <Button size='lg' color="secondary" className={styles.introBtn} onClick={this._toggle}>클래스 생성</Button>
                     </div>
                 </div>
                 <Modal size='lg' isOpen={this.state.modal} toggle={this._toggle} className={this.props.className}>
