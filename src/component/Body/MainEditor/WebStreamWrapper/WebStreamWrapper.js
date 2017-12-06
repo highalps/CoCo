@@ -423,11 +423,11 @@ class WebStreamWrapper extends React.Component {
                     </div>
                     <video
                         ref={e => this._refs["local-video"] = e}
-                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isSuccessGetMedia })}
+                        className={classNames(styles["local-video"], { [styles.hidden]: !this.state.isSuccessGetMedia })}
                         muted="muted" autoPlay="true" title="720p" />
                     <video
                         ref={e => this._refs["remote-video"] = e}
-                        className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isConnectionSuccess  })}
+                        className={classNames(styles["remote-video"], { [styles.hidden]: !this.state.isConnectionSuccess  })}
                         autoPlay="true" />
                 </section>
             </div>

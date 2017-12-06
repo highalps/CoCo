@@ -10,23 +10,31 @@ export function changekey(obj) {
 
 export function insertPath(directory) {
     for (let i = 0; i< directory.length; i++) {
-        _insert(directory[i], '')
+        _insert(directory[i], '', 0)
     }
 }
 
-function _insert(obj, prevPath) {
+function makeFileName(path, title) {
+    if (path === '/') {
+        return `/${title}`
+    }
+    return `${path}/${title}`
+}
+
+function _insert(obj, prevPath, depth) {
     _.forIn(obj, function (val, key) {
-        let path = prevPath
-        obj['path'] = path || '/';
+        obj['path'] = prevPath || '/'
+        obj['depth'] = depth
+        obj['key'] = makeFileName(obj.path, obj.title)
         if (_.isArray(val)) { // children
             val.forEach(function(el) {
                 if (_.isObject(el)) {
-                    _insert(el, (path ? '' : '/') + obj['title'])
+                    _insert(el, prevPath + '/' + obj['title'], depth + 1)
                 }
             });
         }
         if (_.isObject(key)) {
-            _insert(obj[key], (path ? '' : '/') + obj['title'])
+            _insert(obj[key], prevPath || '/' + obj['title'], depth + 1)
         }
     });
 }

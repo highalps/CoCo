@@ -15,6 +15,7 @@ class TutorInfo  extends React.Component {
     _toggleUser(){
         this.props.onToggle()
     }
+
     render(){
         const tutor = this.props.tutorData
         return(

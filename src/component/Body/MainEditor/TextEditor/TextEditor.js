@@ -48,7 +48,7 @@ class TextEditor extends React.Component {
     connect(props) {
         this.setState({ isLoading: false })
         const classNum = this.props.match.params.classId
-        const fileName = '/' + props.currentFileName
+        const fileName = props.currentFileName
         const doc = this.shareConnection.get(classNum, fileName)
         shareDBCodeMirror.attachDocToCodeMirror(doc, this.codeMirror, {
             key: 'content',
@@ -59,7 +59,7 @@ class TextEditor extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <div className={classNames(styles.blackBoard, { [styles.hidden]: this.props.currentFileName} )} />
+                <div className={classNames(styles.blackBoard, { [styles.hidden]: !this.props.isTabEmpty} )} />
                 <textarea
                     className={styles.textArea}
                     ref={e => this._refs.textArea = e} />
@@ -70,10 +70,12 @@ class TextEditor extends React.Component {
 
 TextEditor.propTypes = {
     currentFileName: PropTypes.string,
+    isTabEmpty: PropTypes.bool,
 }
 
 TextEditor.defaultProps = {
     currentFileName: '',
+    isTabEmpty: false,
 }
 
 export default TextEditor

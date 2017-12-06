@@ -5,6 +5,7 @@ import FileExplorerTheme from 'react-sortable-tree-theme-file-explorer'
 import Immutable from 'immutable'
 import autobind from 'core-decorators/lib/autobind'
 import propTypes from 'prop-types'
+import classNames from 'classnames'
 
 /* */
 import styles from './Directory.scss'
@@ -16,14 +17,63 @@ class Directory extends React.Component {
         this._refs = {}
         this.dirMap = Immutable.Map()
         this.state = {
+            isMenuVisible: false,
             directory: props.directory.toJS(),
             dirStatus: Immutable.Map()
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener('click', this.handleClick)
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handleClick)
+    }
+
+    @autobind
+    handleClick(event) {
+        if (this.state.isMenuVisible) {
+            this.setState({ isMenuVisible: false })
         }
     }
 
     @autobind
     onChangeDirectory(directory) {
         this.setState({ directory })
+    }
+
+    @autobind
+    handleContextMenu(file) {
+        return (event) => {
+            event.preventDefault()
+            this.setState({ isMenuVisible: true })
+
+            const clickX = event.clientX
+            const clickY = event.clientY
+            const screenW = window.innerWidth
+            const screenH = window.innerHeight
+            const rootW = this._refs.menu.offsetWidth
+            const rootH = this._refs.menu.offsetHeight
+
+            const right = (screenW - clickX) > rootW
+            const left = !right;
+            const top = (screenH - clickY) > rootH
+            const bottom = !top;
+
+            if (right) {
+                this._refs.menu.style.left = `${clickX + 5}px`
+            }
+            if (left) {
+                this._refs.menu.style.left = `${clickX - rootW - 5}px`
+            }
+            if (top) {
+                this._refs.menu.style.top = `${clickY + 5}px`
+            }
+            if (bottom) {
+                this._refs.menu.style.top = `${clickY - rootH - 5}px`
+            }
+        }
     }
 
     @autobind
@@ -61,18 +111,36 @@ class Directory extends React.Component {
     nodeRenderer(file) {
         if (file.node.type === 'directory') {
             return {
-                icons:  [<div style={this.directoryStyles(file)} />],
+                icons:  [<div key={file.node.key} style={this.directoryStyles(file)} />],
                 onDoubleClick: this.props.handleDoubleClick(file),
+                onContextMenu: this.handleContextMenu(file),
             }
         }
         return {
-            icons: [<div style={this.fileStyles()}>F</div>],
+            icons: [<div key={file.node.key} style={this.fileStyles()}>F</div>],
             onDoubleClick: this.props.handleDoubleClick(file),
+            onContextMenu: this.handleContextMenu(file),
         }
     }
 
+    renderMenu() {
+        return (
+            <div ref={e => this._refs.menu = e} className={classNames(styles.menu, { [styles.hidden]: !this.state.isMenuVisible })}>
+                <div className={styles.option}>New</div>
+                <div className={styles.divider} />
+                <div className={styles.option}>Cut</div>
+                <div className={styles.option}>Copy</div>
+                <div className={styles.option}>Paste</div>
+                <div className={styles.divider} />
+                <div className={styles.option}>Rename</div>
+                <div className={styles.divider} />
+                <div className={styles.option}>Delete</div>
+            </div>
+        )
+    }
+
     render() {
-        console.log(this.state.directory)
+        console.log("A", this.state.directory)
         return (
             <div className={styles.wrapper}>
                 <SortableTree
@@ -83,18 +151,21 @@ class Directory extends React.Component {
                     canDrag={false}
                     getNodeKey={this.getNodeKey}
                     generateNodeProps={this.nodeRenderer} />
+                {this.renderMenu()}
             </div>
-        );
+        )
     }
 }
 
 Directory.propTypes = {
-    handleDoubleClick: propTypes.func
+    handleDoubleClick: propTypes.func,
+    currentFileName: propTypes.string,
 }
 
 Directory.defaultProps = {
     directory: Immutable.Map(),
     handleDoubleClick: () => {},
+    currentFileName: '',
 }
 
 export default Directory

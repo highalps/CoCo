@@ -19,24 +19,25 @@ class Body extends React.Component {
         }
     }
 
-    makeFileName(path, title) {
-        if (path === '/') {
-            return `/${title}`
+    findIndex(index) {
+        if (index === 0) {
+            return this.state.tabList.size >= 2 ? index + 1 : -1;
+        } else {
+            return index - 1;
         }
-        return `${path}/${title}`
     }
 
     @autobind
     handleDoubleClick(file) {
         return (event) => {
             if (file.node.type !== 'directory') {
-                const fileName = this.makeFileName(file.node.path, file.node.title)
+                const fileName = file.node.key
                 if (this.state.tabList.findIndex(tab => tab.fileName === fileName) === -1) {
                     this.setState({
                         tabList: this.state.tabList.push({
-                            index: file.treeIndex, fileName,
+                            index: file.treeIndex, fileName: fileName,
                         }),
-                        currentFileName: fileName
+                        currentFileName: fileName,
                     })
                 } else {
                     this.setState({ currentFileName: fileName })
@@ -50,7 +51,13 @@ class Body extends React.Component {
     handleCancelClick(tab) {
         const index = this.state.tabList.findIndex(t => t.fileName === tab.fileName)
         if (index !== -1) {
-            this.setState({ tabList: this.state.tabList.delete(index) })
+            const curIndex = this.state.tabList.findIndex(t => t.fileName === this.state.currentFileName)
+            const fIndex = this.findIndex(index)
+            const nextIndex = fIndex === curIndex ? fIndex : curIndex
+            this.setState({
+                tabList: this.state.tabList.delete(index),
+                currentFileName: fIndex === -1 ? '' : this.state.tabList.get(nextIndex).fileName,
+            })
         }
     }
 
@@ -64,6 +71,7 @@ class Body extends React.Component {
             <div className={styles.wrapper}>
               <SideBar
                   directory={this.props.directory}
+                  currentFileName={this.state.currentFileName}
                   handleDoubleClick={this.handleDoubleClick} />
               <MainEditor
                   tabList={this.state.tabList}
