@@ -3,10 +3,11 @@ import Immutable from 'immutable'
 
 /* */
 import AT from '../actions/actionTypes'
-import { insertPath } from './reducerUtils'
+import { insertPath, getMaxDepth } from './reducerUtils'
 
 const initialState = {
     directory: Immutable.Map(),
+    maxDepth: 0,
 }
 
 const editorReducer = (state = initialState, action) => {
@@ -17,6 +18,7 @@ const editorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 directory: Immutable.fromJS(directory),
+                maxDepth: getMaxDepth(directory),
             }
         }
 

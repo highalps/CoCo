@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import autobind from 'core-decorators/lib/autobind'
 import webSocket from 'service/terminalSocketService'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
+import { Link, withRouter } from 'react-router-dom'
 
 /* */
 import styles from './Header.scss'
@@ -21,7 +21,7 @@ class Header extends React.Component {
 
     @autobind
     handleCompile(){
-        webSocket.requestCompile()
+        webSocket.requestCompile(this.props.maxDepth)
     }
 
     @autobind
@@ -35,9 +35,11 @@ class Header extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                <div className={styles.title}>
-                    CoCo
-                </div>
+                <Link to={'/'}>
+                    <div className={styles.title}>
+                        CoCo
+                    </div>
+                </Link>
                 <div className={styles.option}>
                     <div className={styles.runOption} onClick={this.handleCompile}>
                         <i className={classNames(styles.runIcon, "fa fa-play-circle-o")} />

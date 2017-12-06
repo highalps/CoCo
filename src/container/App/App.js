@@ -12,6 +12,7 @@ import { uiActions, editorActions } from '../../redux/actions/'
 
 const mapStateToProps = (state) => ({
     directory: state.editorReducer.directory,
+    maxDepth: state.editorReducer.maxDepth,
 })
 
 @withRouter
@@ -52,7 +53,7 @@ class App extends React.Component {
 
        return (
            <div className={styles.wrapper}>
-               <Header />
+               <Header maxDepth={this.props.maxDepth} />
                <Body directory={this.props.directory} />
                <Footer />
            </div>

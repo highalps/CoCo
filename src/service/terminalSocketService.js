@@ -20,9 +20,9 @@ class TerminalSocketService {
     sendCommand(command) {
         this._socket.emit('command', command)
     }
-    requestCompile() {
-        console.log('requestCompile')
-        this._socket.emit('run')
+
+    requestCompile(maxDepth) {
+        this._socket.emit('run', maxDepth)
     }
 
     _onConnect() {}

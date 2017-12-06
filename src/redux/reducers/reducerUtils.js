@@ -14,6 +14,8 @@ export function insertPath(directory) {
     }
 }
 
+export const getMaxDepth = ({ children }) => (1 + (children ? Math.max(...children.map(getMaxDepth)) : 0))
+
 function makeFileName(path, title) {
     if (path === '/') {
         return `/${title}`
