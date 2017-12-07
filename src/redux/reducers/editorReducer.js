@@ -18,7 +18,7 @@ const editorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 directory: Immutable.fromJS(directory),
-                maxDepth: getMaxDepth(directory),
+                maxDepth: getMaxDepth(...directory),
             }
         }
 
