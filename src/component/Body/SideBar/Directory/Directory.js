@@ -6,10 +6,13 @@ import Immutable from 'immutable'
 import autobind from 'core-decorators/lib/autobind'
 import propTypes from 'prop-types'
 import classNames from 'classnames'
+import { withRouter } from 'react-router-dom'
 
 /* */
 import styles from './Directory.scss'
+import Modal from '../../../../component/Modal'
 
+@withRouter
 class Directory extends React.Component {
 
     constructor(props) {
@@ -17,6 +20,7 @@ class Directory extends React.Component {
         this._refs = {}
         this.dirMap = Immutable.Map()
         this.state = {
+            file: null,
             isMenuVisible: false,
             directory: props.directory.toJS(),
             dirStatus: Immutable.Map()
@@ -32,7 +36,7 @@ class Directory extends React.Component {
     }
 
     @autobind
-    handleClick(event) {
+    handleClick() {
         if (this.state.isMenuVisible) {
             this.setState({ isMenuVisible: false })
         }
@@ -47,7 +51,7 @@ class Directory extends React.Component {
     handleContextMenu(file) {
         return (event) => {
             event.preventDefault()
-            this.setState({ isMenuVisible: true })
+            this.setState({ isMenuVisible: true, file: file.node })
 
             const clickX = event.clientX
             const clickY = event.clientY
@@ -75,6 +79,22 @@ class Directory extends React.Component {
             }
         }
     }
+
+    @autobind
+    handleNewClick() {
+        const { type, title, path } = this.state.file
+        const payload = {
+            classNum: this.props.match.params.classId,
+            fileName : title,
+            type,
+            path,
+        }
+    }
+
+    handleDeleteClick() {
+
+    }
+
 
     @autobind
     getNodeKey({ treeIndex, node }) {
@@ -126,7 +146,7 @@ class Directory extends React.Component {
     renderMenu() {
         return (
             <div ref={e => this._refs.menu = e} className={classNames(styles.menu, { [styles.hidden]: !this.state.isMenuVisible })}>
-                <div className={styles.option}>New</div>
+                <div className={styles.option} onClick={this.handleNewClick}>New</div>
                 <div className={styles.divider} />
                 <div className={styles.option}>Cut</div>
                 <div className={styles.option}>Copy</div>
@@ -134,7 +154,7 @@ class Directory extends React.Component {
                 <div className={styles.divider} />
                 <div className={styles.option}>Rename</div>
                 <div className={styles.divider} />
-                <div className={styles.option}>Delete</div>
+                <div className={styles.option} onClick={this.handleDeleteClick}>Delete</div>
             </div>
         )
     }
