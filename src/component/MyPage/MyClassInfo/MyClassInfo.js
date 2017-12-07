@@ -65,7 +65,6 @@ class MyClassInfo  extends React.Component {
                 <th>{data.title}</th>
                 <td>{data.language}</td>
                 <td>{data.date.substring(0, 10)}</td>
-                <td><Button>수정</Button></td>
                 <td><Button onClick={this._delete(data.num)}>삭제</Button></td>
             </tr>
         )
@@ -147,7 +146,6 @@ class MyClassInfo  extends React.Component {
                                         <th>제목</th>
                                         <th>언어</th>
                                         <th>생성날짜</th>
-                                        <th>수정</th>
                                         <th>삭제</th>
                                     </tr>
                                     </thead>
@@ -169,7 +167,6 @@ class MyClassInfo  extends React.Component {
                                         <th>취소</th>
                                     </tr>
                                     </thead>
-
                                     <tbody>
                                     {this.props.getApplicant.map((data, index)=>{return this._renderApplicantList(data, index)})}
                                     </tbody>

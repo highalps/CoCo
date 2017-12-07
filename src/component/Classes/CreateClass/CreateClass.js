@@ -78,7 +78,7 @@ class CreateClass extends React.Component {
                 {day:'일', startTime:0, endTime:0}
             ]
         }
-        this.setState({body:_body}, ()=>{console.log('init',this.state)})
+        this.setState({body:_body})
     }
     @autobind
     _returnTime(day , index){
@@ -180,7 +180,7 @@ class CreateClass extends React.Component {
             () => {
                 client.post('api/board',
                     this.state.body
-                ).then(res =>{console.log(res.data)
+                ).then(res =>{
                     window.alert('클래스 생성을 완료했습니다.')
                     window.location.reload()
                 }).catch(error =>{

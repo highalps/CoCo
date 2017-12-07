@@ -21,15 +21,15 @@ class DeleteClass  extends React.Component {
     @autobind
     _delete(){
         client.delete('api/board/'+this.props.classData)
-            .then(
-                res =>{console.log('삭제 완료')
+            .then(res =>{console.log('삭제 완료')
                     window.alert('삭제를 완료했습니다.')
                     window.location.reload()
-                })
-            .catch(error =>{
+            }).catch(error =>{
                 console.log(error)
                 window.alert('삭제 실패')
-            })
+                window.location.reload()
+
+        })
     }
     render(){
         return(

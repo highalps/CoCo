@@ -1,6 +1,6 @@
 .wrapper{
   width:100%;
-  background-image: url("https://appendto.com/wp-content/uploads/2016/04/StockSnap_TXSMCUMSQL.jpg");
+  background-image: url('../../../styles/background/classBG.jpg');
   background-size: 100% 100%;
   padding-top: 9%;
   padding-bottom: 9%;
@@ -53,6 +53,7 @@
   margin-left: 10%;
 }
 .area{
+  white-space: pre-line;
   height: 300px;
 }
 .modalTitle{

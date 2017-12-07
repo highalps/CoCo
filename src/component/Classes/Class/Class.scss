@@ -16,9 +16,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: default;
+  opacity: 0.9;
 }
-.classTitle .classNickName:hover{
-  opacity: 0.8;
+.classTitle:hover, .classNickName:hover{
+  opacity: 0.7;
+}
+
+.userImg:hover{
+  opacity: 0.9;
 }
 .classNickName{
   margin-top: 10%;
@@ -29,6 +34,7 @@
   font-weight: 600;
   text-align: center;
   cursor: default;
+  opacity:0.8;
 }
 
 .cardWrapper{
@@ -94,7 +100,7 @@
   margin-left: 5%;
 }
 .classBox{
-  padding:4%;
+  padding:3%;
 }
 .language{
   margin-left: 5%;
@@ -114,14 +120,17 @@
   margin-left: 5%;
 }
 .nestedModalHeader{
-  background: #800080;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right,#ffc0cb ,#800080 );  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #800080, #ffc0cb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-color: #800080;  /* fallback for old browsers */
   color:white;
+  opacity: 0.7;
 }
 .content{
   display:block;
+  font-size: 120%;
+  font-weight: 500;
+  white-space: pre-line;
 }
+
 /*
 career
 degree

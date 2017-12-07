@@ -169,7 +169,7 @@ class ModifyClass extends React.Component {
 
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 소개</label>
-                            <Input className={styles.area} type="textarea" onChange = {(e) => this._handleContentChange(e)} placeholder = {this.props.content}/>
+                            <Input className={styles.area} type="textarea" onChange = {(e) => this._handleContentChange(e)} value= {this.state.body.content}/>
                         </div>
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 가능 시간</label>
