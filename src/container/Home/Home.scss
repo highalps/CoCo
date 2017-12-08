@@ -11,27 +11,26 @@
     background-size: cover;
     opacity: 0.4;
   }
-
-
   .intro{
     position: absolute;
     color: white;
-    width: 420px;
+    width: 463px;
     top:calc(70% - 250px);
-    left:calc(50% - 210px);
+    left:calc(50% - 231.5px);
     font-weight: 800;
     font-size: 260%;
     opacity: 0.7;
+    font-family: Arial, Helvetica, sans-serif;
   }
   .subIntro{
     position: absolute;
     color: white;
-    width: 700px;
+    width: 740px;
     top:calc(85% - 250px);
-    left:calc(50% - 350px);
+    left:calc(50% - 370px);
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
     font-size: 280%;
-    opacity: 0.9;
   }
 
   .chatWrapper {

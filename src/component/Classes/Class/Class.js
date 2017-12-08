@@ -163,7 +163,7 @@ class  ColComponent extends React.Component {
         console.log('_body', _body)
         console.log('body',this.state.body)
         client.post('api/board/request',_body).then(res => {
-            console.log('완료')
+            window.alert('매칭 신청을 완료했습니다.')
             this._toggleMatch()
             this._toggleClass()
             this._initBody()

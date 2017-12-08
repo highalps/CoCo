@@ -22,6 +22,7 @@ body = {
 }
 */
 const mapStateToProps = (state) => ({
+    isLogged: state.userReducer.isLogged,
     nickname: state.userReducer.nickname,
     email: state.userReducer.email,
     tutor: state.userReducer.tutor,
@@ -120,6 +121,10 @@ class CreateClass extends React.Component {
     }
     @autobind
     _toggle(){
+        if(!this.props.isLogged){
+            window.alert('먼저 로그인 하세요');
+            return
+        }
         this.setState({
             modal: !this.state.modal
         })
@@ -133,6 +138,10 @@ class CreateClass extends React.Component {
 
     @autobind
     handleTutorButtonClick() {
+        if(!this.props.isLogged){
+            window.alert('먼저 로그인 하세요.')
+            return
+        }
         this.props.history.push('/RegisterTutor')
     }
 

@@ -37,10 +37,6 @@ class MyPageContainer  extends React.Component {
     }
 
     componentWillMount(){
-        console.log(this.props.isLogged)
-        if(!this.props.isLogged){
-            window.location.href = 'https://www.cocotutor.ml/#/signIn'
-        }
         client.get('api/user/getWriter/'+this.props.nickname
         ).then(res =>{
             console.log('getWriter', res.data.list)

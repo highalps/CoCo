@@ -108,7 +108,6 @@ class ColComponent extends React.Component {
                         <Button color="secondary" onClick={this._toggleInfo}>취소</Button>
                     </ModalFooter>
                 </Modal>
-
                 <Modal isOpen={this.state.modalPlus} toggle={this._togglePlus}>
                     <ModalHeader toggle={this._togglePlus} className = {styles.modalHeader}>전체 클래스 목록</ModalHeader>
                     <ModalBody className={styles.modalBodyStyle}>
@@ -121,7 +120,6 @@ class ColComponent extends React.Component {
                                     <th>참여하기</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 {this.props.entire.map((data, index)=>{return this._renderEntireList(data, index)})}
                             </tbody>
@@ -132,7 +130,6 @@ class ColComponent extends React.Component {
                     </ModalFooter>
                 </Modal>
             </div>
-
         )
     }
 }
