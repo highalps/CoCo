@@ -41,7 +41,7 @@ class SignModal extends React.Component {
 
     @autobind
     handleClose() {
-        this.setState({ mode: 'signIn' })
+        this.setState({ mode: 'signIn', id: '', password: '', email: '', nickname: '' })
         this.props.dispatch(uiActions.closeSignModal())
     }
 
@@ -56,19 +56,19 @@ class SignModal extends React.Component {
         }
         if (this.state.mode === 'signIn') {
             dispatch(userActions.signIn(payload))
-                .then(() => this.props.dispatch(uiActions.closeSignModal()))
+                .then(() => { this.props.dispatch(uiActions.closeSignModal()); this.handleClose() })
                 .catch(err => {})
         }
          else {
             dispatch(userActions.signUp(payload))
-                .then(() => this.props.dispatch(uiActions.closeSignModal()))
+                .then(() => { this.props.dispatch(uiActions.closeSignModal()); this.handleClose() })
                 .catch(err => {})
         }
     }
 
     render() {
         return (
-            <Modal isModalOpen={this.props.isModalOpen}>
+            <Modal isModalOpen={this.props.isModalOpen} onClose={this.handleClose}>
                 <div className={styles.modal}>
                     <div className={styles.bar} />
                     <div className={styles.close} onClick={this.handleClose}>✕</div>

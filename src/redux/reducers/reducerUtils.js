@@ -62,12 +62,11 @@ function _create(obj, file) {
             const { type, path, title } = file
             const defaultOption = { type, path, title, key: `${path}/${title}` }
             const lastChild = obj['children'][obj['children'].length -1]
-            if (lastChild.key !== defaultOption.key) {
+            if (lastChild && (lastChild.key !== defaultOption.key)) {
                 if (type === 'directory') {
                     obj['children'].push({...defaultOption, children: []})
                 } else if (type === 'file') {
                     obj['children'].push({...defaultOption})
-                    return
                 }
             }
         }
@@ -85,7 +84,6 @@ function _create(obj, file) {
 }
 
 function _delete(obj, file) {
-    console.log(obj, file)
     _.forIn(obj, function (val, key) {
         if (_.isArray(val)) { // children
             val.forEach(function (el, idx) {
@@ -103,23 +101,3 @@ function _delete(obj, file) {
         }
     })
 }
-
-// }
-//
-// function _insert(obj, prevPath, depth) {
-//     _.forIn(obj, function (val, key) {
-//         obj['path'] = prevPath || '/'
-//         obj['depth'] = depth
-//         obj['key'] = _makeFileName(obj.path, obj.title)
-//         if (_.isArray(val)) { // children
-//             val.forEach(function(el) {
-//                 if (_.isObject(el)) {
-//                     _insert(el, prevPath + '/' + obj['title'], depth + 1)
-//                 }
-//             })
-//         }
-//         if (_.isObject(key)) {
-//             _insert(obj[key], prevPath || '/' + obj['title'], depth + 1)
-//         }
-//     })
-// }

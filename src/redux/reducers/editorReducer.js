@@ -36,7 +36,6 @@ const editorReducer = (state = initialState, action) => {
             const { type, fileName, key } = action.payload
             const directory = state.directory.toJS()
             deleteFile(directory, { type, title: fileName, key })
-            console.log(directory)
             return {
                 ...state,
                 directory: Immutable.fromJS(directory),

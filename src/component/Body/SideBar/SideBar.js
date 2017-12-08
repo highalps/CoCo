@@ -13,7 +13,6 @@ class SideBar extends React.Component {
     }
 
     render() {
-        console.log(this.props.directory)
         return (
            <div className={styles.wrapper}>
                <div className={styles.tab}>

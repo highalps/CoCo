@@ -1,11 +1,22 @@
 /* */
 import React from 'react'
+import PropTypes from 'prop-types'
 import Transition from 'react-transition-group/Transition';
 
 /* */
 import styles from './Modal.scss'
 
 class Modal extends React.Component {
+
+    constructor() {
+        super()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.isModalOpen && !this.props.isModalOpen) {
+            this.props.onClose()
+        }
+    }
 
     renderContent() {
         const { isModalOpen, children } = this.props
@@ -30,6 +41,16 @@ class Modal extends React.Component {
             </div>
         )
     }
+}
+
+Modal.propTypes = {
+    isModalOpen: PropTypes.bool,
+    onClose: PropTypes.func,
+}
+
+Modal.defaultProps = {
+    isModalOpen: false,
+    onClose: () => {},
 }
 
 export default Modal

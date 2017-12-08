@@ -122,7 +122,6 @@ class Directory extends React.Component {
     @autobind
     handleDeleteClick() {
         const { type, path, title, key } = this.state.file
-        console.log("filefile", this.state.file)
         this.setState({ deleteModalOpen: true })
         const payload = {
             classNum: this.props.match.params.classId,
@@ -137,7 +136,7 @@ class Directory extends React.Component {
 
     @autobind
     handleCancelClick() {
-        this.setState({ createModalOpen: false, deleteModalOpen: false })
+        this.setState({ createModalOpen: false, deleteModalOpen: false, inputValue: '' })
     }
 
     @autobind
