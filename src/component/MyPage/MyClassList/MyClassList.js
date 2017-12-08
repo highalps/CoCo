@@ -8,7 +8,6 @@ import { withRouter } from 'react-router'
 /* */
 import styles from './MyClassList.scss'
 import { classActions } from '../../../redux/actions'
-
 class MyClassList extends React.Component {
     constructor(props){
         super(props)

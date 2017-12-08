@@ -96,23 +96,23 @@ class MyPrivateInfo  extends React.Component {
                                 <ModalBody className={styles.modalBodyStyle}>
                                     <div className={styles.userBox}>
                                         <label className={styles.labels}>튜터 소개</label><br/>
-                                        <div>{this.state.tutorInfo.intro}</div><hr/>
+                                        <div className={styles.contents}>{this.state.tutorInfo.intro}</div><hr/>
                                     </div>
                                     <div className={styles.userBox}>
                                         <label className={styles.labels}>학위 정보</label><br/>
-                                        <div>{this.state.tutorInfo.degree}</div><hr/>
+                                        <div className={styles.contents}>{this.state.tutorInfo.degree}</div><hr/>
                                     </div>
                                     <div className={styles.userBox}>
                                         <label className={styles.labels}>Github주소</label><br/>
-                                        <div>{this.state.tutorInfo.github}</div><hr/>
+                                        <div className={styles.contents}>{this.state.tutorInfo.github}</div><hr/>
                                     </div>
                                     <div className={styles.userBox}>
                                         <label className={styles.labels}>Github주소</label><br/>
-                                        <div>{this.state.tutorInfo.career}</div><hr />
+                                        <div className={styles.contents}>{this.state.tutorInfo.career}</div><hr />
                                     </div>
                                     <div className={styles.userBox}>
                                         <label className={styles.labels}>선호 언어</label><br/>
-                                        <div>{this.state.tutorInfo.language}</div>
+                                        <div className={styles.languages}>{this.state.tutorInfo.language}</div>
                                     </div>
                                 </ModalBody>
                                 <ModalFooter>

@@ -92,10 +92,25 @@
 
 .name{
   color:white;
+  cursor:default;
+}
+.name:hover{
+  opacity: 0.8;
 }
 
+.contents{
+  padding:2%;
+  font-weight: 500;
+  font-size: 110%;
+  opacity: 0.9;
+}
+.languages{
+  padding:2%;
+  font-weight: 500;
+  font-size: 150%;
+  opacity: 0.9;
 
-
+}
 .modalHeader{
   background-color: #1934af;
   color:white;
@@ -107,5 +122,5 @@
 }
 
 .userBox{
-  padding:5%;
+  padding:3%;
 }

@@ -240,7 +240,18 @@ class  ColComponent extends React.Component {
     _toggleModify() {
         this.setState({ modalModify: !this.state.modalModify })
     }
-
+    @autobind
+    renderModifyComponent(){
+        return(
+            <ModifyClass
+                isModalOpen={this.state.modalModify}
+                classData={this.props.colData}
+                onToggle={this._toggleModify}
+                time = {this.state.classInfo.time}
+                content = {this.state.classInfo.content}
+            />
+        )
+    }
 
     render() {
         const colData = this.props.colData
@@ -266,7 +277,7 @@ class  ColComponent extends React.Component {
                             <div className={styles.content}>{this.state.classInfo.content}</div><hr/>
                         </div>
                         <div className={styles.classBox}>
-                            <h4 className={styles.labels}>수업 가능 시간</h4><br/><br/>
+                            <h4 className={styles.labels}>수업 가능 시간</h4><br/>
                             <div className={styles.timeHeaderWrapper}>
                                 <div className={styles.timeHeader}>요일</div>
                                 <div className={styles.timeHeader}>시작</div>
@@ -328,13 +339,7 @@ class  ColComponent extends React.Component {
                     isModalOpen={this.state.modalUser}
                     tutorData={this.state.tutorInfo}
                     onToggle={this._toggleUser}/>
-                <ModifyClass
-                    isModalOpen={this.state.modalModify}
-                    classData={colData}
-                    onToggle={this._toggleModify}
-                    time = {this.state.classInfo.time}
-                    content = {this.state.classInfo.content}
-                />
+                {this.state.modalModify === true? this.renderModifyComponent():''}
                 <DeleteClass
                     isModalOpen={this.state.modalDelete}
                     classData={colData.num}
