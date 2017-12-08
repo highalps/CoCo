@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 
 /* */
 import AT from '../actions/actionTypes'
-import { insertPath, getMaxDepth } from './reducerUtils'
+import { insertPath, getMaxDepth, createFile } from './reducerUtils'
 
 const initialState = {
     directory: Immutable.Map(),
@@ -16,9 +16,19 @@ const editorReducer = (state = initialState, action) => {
             const directory = action.payload.directory.dir
             insertPath(directory)
             return {
-                ...state,
                 directory: Immutable.fromJS(directory),
                 maxDepth: getMaxDepth(...directory),
+            }
+        }
+
+        case AT.CREATE_FILE_SUCCESS: {
+            const { type, title, path } = action.payload
+            const directory = state.directory.toJS()
+            createFile(directory, { type, title, path })
+            console.log("DDD",directory)
+            return {
+                directory: Immutable.fromJS(directory),
+                maxDepth: getMaxDepth(...directory)
             }
         }
 

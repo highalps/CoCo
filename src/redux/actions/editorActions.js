@@ -34,5 +34,32 @@ export default {
                 })
         }
     },
+    createFile: (payload) => {
+        return (dispatch) => {
+            dispatch(createAction(AT.CREATE_FILE)(payload))
+            return client.post('/api/pad/directory', payload)
+                .then(response => {
+                    dispatch(createAction(AT.CREATE_FILE_SUCCESS)(payload))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.CREATE_FILE_ERROR)(error))
+                    return Promise.reject(error.response)
+                })
+        }
+    },
+    removeFile: (payload) => {
+        return (dispatch) => {
+            dispatch(createAction(AT.REMOVE_FILE)(payload))
+            const { classNum, path, fileName, type } = payload
+            return client.delete(`/api/pad/directory/?classNum=${classNum}&path=${path}&fileName=${fileName}&type=${type}`)
+                .then(response => {
+                    dispatch(createAction(AT.REMOVE_FILE_SUCCESS)(response.data))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.REMOVE_FILE_ERROR)(error))
+                    return Promise.reject(error.response)
+                })
+        }
+    },
 }
 

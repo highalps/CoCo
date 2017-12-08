@@ -7,12 +7,15 @@ import autobind from 'core-decorators/lib/autobind'
 import propTypes from 'prop-types'
 import classNames from 'classnames'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 /* */
 import styles from './Directory.scss'
 import Modal from '../../../../component/Modal'
+import { editorActions } from '../../../../redux/actions'
 
 @withRouter
+@connect()
 class Directory extends React.Component {
 
     constructor(props) {
@@ -34,6 +37,7 @@ class Directory extends React.Component {
     componentWillUnmount() {
         document.removeEventListener('click', this.handleClick)
     }
+
 
     @autobind
     handleClick() {
@@ -82,17 +86,27 @@ class Directory extends React.Component {
 
     @autobind
     handleNewClick() {
-        const { type, title, path } = this.state.file
+        const { type, path, title } = this.state.file
         const payload = {
             classNum: this.props.match.params.classId,
-            fileName : title,
-            type,
-            path,
+            fileName : 'koonangnang.c',
+            type: 'file',
+            path : type === 'directory' ? `${path}/${title}` : path
         }
+        this.props.dispatch(editorActions.createFile(payload))
     }
 
+    @autobind
     handleDeleteClick() {
-
+        const { type, path, title } = this.state.file
+        const payload = {
+            classNum: this.props.match.params.classId,
+            type,
+            path,
+            fileName : title,
+        }
+        console.log(payload)
+        this.props.dispatch(editorActions.removeFile(payload))
     }
 
 

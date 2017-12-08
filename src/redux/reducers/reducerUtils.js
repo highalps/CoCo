@@ -9,14 +9,51 @@ export function changekey(obj) {
 }
 
 export function insertPath(directory) {
+    directory[0].expanded = true
     for (let i = 0; i< directory.length; i++) {
         _insert(directory[i], '', 0)
     }
 }
 
+export function createFile(directory, file) {
+    for (let i = 0; i< directory.length; i++) {
+        _create(directory[i], file)
+    }
+}
+
+export function _create(obj, file) {
+    _.forIn(obj, function (val, key) {
+        console.log("path", obj.path, file.path)
+        if (obj['path'] === file.path) {
+            console.log('here!')
+            const { type, path, title } = file
+            const defaultOption = { type, path, title }
+            if (type === 'directory') {
+                console.log("testing", obj, file)
+                obj['children'].push({ ... defaultOption, children: [] })
+            } else if (type === 'file') {
+                console.log("testing", obj, file)
+                obj['children'].push({ ... defaultOption })
+            }
+        }
+        if (_.isArray(val)) { // children
+            val.forEach(function(el) {
+                if (_.isObject(el)) {
+                    createFile(el, file)
+                }
+            });
+        }
+        if (_.isObject(key)) {
+            createFile(obj[key], file)
+        }
+    });
+}
+
 export const getMaxDepth = ({ children, depth }) => (children ? Math.max(...children.map(getMaxDepth)) : depth)
 
-function makeFileName(path, title) {
+
+/** private **/
+function _makeFileName(path, title) {
     if (path === '/') {
         return `/${title}`
     }
@@ -27,7 +64,7 @@ function _insert(obj, prevPath, depth) {
     _.forIn(obj, function (val, key) {
         obj['path'] = prevPath || '/'
         obj['depth'] = depth
-        obj['key'] = makeFileName(obj.path, obj.title)
+        obj['key'] = _makeFileName(obj.path, obj.title)
         if (_.isArray(val)) { // children
             val.forEach(function(el) {
                 if (_.isObject(el)) {
@@ -38,5 +75,5 @@ function _insert(obj, prevPath, depth) {
         if (_.isObject(key)) {
             _insert(obj[key], prevPath || '/' + obj['title'], depth + 1)
         }
-    });
+    })
 }

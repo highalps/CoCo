@@ -45,6 +45,14 @@ export default keyMirror({
     SAVE_DIRECTORY_SUCCESS: null,
     SAVE_DIRECTORY_ERROR: null,
 
+    CREATE_FILE: null,
+    CREATE_FILE_SUCCESS: null,
+    CREATE_FILE_ERROR: null,
+
+    REMOVE_FILE: null,
+    REMOVE_FILE_SUCCESS: null,
+    REMOVE_FILE_ERROR: null,
+
     /* UI actions */
     CLOSE_CHAT: null,
     SHOW_CHAT_LIST: null,
