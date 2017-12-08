@@ -53,7 +53,7 @@ export default {
             const { classNum, path, fileName, type } = payload
             return client.delete(`/api/pad/directory/?classNum=${classNum}&path=${path}&fileName=${fileName}&type=${type}`)
                 .then(response => {
-                    dispatch(createAction(AT.REMOVE_FILE_SUCCESS)(response.data))
+                    dispatch(createAction(AT.REMOVE_FILE_SUCCESS)(payload))
                 })
                 .catch(error => {
                     dispatch(createAction(AT.REMOVE_FILE_ERROR)(error))

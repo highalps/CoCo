@@ -8,6 +8,7 @@ import propTypes from 'prop-types'
 import classNames from 'classnames'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import Button from '../../../Button'
 
 /* */
 import styles from './Directory.scss'
@@ -24,6 +25,10 @@ class Directory extends React.Component {
         this.dirMap = Immutable.Map()
         this.state = {
             file: null,
+            target: '',
+            inputValue: '',
+            createModalOpen: false,
+            deleteModalOpen: false,
             isMenuVisible: false,
             directory: props.directory.toJS(),
             dirStatus: Immutable.Map()
@@ -38,6 +43,11 @@ class Directory extends React.Component {
         document.removeEventListener('click', this.handleClick)
     }
 
+    componentDidUpdate(prevProps) {
+        if (!prevProps.directory.equals(this.props.directory)) {
+            this.setState({ directory: this.props.directory.toJS() })
+        }
+    }
 
     @autobind
     handleClick() {
@@ -49,6 +59,11 @@ class Directory extends React.Component {
     @autobind
     onChangeDirectory(directory) {
         this.setState({ directory })
+    }
+
+    @autobind
+    onChangeInput(event) {
+        this.setState({ inputValue: event.target.value })
     }
 
     @autobind
@@ -85,30 +100,45 @@ class Directory extends React.Component {
     }
 
     @autobind
-    handleNewClick() {
+    handleNewClick(target) {
+        return () => {
+            this.setState({ createModalOpen: true, target })
+        }
+    }
+
+    @autobind
+    handleCreateFile() {
         const { type, path, title } = this.state.file
         const payload = {
             classNum: this.props.match.params.classId,
-            fileName : 'koonangnang.c',
-            type: 'file',
-            path : type === 'directory' ? `${path}/${title}` : path
+            fileName : this.state.target === 'file' ? this.state.inputValue : this.state.inputValue.split('.')[0],
+            type: this.state.target,
+            path : type === 'directory' ? (path === '/' ? `/${title}` :`${path}/${title}`) : path
         }
         this.props.dispatch(editorActions.createFile(payload))
+            .then(() => this.setState({ createModalOpen: false }))
     }
 
     @autobind
     handleDeleteClick() {
-        const { type, path, title } = this.state.file
+        const { type, path, title, key } = this.state.file
+        console.log("filefile", this.state.file)
+        this.setState({ deleteModalOpen: true })
         const payload = {
             classNum: this.props.match.params.classId,
             type,
             path,
+            key,
             fileName : title,
         }
-        console.log(payload)
         this.props.dispatch(editorActions.removeFile(payload))
     }
 
+
+    @autobind
+    handleCancelClick() {
+        this.setState({ createModalOpen: false, deleteModalOpen: false })
+    }
 
     @autobind
     getNodeKey({ treeIndex, node }) {
@@ -160,7 +190,8 @@ class Directory extends React.Component {
     renderMenu() {
         return (
             <div ref={e => this._refs.menu = e} className={classNames(styles.menu, { [styles.hidden]: !this.state.isMenuVisible })}>
-                <div className={styles.option} onClick={this.handleNewClick}>New</div>
+                <div className={styles.option} onClick={this.handleNewClick('file')}>New File</div>
+                <div className={styles.option} onClick={this.handleNewClick('directory')}>New Directory</div>
                 <div className={styles.divider} />
                 <div className={styles.option}>Cut</div>
                 <div className={styles.option}>Copy</div>
@@ -173,8 +204,39 @@ class Directory extends React.Component {
         )
     }
 
+    renderCreateModal() {
+       return (
+           <Modal isModalOpen={this.state.createModalOpen}>
+               <div className={styles.modal}>
+                   <div className={styles.head}>
+                       <div className={styles.title}>{`New ${this.state.target}`}</div>
+                       <div className={styles.cancel} onClick={this.handleCancelClick}>x</div>
+                   </div>
+                   <div className={styles.body}>
+                       <div className={styles.description}>{`Enter a new ${this.state.target} name:`}</div>
+                       <input
+                           autoFocus
+                           className={styles.input}
+                           onChange={this.onChangeInput}
+                           placeholder="main.cpp"
+                           value={this.state.inputValue} />
+                   </div>
+                   <div className={styles.footer}>
+                       <div className={styles.button} onClick={this.handleCreateFile}>OK</div>
+                       <div className={styles.button} onClick={this.handleCancelClick}>Cancel</div>
+                   </div>
+               </div>
+           </Modal>
+       )
+    }
+
+    renderDeleteModal() {
+        return (
+            <Modal isModalOpen={this.state.deleteModalOpen} />
+        )
+    }
+
     render() {
-        console.log("A", this.state.directory)
         return (
             <div className={styles.wrapper}>
                 <SortableTree
@@ -186,6 +248,8 @@ class Directory extends React.Component {
                     getNodeKey={this.getNodeKey}
                     generateNodeProps={this.nodeRenderer} />
                 {this.renderMenu()}
+                {this.renderCreateModal()}
+                {this.renderDeleteModal()}
             </div>
         )
     }

@@ -21,32 +21,10 @@ export function createFile(directory, file) {
     }
 }
 
-export function _create(obj, file) {
-    _.forIn(obj, function (val, key) {
-        console.log("path", obj.path, file.path)
-        if (obj['path'] === file.path) {
-            console.log('here!')
-            const { type, path, title } = file
-            const defaultOption = { type, path, title }
-            if (type === 'directory') {
-                console.log("testing", obj, file)
-                obj['children'].push({ ... defaultOption, children: [] })
-            } else if (type === 'file') {
-                console.log("testing", obj, file)
-                obj['children'].push({ ... defaultOption })
-            }
-        }
-        if (_.isArray(val)) { // children
-            val.forEach(function(el) {
-                if (_.isObject(el)) {
-                    createFile(el, file)
-                }
-            });
-        }
-        if (_.isObject(key)) {
-            createFile(obj[key], file)
-        }
-    });
+export function deleteFile(directory, file) {
+    for (let i = 0; i< directory.length; i++) {
+        _delete(directory[i], file)
+    }
 }
 
 export const getMaxDepth = ({ children, depth }) => (children ? Math.max(...children.map(getMaxDepth)) : depth)
@@ -70,10 +48,78 @@ function _insert(obj, prevPath, depth) {
                 if (_.isObject(el)) {
                     _insert(el, prevPath + '/' + obj['title'], depth + 1)
                 }
-            });
+            })
         }
         if (_.isObject(key)) {
             _insert(obj[key], prevPath || '/' + obj['title'], depth + 1)
         }
     })
 }
+
+function _create(obj, file) {
+    _.forIn(obj, function (val, key) {
+        if (obj['key'] === file.path) {
+            const { type, path, title } = file
+            const defaultOption = { type, path, title, key: `${path}/${title}` }
+            const lastChild = obj['children'][obj['children'].length -1]
+            if (lastChild.key !== defaultOption.key) {
+                if (type === 'directory') {
+                    obj['children'].push({...defaultOption, children: []})
+                } else if (type === 'file') {
+                    obj['children'].push({...defaultOption})
+                    return
+                }
+            }
+        }
+        if (_.isArray(val)) { // children
+            val.forEach(function(el) {
+                if (_.isObject(el)) {
+                    _create(el, file)
+                }
+            });
+        }
+        if (_.isObject(key)) {
+            _create(obj[key], file)
+        }
+    })
+}
+
+function _delete(obj, file) {
+    console.log(obj, file)
+    _.forIn(obj, function (val, key) {
+        if (_.isArray(val)) { // children
+            val.forEach(function (el, idx) {
+                if(el.key === file.key) {
+                    val.splice(idx, 1)
+                } else {
+                    if (_.isObject(el)) {
+                        _delete(el, file)
+                    }
+                }
+            })
+        }
+        if (_.isObject(key)) {
+            _delete(obj[key], file)
+        }
+    })
+}
+
+// }
+//
+// function _insert(obj, prevPath, depth) {
+//     _.forIn(obj, function (val, key) {
+//         obj['path'] = prevPath || '/'
+//         obj['depth'] = depth
+//         obj['key'] = _makeFileName(obj.path, obj.title)
+//         if (_.isArray(val)) { // children
+//             val.forEach(function(el) {
+//                 if (_.isObject(el)) {
+//                     _insert(el, prevPath + '/' + obj['title'], depth + 1)
+//                 }
+//             })
+//         }
+//         if (_.isObject(key)) {
+//             _insert(obj[key], prevPath || '/' + obj['title'], depth + 1)
+//         }
+//     })
+// }
