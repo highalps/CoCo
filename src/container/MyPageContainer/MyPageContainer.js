@@ -37,35 +37,18 @@ class MyPageContainer  extends React.Component {
     }
 
     componentWillMount(){
-        client.get('api/user/getWriter/'+this.props.nickname
+        console.log(this.props.isLogged)
+        if(!this.props.isLogged){
+            window.location.href = 'https://www.cocotutor.ml/#/signIn'
+        }
+        client.get('api/user/'
         ).then(res =>{
-            console.log('getWriter', res.data.list)
             this.setState({
-                getWriter:res.data.list
+                getWriter: res.data.list.requests.writer,
+                getApplicant: res.data.list.requests.applicant,
+                getClass: res.data.list.classes.matchList,
+                getMyList: res.data.list.classes.myList
             }, ()=>{
-                console.log('getWriter!!!', this.state.getWriter.length)
-            })
-        }).catch(error =>{
-            console.log(error)
-        })
-
-        client.get('api/user/getApplicant/'+this.props.nickname
-        ).then(res =>{
-            console.log('getApplicant', res.data.list)
-            this.setState({
-                getApplicant:res.data.list
-            })
-        }).catch(error =>{
-            console.log(error)
-        })
-
-        client.get('api/user/getClass/'+this.props.nickname
-        ).then(res =>{
-            console.log('match', res.data.matchList)
-            console.log('myList', res.data.myList)
-            this.setState({
-                getClass:res.data.matchList,
-                getMyList: res.data.myList
             })
         }).catch(error =>{
             console.log(error)

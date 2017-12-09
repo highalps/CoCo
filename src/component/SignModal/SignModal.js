@@ -52,7 +52,7 @@ class SignModal extends React.Component {
             id: this.state.id,
             password: this.state.password,
             email: this.state.email,
-            nickname: this.state.email,
+            nickname: this.state.nickname,
         }
         if (this.state.mode === 'signIn') {
             dispatch(userActions.signIn(payload))

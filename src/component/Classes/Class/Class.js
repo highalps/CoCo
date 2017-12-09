@@ -196,7 +196,7 @@ class  ColComponent extends React.Component {
     }
     @autobind
     _getTutorData(){
-        client.get('api/user/getTutor/'+this.props.colData.nickname).then(res => {
+        client.get('api/user/tutor/nickname/'+this.props.colData.nickname).then(res => {
             console.log('tutorinfo', res.data.tutor)
             this.setState({
                 tutorInfo:res.data.tutor

@@ -26,7 +26,7 @@ class MyPrivateInfo  extends React.Component {
 
     @autobind
     _getTutorData(){
-        client.get('api/user/TutorInfo/'+this.props.id).then(res => {
+        client.get('api/user/tutor/id'+this.props.id).then(res => {
             this.setState({
                 tutorInfo:res.data.tutor
             },()=>{
