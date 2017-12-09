@@ -14,7 +14,7 @@ import ScreenCover from './component/ScreenCover'
 
 export default () => (
     <HashRouter>
-        <div style={{ width: "100%", height: "100%", 'font-family': 'Nanum Square' }}>
+        <div style={{ width: "100%", height: "100%", fontFamily: 'Nanum Square' }}>
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/editor/:classId" component={App} />

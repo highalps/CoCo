@@ -22,7 +22,6 @@ class Directory extends React.Component {
     constructor(props) {
         super(props)
         this._refs = {}
-        this.dirMap = Immutable.Map()
         this.state = {
             file: null,
             target: '',
@@ -48,6 +47,32 @@ class Directory extends React.Component {
             this.setState({ directory: this.props.directory.toJS() })
         }
     }
+
+    directoryStyles(file) {
+        return {
+            borderLeft: 'solid 8px gray',
+            borderBottom: 'solid 10px gray',
+            marginRight: 10,
+            width: 16,
+            height: 12,
+            filter: file.node.expanded
+                ? 'drop-shadow(1px 0 0 gray) drop-shadow(0 1px 0 gray) drop-shadow(0 -1px 0 gray) drop-shadow(-1px 0 0 gray)'
+                : 'none',
+            borderColor: file.node.expanded ? 'white' : 'gray',
+        }
+    }
+
+    fileStyles() {
+        return {
+            border: 'solid 1px black',
+            fontSize: 8,
+            textAlign: 'center',
+            marginRight: 10,
+            width: 12,
+            height: 16,
+        }
+    }
+
 
     @autobind
     handleClick() {
@@ -140,37 +165,6 @@ class Directory extends React.Component {
     }
 
     @autobind
-    getNodeKey({ treeIndex, node }) {
-        // this.setState({ dirStatus: this.state.dirStatus.set(treeIndex, node) })
-        this.dirMap = this.dirMap.set(treeIndex, node)
-    }
-
-    directoryStyles(file) {
-        return {
-            borderLeft: 'solid 8px gray',
-            borderBottom: 'solid 10px gray',
-            marginRight: 10,
-            width: 16,
-            height: 12,
-            filter: file.node.expanded
-                ? 'drop-shadow(1px 0 0 gray) drop-shadow(0 1px 0 gray) drop-shadow(0 -1px 0 gray) drop-shadow(-1px 0 0 gray)'
-                : 'none',
-            borderColor: file.node.expanded ? 'white' : 'gray',
-        }
-    }
-
-    fileStyles() {
-        return {
-            border: 'solid 1px black',
-            fontSize: 8,
-            textAlign: 'center',
-            marginRight: 10,
-            width: 12,
-            height: 16,
-        }
-    }
-
-    @autobind
     nodeRenderer(file) {
         if (file.node.type === 'directory') {
             return {
@@ -235,6 +229,11 @@ class Directory extends React.Component {
         )
     }
 
+    @autobind
+    onToggle(treeData) {
+        this.setState({ directory: treeData.treeData})
+    }
+
     render() {
         return (
             <div className={styles.wrapper}>
@@ -243,8 +242,7 @@ class Directory extends React.Component {
                     theme={FileExplorerTheme}
                     onChange={this.onChangeDirectory}
                     treeData={this.state.directory}
-                    canDrag={false}
-                    getNodeKey={this.getNodeKey}
+                    onVisibilityToggle={this.onToggle}
                     generateNodeProps={this.nodeRenderer} />
                 {this.renderMenu()}
                 {this.renderCreateModal()}

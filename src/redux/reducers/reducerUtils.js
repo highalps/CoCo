@@ -9,7 +9,7 @@ export function changekey(obj) {
 }
 
 export function insertPath(directory) {
-    directory[0].expanded = true
+    // directory[0].expanded = true
     for (let i = 0; i< directory.length; i++) {
         _insert(directory[i], '', 0)
     }
@@ -43,6 +43,9 @@ function _insert(obj, prevPath, depth) {
         obj['path'] = prevPath || '/'
         obj['depth'] = depth
         obj['key'] = _makeFileName(obj.path, obj.title)
+        if (obj['type'] === 'directory') {
+            obj['expanded'] = true
+        }
         if (_.isArray(val)) { // children
             val.forEach(function(el) {
                 if (_.isObject(el)) {
@@ -62,7 +65,7 @@ function _create(obj, file) {
             const { type, path, title } = file
             const defaultOption = { type, path, title, key: `${path}/${title}` }
             const lastChild = obj['children'][obj['children'].length -1]
-            if (lastChild && (lastChild.key !== defaultOption.key)) {
+            if (lastChild || (lastChild.key !== defaultOption.key)) {
                 if (type === 'directory') {
                     obj['children'].push({...defaultOption, children: []})
                 } else if (type === 'file') {
