@@ -92,6 +92,15 @@ var config = {
                     }
                 ]
             },
+            {
+                test: /\.js\.map$/,
+                use: [
+                    {
+                        loader: 'source-map-loader',
+                    }
+                ],
+                enforce: "pre"
+            }
         ],
     },
     plugins: [
