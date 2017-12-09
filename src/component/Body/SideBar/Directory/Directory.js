@@ -242,6 +242,7 @@ class Directory extends React.Component {
                     theme={FileExplorerTheme}
                     onChange={this.onChangeDirectory}
                     treeData={this.state.directory}
+                    canDrag={false}
                     onVisibilityToggle={this.onToggle}
                     generateNodeProps={this.nodeRenderer} />
                 {this.renderMenu()}
