@@ -15,9 +15,6 @@ class SideBar extends React.Component {
     render() {
         return (
            <div className={styles.wrapper}>
-               <div className={styles.tab}>
-                    탭
-               </div>
                <Directory
                    directory={this.props.directory}
                    currentFileName={this.props.currentFileName}

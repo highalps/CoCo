@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 200px;
+  width: 240px;
   background-color: #303130;
   color: #f1f1f1;
   padding-left: 10px;
@@ -48,7 +48,7 @@
 
 .modal {
   width: 350px;
-  height: 140px;
+  max-height: 140px;
   background-color: #303130;
 
   .head {

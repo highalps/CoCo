@@ -28,6 +28,7 @@ class Directory extends React.Component {
             inputValue: '',
             createModalOpen: false,
             deleteModalOpen: false,
+            renameModalOpen: false,
             isMenuVisible: false,
             directory: props.directory.toJS(),
             dirStatus: Immutable.Map()
@@ -92,42 +93,52 @@ class Directory extends React.Component {
     }
 
     @autobind
+    onToggle(treeData) {
+        this.setState({ directory: treeData.treeData})
+    }
+
+
+    @autobind
     handleContextMenu(file) {
         return (event) => {
-            event.preventDefault()
-            this.setState({ isMenuVisible: true, file: file.node })
+            const isModalOpen = this.state.createModalOpen || this.state.renameModalOpen || this.state.deleteModalOpen
+            if (!isModalOpen) {
+                event.preventDefault()
+                this.setState({isMenuVisible: true, file: file.node})
 
-            const clickX = event.clientX
-            const clickY = event.clientY
-            const screenW = window.innerWidth
-            const screenH = window.innerHeight
-            const rootW = this._refs.menu.offsetWidth
-            const rootH = this._refs.menu.offsetHeight
+                const clickX = event.clientX
+                const clickY = event.clientY
+                const screenW = window.innerWidth
+                const screenH = window.innerHeight
+                const rootW = this._refs.menu.offsetWidth
+                const rootH = this._refs.menu.offsetHeight
 
-            const right = (screenW - clickX) > rootW
-            const left = !right;
-            const top = (screenH - clickY) > rootH
-            const bottom = !top;
+                const right = (screenW - clickX) > rootW
+                const left = !right;
+                const top = (screenH - clickY) > rootH
+                const bottom = !top;
 
-            if (right) {
-                this._refs.menu.style.left = `${clickX + 5}px`
-            }
-            if (left) {
-                this._refs.menu.style.left = `${clickX - rootW - 5}px`
-            }
-            if (top) {
-                this._refs.menu.style.top = `${clickY + 5}px`
-            }
-            if (bottom) {
-                this._refs.menu.style.top = `${clickY - rootH - 5}px`
+                if (right) {
+                    this._refs.menu.style.left = `${clickX + 5}px`
+                }
+                if (left) {
+                    this._refs.menu.style.left = `${clickX - rootW - 5}px`
+                }
+                if (top) {
+                    this._refs.menu.style.top = `${clickY + 5}px`
+                }
+                if (bottom) {
+                    this._refs.menu.style.top = `${clickY - rootH - 5}px`
+                }
             }
         }
     }
 
     @autobind
-    handleNewClick(target) {
+    handleOptionClick(option, target) {
+        const inputValue = this.state.file && option === 'rename' ? this.state.file.title : ''
         return () => {
-            this.setState({ createModalOpen: true, target })
+            this.setState({ [`${option}ModalOpen`]: true, target, inputValue })
         }
     }
 
@@ -145,7 +156,7 @@ class Directory extends React.Component {
     }
 
     @autobind
-    handleDeleteClick() {
+    handleDeleteFile() {
         const { type, path, title, key } = this.state.file
         this.setState({ deleteModalOpen: true })
         const payload = {
@@ -156,45 +167,25 @@ class Directory extends React.Component {
             fileName : title,
         }
         this.props.dispatch(editorActions.removeFile(payload))
+            .then(() => this.setState({ deleteModalOpen: false }))
     }
 
+    @autobind
+    handleRenameFile() {
+        // const { type, path, title, key } = this.state.file
+        // const payload = {
+        //     classNum: this.props.match.params.classId,
+        //     type,
+        //     path,
+        //     key,
+        //     fileName : title,
+        // }
+        // this.props.dispatch(editorActions.removeFile(payload))
+    }
 
     @autobind
     handleCancelClick() {
-        this.setState({ createModalOpen: false, deleteModalOpen: false, inputValue: '' })
-    }
-
-    @autobind
-    nodeRenderer(file) {
-        if (file.node.type === 'directory') {
-            return {
-                icons:  [<div key={file.node.key} style={this.directoryStyles(file)} />],
-                onDoubleClick: this.props.handleDoubleClick(file),
-                onContextMenu: this.handleContextMenu(file),
-            }
-        }
-        return {
-            icons: [<div key={file.node.key} style={this.fileStyles()}>F</div>],
-            onDoubleClick: this.props.handleDoubleClick(file),
-            onContextMenu: this.handleContextMenu(file),
-        }
-    }
-
-    renderMenu() {
-        return (
-            <div ref={e => this._refs.menu = e} className={classNames(styles.menu, { [styles.hidden]: !this.state.isMenuVisible })}>
-                <div className={styles.option} onClick={this.handleNewClick('file')}>New File</div>
-                <div className={styles.option} onClick={this.handleNewClick('directory')}>New Directory</div>
-                <div className={styles.divider} />
-                <div className={styles.option}>Cut</div>
-                <div className={styles.option}>Copy</div>
-                <div className={styles.option}>Paste</div>
-                <div className={styles.divider} />
-                <div className={styles.option}>Rename</div>
-                <div className={styles.divider} />
-                <div className={styles.option} onClick={this.handleDeleteClick}>Delete</div>
-            </div>
-        )
+        this.setState({ createModalOpen: false, deleteModalOpen: false, renameModalOpen: false, inputValue: '' })
     }
 
     renderCreateModal() {
@@ -223,15 +214,94 @@ class Directory extends React.Component {
        )
     }
 
+    renderRenameModal() {
+        return (
+            <Modal isModalOpen={this.state.renameModalOpen}>
+                <div className={styles.modal}>
+                    <div className={styles.head}>
+                        <div className={styles.title}>Rename</div>
+                        <div className={styles.cancel} onClick={this.handleCancelClick}>x</div>
+                    </div>
+                    <div className={styles.body}>
+                        <div className={styles.description}>
+                            {
+                                `
+                                   Rename
+                                   ${this.state.file ? this.state.file.type : ''}
+                                   ${this.state.file ? this.state.file.title : ''} and its usages to:
+                                `
+                            }
+                        </div>
+                        <input
+                            autoFocus
+                            className={styles.input}
+                            onChange={this.onChangeInput}
+                            value={this.state.inputValue} />
+                    </div>
+                    <div className={styles.footer}>
+                        <div className={styles.button} onClick={this.handleRenameFile}>OK</div>
+                        <div className={styles.button} onClick={this.handleCancelClick}>Cancel</div>
+                    </div>
+                </div>
+            </Modal>
+        )
+    }
+
+
     renderDeleteModal() {
         return (
-            <Modal isModalOpen={this.state.deleteModalOpen} />
+            <Modal isModalOpen={this.state.deleteModalOpen}>
+                <div className={styles.modal}>
+                    <div className={styles.head}>
+                        <div className={styles.title}>Delete</div>
+                        <div className={styles.cancel} onClick={this.handleCancelClick}>x</div>
+                    </div>
+                    <div className={styles.body}>
+                        <div className={styles.description}>
+                            {
+                                `Delete
+                                 ${this.state.file ? this.state.file.type : ''}
+                                 "${this.state.file ? this.state.file.title : ''}"?
+                                 `
+                            }
+                        </div>
+                    </div>
+                    <div className={styles.footer}>
+                        <div className={styles.button} onClick={this.handleDeleteFile}>OK</div>
+                        <div className={styles.button} onClick={this.handleCancelClick}>Cancel</div>
+                    </div>
+                </div>
+            </Modal>
+        )
+    }
+
+    renderMenu() {
+        return (
+            <div ref={e => this._refs.menu = e} className={classNames(styles.menu, { [styles.hidden]: !this.state.isMenuVisible })}>
+                <div className={styles.option} onClick={this.handleOptionClick('create', 'file')}>New File</div>
+                <div className={styles.option} onClick={this.handleOptionClick('create', 'directory')}>New Directory</div>
+                <div className={styles.divider} />
+                <div className={styles.option} onClick={this.handleOptionClick('rename')}>Rename</div>
+                <div className={styles.divider} />
+                <div className={styles.option} onClick={this.handleOptionClick('delete')}>Delete</div>
+            </div>
         )
     }
 
     @autobind
-    onToggle(treeData) {
-        this.setState({ directory: treeData.treeData})
+    nodeRenderer(file) {
+        if (file.node.type === 'directory') {
+            return {
+                icons:  [<div key={file.node.key} style={this.directoryStyles(file)} />],
+                onDoubleClick: this.props.handleDoubleClick(file),
+                onContextMenu: this.handleContextMenu(file),
+            }
+        }
+        return {
+            icons: [<div key={file.node.key} style={this.fileStyles()}>F</div>],
+            onDoubleClick: this.props.handleDoubleClick(file),
+            onContextMenu: this.handleContextMenu(file),
+        }
     }
 
     render() {
@@ -248,6 +318,7 @@ class Directory extends React.Component {
                 {this.renderMenu()}
                 {this.renderCreateModal()}
                 {this.renderDeleteModal()}
+                {this.renderRenameModal()}
             </div>
         )
     }
