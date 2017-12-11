@@ -2,25 +2,14 @@
 import styles from './CreateClass.scss'
 import client from '../../../redux/base.js'
 import { withRouter } from 'react-router'
+import { uiActions } from '../../../redux/actions'
 
 /* */
 import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
-import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
+import {ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
 import React from 'react'
-/*
-body = {
-		nickname: 작성자
-		title:
-		content:
-		language:
-		status: 1 - 학생, 2 - 튜터
-		time: [
-			{ day: ‘월’, startTime: 8, endTime:17 }
-			……..
-		]
-}
-*/
+
 const mapStateToProps = (state) => ({
     isLogged: state.userReducer.isLogged,
     nickname: state.userReducer.nickname,
@@ -123,6 +112,7 @@ class CreateClass extends React.Component {
     _toggle(){
         if(!this.props.isLogged){
             window.alert('먼저 로그인 하세요');
+            this.props.dispatch(uiActions.openSignModal())
             return
         }
         this.setState({
@@ -135,11 +125,11 @@ class CreateClass extends React.Component {
             alert: !this.state.alert
         })
     }
-
     @autobind
     handleTutorButtonClick() {
         if(!this.props.isLogged){
             window.alert('먼저 로그인 하세요.')
+            this.props.dispatch(uiActions.openSignModal())
             return
         }
         this.props.history.push('/RegisterTutor')
@@ -179,7 +169,7 @@ class CreateClass extends React.Component {
         let day = []
         let _body = { ...this.state.body }
         for(let i=0; i < 7; i++){
-            if(_body.time[i].startTime != 0 || _body.time[i].endTime != 0){
+            if(_body.time[i].startTime !== 0 || _body.time[i].endTime !== 0){
                 day.push(_body.time[i])
             }
         }
