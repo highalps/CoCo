@@ -87,6 +87,7 @@ class WebStreamWrapper extends React.Component {
     /** socket method **/
     initSocket() {
         console.log("this.scoket", this.socket)
+        this.socket.emit('joinRoom', this.roomId, this.userId)
         this.socket.on('joinRoom', (roomId, userList) => {
             console.log('joinRoom', arguments)
 
@@ -275,7 +276,6 @@ class WebStreamWrapper extends React.Component {
     @autobind
     handleClickButton(isOffer) {
         return () => {
-            this.socket.emit('joinRoom', this.roomId, this.userId)
             window.navigator.getUserMedia({
                 audio: true,
                 video: {
@@ -359,11 +359,9 @@ class WebStreamWrapper extends React.Component {
         if (!this.state.isSuccessGetMedia) {
             return (
                 <div className={styles.join}>
-                    {
-                        this.state.isPossibleJoin
-                            ? (<span className={styles.waitDescription}>상대방이 대기 중입니다</span>)
-                            : (<span className={styles.waitDescription}>상대방을 기다리는 중입니다</span>)
-                    }
+                    <span className={styles.waitDescription}>
+                        { this.state.isPossibleJoin ? '상대방이 대기 중입니다' : '상대방을 기다리는 중입니다' }
+                    </span>
                     <div className={styles.camera} onClick={this.handleClickButton(isOffer)}>
                         <i className="fa fa-video-camera" />
                     </div>
@@ -422,6 +420,8 @@ class WebStreamWrapper extends React.Component {
                 {this.renderWaitComponent()}
                 <section ref={e => this._refs.videoWrapper = e} className={styles.videoWrapper}>
                     {this.renderOption()}
+                    <div className={classNames(styles.cover, "fa fa-user", { [styles.hidden]: this.state.isSuccessGetMedia })} />
+                    <div className={classNames(styles.cover, "fa fa-user", { [styles.hidden]: this.state.isSuccessGetMedia })} />
                     <video
                         ref={e => this._refs["local-video"] = e}
                         className={classNames(styles["local-video"], { [styles.hidden]: !this.state.isSuccessGetMedia })}
