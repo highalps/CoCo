@@ -172,15 +172,17 @@ class Directory extends React.Component {
 
     @autobind
     handleRenameFile() {
-        // const { type, path, title, key } = this.state.file
-        // const payload = {
-        //     classNum: this.props.match.params.classId,
-        //     type,
-        //     path,
-        //     key,
-        //     fileName : title,
-        // }
-        // this.props.dispatch(editorActions.removeFile(payload))
+        const { type, path, title, key } = this.state.file
+        const payload = {
+            classNum: this.props.match.params.classId,
+            type,
+            path,
+            key,
+            prevName: title,
+            nextName: this.state.inputValue,
+        }
+        this.props.dispatch(editorActions.renameFile(payload))
+            .then(() => this.setState({ renameModalOpen: false }))
     }
 
     @autobind

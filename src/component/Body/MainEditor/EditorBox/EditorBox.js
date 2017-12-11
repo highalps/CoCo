@@ -13,14 +13,13 @@ class EditorBox extends React.Component {
         this._refs = {}
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (prevProps.tabList.size !== this.props.tabList.size) {
         }
     }
 
 
     handleTabClick(tab) {
-        console.log('A', tab)
         this.props.handleTabClick(tab.fileName)
     }
 

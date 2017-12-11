@@ -53,6 +53,10 @@ export default keyMirror({
     REMOVE_FILE_SUCCESS: null,
     REMOVE_FILE_ERROR: null,
 
+    RENAME_FILE: null,
+    RENAME_FILE_SUCCESS: null,
+    RENAME_FILE_ERROR: null,
+
     /* UI actions */
     CLOSE_CHAT: null,
     SHOW_CHAT_LIST: null,

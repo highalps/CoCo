@@ -19,14 +19,6 @@ class Body extends React.Component {
         }
     }
 
-    findIndex(index) {
-        if (index === 0) {
-            return this.state.tabList.size >= 2 ? index + 1 : -1;
-        } else {
-            return index - 1;
-        }
-    }
-
     @autobind
     handleDoubleClick(file) {
         return (event) => {
@@ -49,14 +41,20 @@ class Body extends React.Component {
 
     @autobind
     handleCancelClick(tab) {
-        const index = this.state.tabList.findIndex(t => t.fileName === tab.fileName)
-        if (index !== -1) {
-            const curIndex = this.state.tabList.findIndex(t => t.fileName === this.state.currentFileName)
-            const fIndex = this.findIndex(index)
-            const nextIndex = fIndex === curIndex ? fIndex : curIndex
+        const targetIndex = this.state.tabList.findIndex(t => t.fileName === tab.fileName) // x를 누른 파일 위치
+        if (targetIndex !== -1) {
+            const curIndex = this.state.tabList.findIndex(t => t.fileName === this.state.currentFileName) // 보고 있는 위치
+            const fIndex = targetIndex === curIndex ? curIndex -1 : curIndex
+            const nextIndex = (() => {
+                if (fIndex === -1) {
+                    if (this.state.tabList.size >= 2)return 1
+                    return -1
+                }
+                return fIndex
+            })()
             this.setState({
-                tabList: this.state.tabList.delete(index),
-                currentFileName: fIndex === -1 ? '' : this.state.tabList.get(nextIndex).fileName,
+                tabList: this.state.tabList.delete(targetIndex),
+                currentFileName: nextIndex === -1 ? '' : this.state.tabList.get(nextIndex).fileName,
             })
         }
     }

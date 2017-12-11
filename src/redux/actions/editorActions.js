@@ -53,10 +53,24 @@ export default {
             const { classNum, path, fileName, type } = payload
             return client.delete(`/api/pad/directory/?classNum=${classNum}&path=${path}&fileName=${fileName}&type=${type}`)
                 .then(response => {
-                    dispatch(createAction(AT.REMOVE_FILE_SUCCESS)(payload))
+                    return dispatch(createAction(AT.REMOVE_FILE_SUCCESS)(payload))
                 })
                 .catch(error => {
                     dispatch(createAction(AT.REMOVE_FILE_ERROR)(error))
+                    return Promise.reject(error.response)
+                })
+        }
+    },
+    renameFile: (payload) => {
+        return (dispatch) => {
+            dispatch(createAction(AT.RENAME_FILE)(payload))
+            const { classNum } = payload
+            return client.put(`/api/pad/directory/${classNum}`, payload)
+                .then(response => {
+                    dispatch(createAction(AT.RENAME_FILE_SUCCESS)(payload))
+                })
+                .catch(error => {
+                    dispatch(createAction(AT.RENAME_FILE_ERROR)(error))
                     return Promise.reject(error.response)
                 })
         }
