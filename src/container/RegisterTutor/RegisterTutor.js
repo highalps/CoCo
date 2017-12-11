@@ -4,6 +4,8 @@ import { Button,Input, FormGroup, Label } from 'reactstrap'
 import client from '../../redux/base.js'
 import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
+import { withRouter } from 'react-router'
+
 
 /* */
 import styles from './RegisterTutor.scss'
@@ -16,6 +18,7 @@ const mapStateToProps = (state) => ({
     id : state.userReducer.id
 })
 
+@withRouter
 @connect(mapStateToProps)
 class RegisterTutor  extends React.Component {
 
@@ -86,6 +89,7 @@ class RegisterTutor  extends React.Component {
             }
         ).then(res =>{console.log(res.data)
             window.alert("튜터 등록요청을 완료했습니다.")
+            this.props.history.push('/classes')
         }).catch(error =>{
             window.alert("다시 요청해주세요.")
             console.log(error)

@@ -106,6 +106,9 @@ class ChatMessage extends React.Component {
         if(this.props.isWriter === true){
             return this.props.status === 3? <div className={styles.chatTitle} onClick={this.handleClickParticipate}>참여하기</div>:<div className={styles.chatTitle} onClick={this.accept()}>수락</div>
         }
+        else if(this.props.isWriter === false){
+            return this.props.status === 3? <div className={styles.chatTitle} onClick={this.handleClickParticipate}>참여하기</div>:''
+        }
     }
 
     @autobind
