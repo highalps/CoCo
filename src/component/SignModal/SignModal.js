@@ -54,15 +54,16 @@ class SignModal extends React.Component {
             email: this.state.email,
             nickname: this.state.nickname,
         }
+
         if (this.state.mode === 'signIn') {
             dispatch(userActions.signIn(payload))
                 .then(() => { this.props.dispatch(uiActions.closeSignModal()); this.handleClose() })
-                .catch(err => {})
+                .catch(err => {window.alert(err.data.err)})
         }
          else {
             dispatch(userActions.signUp(payload))
                 .then(() => { this.props.dispatch(uiActions.closeSignModal()); this.handleClose() })
-                .catch(err => {})
+                .catch(err => {window.alert(err.data.err)})
         }
     }
 

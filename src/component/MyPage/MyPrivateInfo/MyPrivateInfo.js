@@ -3,16 +3,24 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import {Button,Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import autobind from 'core-decorators/lib/autobind'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
 
 /* */
 import styles from './MyPrivateInfo.scss'
 import client from '../../../redux/base.js'
+import { userActions} from '../../../redux/actions'
 
+const mapStateToProps = (state) => ({
+})
 
+@withRouter
+@connect(mapStateToProps)
 class MyPrivateInfo  extends React.Component {
     constructor(props){
         super(props)
         this.state = {
+            modalDelete:false,
             modal:false,
             tutorInfo: {
                 degree:'내용없음',
@@ -23,7 +31,16 @@ class MyPrivateInfo  extends React.Component {
             }
         }
     }
-
+    @autobind
+    deleteUser(){
+        client.delete('/auth').then(res => {
+            window.alert('회원 탈퇴를 성공했습니다.')
+            this.props.dispatch(userActions.logout())
+            this.props.history.push('/')
+        }).catch(error =>{console.log(error)
+            window.alert('회원 탈퇴를 실패했습니다.')
+        })
+    }
     @autobind
     _getTutorData(){
         client.get('api/user/tutor/id/'+this.props.id).then(res => {
@@ -40,6 +57,12 @@ class MyPrivateInfo  extends React.Component {
     _toggle(){
         this.setState({
             modal:!this.state.modal
+        })
+    }
+    @autobind
+    toggleDelete(){
+        this.setState({
+            modalDelete:!this.state.modalDelete
         })
     }
     @autobind
@@ -91,6 +114,7 @@ class MyPrivateInfo  extends React.Component {
                         <div className = {styles.box3}>
                             <div className={styles.smSize}>튜터 등록 여부:</div>
                             <div className={styles.lgSize}>{this.props.tutor===0? '미등록':'등록'}</div>
+
                             <Modal isOpen={this.state.modal} toggle={this._toggle}>
                                 <ModalHeader toggle={this._toggle} className = {styles.modalHeader}>튜터 소개</ModalHeader>
                                 <ModalBody className={styles.modalBodyStyle}>
@@ -122,8 +146,21 @@ class MyPrivateInfo  extends React.Component {
                         </div>
                         <div className = {styles.box3}>
                             {this._ifTutorOrNot()}
-                        </div>
+                            <div className={styles.smSize2} onClick={this.toggleDelete}>회원 탈퇴</div>
 
+                            <Modal isOpen={this.state.modalDelete} toggle={this.toggleDelete}>
+                                <ModalHeader toggle={this.toggleDelete} className = {styles.modalHeader}>클래스 삭제</ModalHeader>
+                                <ModalBody>
+                                    <div className={styles.userBox}>
+                                        회원 탈퇴를 진행하시겠습니까?
+                                    </div>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="primary" onClick={this.deleteUser}>삭제</Button>
+                                    <Button color="secondary" onClick={this.toggleDelete}>취소</Button>
+                                </ModalFooter>
+                            </Modal>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -71,22 +71,32 @@
 }
 .bottom{
   text-align: center;
-  font-family: "맑은 고딕";
   font-size: 20px;
 }
 .box3{
-  padding: 13px;
+  padding: 8px;
 }
+
 .smSize{
   display: inline-block;
   width: 100px;
-  font-family: "맑은 고딕";
   font-size: 12px;
 }
+.smSize2{
+  margin-left: 20px;
+  display: inline-block;
+  width: 100px;
+  font-size: 12px;
+  cursor: default;
+  opacity: 0.7;
+}
+.smSize2:hover{
+  opacity: 0.5;
+}
+
 .lgSize{
   display: inline-block;
   width: 200px;
-  font-family: "맑은 고딕";
   font-size: 18px;
 }
 
@@ -116,6 +126,7 @@
   color:white;
   opacity: 0.9;
 }
+
 .modalBodyStyle{
   width: 90%;
   margin-left: 5%;
@@ -124,3 +135,4 @@
 .userBox{
   padding:3%;
 }
+

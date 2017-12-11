@@ -6,7 +6,7 @@ import { Input, Button, Card, CardDeck, Modal, ModalHeader, ModalBody, ModalFoot
     ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Form, FormGroup } from 'reactstrap'
 
 /* */
-import styles from './Class.scss'
+import styles from './class.scss'
 import ModifyClass from '../ModifyClass'
 import DeleteClass from '../DeleteClass'
 import TutorInfo from '../TutorInfo'
