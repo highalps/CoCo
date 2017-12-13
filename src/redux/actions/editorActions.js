@@ -1,4 +1,5 @@
 /* */
+import { toastr } from 'react-redux-toastr'
 
 /* */
 import AT from '../actions/actionTypes'
@@ -26,6 +27,7 @@ export default {
             const { classId } = payload
             return client.put(`/api/pad/${classId}`)
                 .then(response => {
+                    toastr.success('파일 저장', response.data.msg)
                     dispatch(createAction(AT.SAVE_DIRECTORY_SUCCESS)(response.data))
                 })
                 .catch(error => {
@@ -39,6 +41,7 @@ export default {
             dispatch(createAction(AT.CREATE_FILE)(payload))
             return client.post('/api/pad/directory', payload)
                 .then(response => {
+                    toastr.success('파일 생성', response.data.msg)
                     dispatch(createAction(AT.CREATE_FILE_SUCCESS)(payload))
                 })
                 .catch(error => {
@@ -53,6 +56,7 @@ export default {
             const { classNum, path, fileName, type } = payload
             return client.delete(`/api/pad/directory/?classNum=${classNum}&path=${path}&fileName=${fileName}&type=${type}`)
                 .then(response => {
+                    toastr.success('파일 삭제', response.data.msg)
                     return dispatch(createAction(AT.REMOVE_FILE_SUCCESS)(payload))
                 })
                 .catch(error => {
@@ -67,6 +71,7 @@ export default {
             const { classNum } = payload
             return client.put(`/api/pad/directory/${classNum}`, payload)
                 .then(response => {
+                    toastr.success('이름 변경', response.data.msg)
                     dispatch(createAction(AT.RENAME_FILE_SUCCESS)(payload))
                 })
                 .catch(error => {
