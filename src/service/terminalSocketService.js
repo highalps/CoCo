@@ -54,7 +54,9 @@ class TerminalSocketService {
 
     _onDelete(file) {
         console.log('onDelete', file)
-        Redux.dispatch(editorActions.onDeleteFile(file))
+        const { path, fileName } = file
+        const key = path === '/' ? `/${fileName}` : `${path}/${fileName}`
+        Redux.dispatch(editorActions.onDeleteFile({ ...file, key }))
     }
 }
 
