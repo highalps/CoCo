@@ -18,6 +18,8 @@ class SideBar extends React.Component {
                <Directory
                    directory={this.props.directory}
                    currentFileName={this.props.currentFileName}
+                   handleDelete={this.props.handleDelete}
+                   handleRename={this.props.handleRename}
                    handleDoubleClick={this.props.handleDoubleClick} />
            </div>
         )
@@ -25,10 +27,14 @@ class SideBar extends React.Component {
 }
 
 SideBar.propTypes = {
+    handleDelete: propTypes.func,
+    handleRename: propTypes.func,
     handleDoubleClick: propTypes.func,
 }
 
 SideBar.defaultProps = {
+    handleDelete: () => {},
+    handleRename: () => {},
     handleDoubleClick: () => {},
 }
 

@@ -20,6 +20,23 @@ class Body extends React.Component {
     }
 
     @autobind
+    handleDelete(key) {
+        console.log('delete', key, this.state.tabList.toJS())
+        this.handleCancelClick({ fileName: key })
+    }
+
+    @autobind
+    handleRename(key, newKey) {
+        console.log(this.state.currentFileName, newKey)
+        const index = this.state.tabList.findIndex(tab => tab.fileName === key)
+        if (index !== -1) {
+            const updateTab = this.state.tabList.update(index, tab => ({...tab, fileName: newKey }))
+            const fileName = this.state.currentFileName === key ? newKey : this.state.currentFileName
+            this.setState({ tabList: updateTab, currentFileName: fileName })
+        }
+    }
+
+    @autobind
     handleDoubleClick(file) {
         return (event) => {
             if (file.node.type !== 'directory') {
@@ -70,6 +87,8 @@ class Body extends React.Component {
               <SideBar
                   directory={this.props.directory}
                   currentFileName={this.state.currentFileName}
+                  handleDelete={this.handleDelete}
+                  handleRename={this.handleRename}
                   handleDoubleClick={this.handleDoubleClick} />
               <MainEditor
                   tabList={this.state.tabList}

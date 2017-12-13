@@ -27,6 +27,12 @@ export function deleteFile(directory, file) {
     }
 }
 
+export function renameFile(directory, file) {
+    for (let i = 0; i< directory.length; i++) {
+        _rename(directory[i], file)
+    }
+}
+
 export const getMaxDepth = ({ children, depth }) => (children ? Math.max(...children.map(getMaxDepth)) : depth)
 
 
@@ -82,6 +88,26 @@ function _create(obj, file) {
         }
         if (_.isObject(key)) {
             _create(obj[key], file)
+        }
+    })
+}
+
+function _rename(obj, file) {
+    _.forIn(obj, function (val, key) {
+        const { nextName, prevKey, newKey } = file
+        if (obj['key'] === prevKey) {
+            obj['title'] = nextName
+            obj['key'] = newKey
+        }
+        if (_.isArray(val)) { // children
+            val.forEach(function(el) {
+                if (_.isObject(el)) {
+                    _rename(el, file)
+                }
+            });
+        }
+        if (_.isObject(key)) {
+            _rename(obj[key], file)
         }
     })
 }

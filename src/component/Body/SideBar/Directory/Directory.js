@@ -167,22 +167,31 @@ class Directory extends React.Component {
             fileName : title,
         }
         this.props.dispatch(editorActions.removeFile(payload))
-            .then(() => this.setState({ deleteModalOpen: false }))
+            .then(() => {
+                this.props.handleDelete(key)
+                this.setState({ deleteModalOpen: false })
+            })
     }
 
     @autobind
     handleRenameFile() {
         const { type, path, title, key } = this.state.file
+        const nextName = this.state.inputValue
+        const newKey = path === '/' ? `/${nextName}` : `${path}/${nextName}`
         const payload = {
             classNum: this.props.match.params.classId,
             type,
             path,
             key,
+            newKey,
             prevName: title,
-            nextName: this.state.inputValue,
+            nextName,
         }
         this.props.dispatch(editorActions.renameFile(payload))
-            .then(() => this.setState({ renameModalOpen: false }))
+            .then(() => {
+                this.setState({ renameModalOpen: false })
+                this.props.handleRename(key, newKey)
+            })
     }
 
     @autobind
@@ -328,11 +337,13 @@ class Directory extends React.Component {
 
 Directory.propTypes = {
     handleDoubleClick: propTypes.func,
+    handleDelete: propTypes.func,
     currentFileName: propTypes.string,
 }
 
 Directory.defaultProps = {
     directory: Immutable.Map(),
+    handleDelete: () => {},
     handleDoubleClick: () => {},
     currentFileName: '',
 }
