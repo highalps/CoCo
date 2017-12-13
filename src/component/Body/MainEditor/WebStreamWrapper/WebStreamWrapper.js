@@ -350,10 +350,6 @@ class WebStreamWrapper extends React.Component {
         this.localStream.getAudioTracks()[0].enabled = !stopAudio
     }
 
-    red() {
-        // DetectRTC.isWebRTCSupported
-    }
-
     renderWaitComponent() {
         const isOffer = this.state.isPossibleJoin
         if (!this.state.isSuccessGetMedia) {

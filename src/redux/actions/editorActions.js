@@ -81,11 +81,20 @@ export default {
         }
     },
 
-    onCreateFile: (payload) => createAction(AT.ON_CREATE_FILE)(payload),
+    onCreateFile: (payload) => {
+        toastr.success('업데이트', '파일이 생성 되었습니다')
+        return createAction(AT.ON_CREATE_FILE)(payload)
+    },
 
-    onRenameFile: (payload) => createAction(AT.ON_RENAME_FILE)(payload),
+    onRenameFile: (payload) => {
+        toastr.success('업데이트', '파일이 이름이 변경 되었습니다')
+        return createAction(AT.ON_RENAME_FILE)(payload)
+    },
 
-    onDeleteFile: (payload) => createAction(AT.ON_DELETE_FILE)(payload),
+    onDeleteFile: (payload) => {
+        toastr.success('업데이트', '파일이 삭제 되었습니다')
+        return createAction(AT.ON_DELETE_FILE)(payload)
+    },
 
 }
 
