@@ -76,5 +76,11 @@ export default {
         }
     },
 
+    onCreateFile: (payload) => createAction(AT.ON_CREATE_FILE)(payload),
+
+    onRenameFile: (payload) => createAction(AT.ON_RENAME_FILE)(payload),
+
+    onDeleteFile: (payload) => createAction(AT.ON_DELETE_FILE)(payload),
+
 }
 

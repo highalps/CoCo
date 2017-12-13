@@ -47,7 +47,7 @@ class Header extends React.Component {
                     </div>
                     <div className={styles.runOption} onClick={this.handleSave}>
                         <i className={classNames(styles.runIcon, "fa fa-save")} />
-                        <div className={styles.text}>Save (테스트)</div>
+                        <div className={styles.text}>Save</div>
                     </div>
                 </div>
             </div>

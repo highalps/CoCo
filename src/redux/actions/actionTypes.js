@@ -57,6 +57,10 @@ export default keyMirror({
     RENAME_FILE_SUCCESS: null,
     RENAME_FILE_ERROR: null,
 
+    ON_CREATE_FILE: null,
+    ON_RENAME_FILE: null,
+    ON_DELETE_FILE: null,
+
     /* UI actions */
     CLOSE_CHAT: null,
     SHOW_CHAT_LIST: null,

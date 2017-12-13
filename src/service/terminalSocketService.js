@@ -4,6 +4,7 @@ import io from 'socket.io-client'
 /* */
 import terminalService from './terminalService'
 import Redux from './reduxService'
+import { editorActions } from '../redux/actions'
 
 class TerminalSocketService {
 
@@ -20,7 +21,9 @@ class TerminalSocketService {
         /**
          * temporarily using terminal socket as directory CRUD
          **/
-        this._socket.on('directory', this._onDirectory.bind(this))
+        this._socket.on('onCreate', this._onCreate.bind(this))
+        this._socket.on('onRename', this._onRename.bind(this))
+        this._socket.on('onDelete', this._onDelete.bind(this))
     }
 
     sendCommand(command) {
@@ -39,9 +42,19 @@ class TerminalSocketService {
         terminalService.writeTerminal(data)
     }
 
-    _onDirectory(file) {
-        console.log('directory socket', data)
-        // Redux.dispatch()
+    _onCreate(file) {
+        console.log('onCreate', file)
+        Redux.dispatch(editorActions.onCreateFile(file))
+    }
+
+    _onRename(file) {
+        console.log('onRename', file)
+        Redux.dispatch(editorActions.onRenameFile(file))
+    }
+
+    _onDelete(file) {
+        console.log('onDelete', file)
+        Redux.dispatch(editorActions.onDeleteFile(file))
     }
 }
 
