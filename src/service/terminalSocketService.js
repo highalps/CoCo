@@ -10,13 +10,16 @@ class TerminalSocketService {
 
     constructor() {
         this._socket = null
+        this.classNum = ''
     }
 
     connect(classNum) {
+        this.classNum = classNum
         this._socket = io('https://external.cocotutor.ml/' + classNum)
         this._socket.on('connect', this._onConnect.bind(this))
         this._socket.on('disconnect', this._onDisConnect.bind(this))
         this._socket.on('data', this._onData.bind(this))
+        this._socket.on('onClose', this._onClose.bind(this))
 
         /**
          * temporarily using terminal socket as directory CRUD
@@ -37,6 +40,10 @@ class TerminalSocketService {
     _onConnect() {}
 
     _onDisConnect() {}
+
+    _onClose() {
+        this.setTimeout(() => this.connect(this.classNum), 2000)
+    }
 
     _onData(data) {
         terminalService.writeTerminal(data)
