@@ -42,6 +42,7 @@ class TerminalSocketService {
     _onDisConnect() {}
 
     _onClose() {
+        console.log("terminal socket disconnected..., trying reconnect")
         this.setTimeout(() => this.connect(this.classNum), 2000)
     }
 
