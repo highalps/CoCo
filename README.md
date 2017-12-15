@@ -6,7 +6,7 @@
 In this project, all source code using Javascript
 
 - react
-- react-redux-
+- react-redux
 - redux-thunk
 - react-router
 - css module + Sass
