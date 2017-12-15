@@ -47,7 +47,7 @@ export default {
                 })
         }
     },
-
+    updateStatus:(payload) => createAction(AT.UPDATE_STATUS)(payload),
     updateMessage: (payload) => createAction(AT.UPDATE_MESSAGE)(payload)
 }
 

@@ -15,6 +15,7 @@ class TutorInfo  extends React.Component {
     _toggleUser(){
         this.props.onToggle()
     }
+
     render(){
         const tutor = this.props.tutorData
         return(
@@ -23,23 +24,23 @@ class TutorInfo  extends React.Component {
                 <ModalBody className={styles.modalBodyStyle}>
                     <div className={styles.userBox}>
                         <label className={styles.labels}>튜터 소개</label><br/>
-                        <div className={styles.intro}>{tutor.intro}</div><hr/>
+                        <div className={styles.contents}>{tutor.intro}</div><hr/>
                     </div>
                     <div className={styles.userBox}>
                         <label className={styles.labels}>학위 정보</label><br/>
-                        <div>{tutor.degree}</div><hr/>
+                        <div className={styles.contents}>{tutor.degree}</div><hr/>
                     </div>
                     <div className={styles.userBox}>
                         <label className={styles.labels}>Github주소</label><br/>
-                        <div>{tutor.github}</div><hr/>
+                        <div className={styles.contents}>{tutor.github}</div><hr/>
                     </div>
                     <div className={styles.userBox}>
                         <label className={styles.labels}>경력</label><br/>
-                        <div className={styles.career}>{tutor.career}</div><hr/>
+                        <div className={styles.contents}>{tutor.career}</div><hr/>
                     </div>
                     <div className={styles.userBox}>
                         <label className={styles.labels}>선호 언어</label><br/>
-                        <div className={styles.career}>{tutor.language}</div>
+                        <div className={styles.languages}>{tutor.language}</div>
                     </div>
                 </ModalBody>
                 <ModalFooter>

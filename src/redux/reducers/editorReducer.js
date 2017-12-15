@@ -1,30 +1,58 @@
 /* */
 import Immutable from 'immutable'
-import _ from 'lodash'
 
 /* */
 import AT from '../actions/actionTypes'
-import { setToken } from '../../utils/authUtils'
+import { insertPath, getMaxDepth, createFile, deleteFile, renameFile } from './reducerUtils'
 
 const initialState = {
     directory: Immutable.Map(),
+    maxDepth: 0,
 }
 
-// rename json key
-function changekey(obj) {
-    var directory = JSON.stringify(obj)
-    directory.replace('name', 'title')
-    directory.replace('contents', 'children')
-    return JSON.parse(directory)
-}
-
-const userReducer = (state = initialState, action) => {
+const editorReducer = (state = initialState, action) => {
     switch (action.type) {
         case AT.GET_DIRECTORY_SUCCESS: {
-            const { directory } = action.payload
+            const directory = action.payload.directory.dir
+            insertPath(directory)
+            return {
+                directory: Immutable.fromJS(directory),
+                maxDepth: getMaxDepth(...directory),
+            }
+        }
+
+        case AT.ON_CREATE_FILE:
+        case AT.CREATE_FILE_SUCCESS: {
+            const { type, fileName, path } = action.payload
+            const directory = state.directory.toJS()
+            createFile(directory, { type, title: fileName, path })
             return {
                 ...state,
-                directory: Immutable.fromJS(directory.dir),
+                directory: Immutable.fromJS(directory),
+                maxDepth: getMaxDepth(...directory)
+            }
+        }
+
+        case AT.ON_RENAME_FILE:
+        case AT.RENAME_FILE_SUCCESS: {
+            const { type, prevName, nextName, key, newKey } = action.payload
+            const directory = state.directory.toJS()
+            renameFile(directory, { type, prevName, nextName, prevKey: key, newKey })
+            return {
+                ...state,
+                directory: Immutable.fromJS(directory),
+            }
+        }
+
+        case AT.ON_DELETE_FILE:
+        case AT.REMOVE_FILE_SUCCESS: {
+            const { type, fileName, key } = action.payload
+            const directory = state.directory.toJS()
+            deleteFile(directory, { type, title: fileName, key })
+            return {
+                ...state,
+                directory: Immutable.fromJS(directory),
+                maxDepth: getMaxDepth(...directory)
             }
         }
 
@@ -33,4 +61,4 @@ const userReducer = (state = initialState, action) => {
     }
 }
 
-export default userReducer
+export default editorReducer

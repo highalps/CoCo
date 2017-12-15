@@ -5,12 +5,17 @@ import { logger } from 'redux-logger' // for debuggin action
 
 /* */
 import reducers from '../redux/reducers/index'
+import { reducer as toastrReducer } from 'react-redux-toastr'
 
 class ReduxService {
 
     constructor() {
+        const reducer = {
+            ...reducers,
+            toastr: toastrReducer,
+        }
         this.store = createStore(
-            combineReducers(reducers),
+            combineReducers(reducer),
             applyMiddleware(
                 thunk,
                 logger

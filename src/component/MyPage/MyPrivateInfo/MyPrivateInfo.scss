@@ -4,13 +4,12 @@
   height: calc(30% + 100px);
   padding-top: 100px;
   min-width: 1200px;
-  background: #485563;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: white;
   opacity: 0.9;
-
+  background-image: url('../../../styles/background/myPrivateBG.png');
 }
+
+
 .sec01{
   width: 33%;
   height: 100%;
@@ -37,7 +36,7 @@
 .left{
   float:left;
   display: inline-block;
-  margin-left: 30px;
+  margin-left: 70px;
   width: 120px;
   height: 120px;
   border-radius:50%;
@@ -52,12 +51,17 @@
 }
 .right01{
   margin-top: 35px;
-  margin-left: 25px;
+  margin-left: 50px;
   font-size: 30px;
   font-family: "맑은 고딕";
 
 }
-
+.labels{
+  color: #5254ff;
+  font-size: 150%;
+  font-weight: 800;
+  opacity: 0.8;
+}
 .middle{
   margin-top: 30px;
   text-align: center;
@@ -67,44 +71,68 @@
 }
 .bottom{
   text-align: center;
-  font-family: "맑은 고딕";
   font-size: 20px;
 }
 .box3{
-  padding: 13px;
+  padding: 8px;
 }
+
 .smSize{
   display: inline-block;
   width: 100px;
-  font-family: "맑은 고딕";
   font-size: 12px;
 }
+.smSize2{
+  margin-left: 20px;
+  display: inline-block;
+  width: 100px;
+  font-size: 12px;
+  cursor: default;
+  opacity: 0.7;
+}
+.smSize2:hover{
+  opacity: 0.5;
+}
+
 .lgSize{
   display: inline-block;
   width: 200px;
-  font-family: "맑은 고딕";
   font-size: 18px;
 }
 
 .name{
   color:white;
+  cursor:default;
+}
+.name:hover{
+  opacity: 0.8;
 }
 
+.contents{
+  padding:2%;
+  font-weight: 500;
+  font-size: 110%;
+  opacity: 0.9;
+}
+.languages{
+  padding:2%;
+  font-weight: 500;
+  font-size: 150%;
+  opacity: 0.9;
 
-
+}
 .modalHeader{
   background-color: #1934af;
   color:white;
   opacity: 0.9;
 }
+
 .modalBodyStyle{
   width: 90%;
   margin-left: 5%;
 }
 
-.status{
-
-}
 .userBox{
-  padding:5%;
+  padding:3%;
 }
+

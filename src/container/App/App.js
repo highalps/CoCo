@@ -7,11 +7,12 @@ import { withRouter } from 'react-router'
 import styles from './App.scss'
 import Header from '../../component/Header'
 import Body from '../../component/Body'
-import Footer from '../../component/Footer'
+import Footer from '../../component/Modal'
 import { uiActions, editorActions } from '../../redux/actions/'
 
 const mapStateToProps = (state) => ({
     directory: state.editorReducer.directory,
+    maxDepth: state.editorReducer.maxDepth,
 })
 
 @withRouter
@@ -31,7 +32,7 @@ class App extends React.Component {
             classId: this.props.match.params.classId,
         }
         this.props.dispatch(editorActions.getDirectory(payload))
-            .then(() => this.setState({ isLoading: false }))
+            .then(() => setTimeout(() => this.setState({ isLoading: false }), 3000))
     }
 
     renderEditor() {
@@ -52,7 +53,7 @@ class App extends React.Component {
 
        return (
            <div className={styles.wrapper}>
-               <Header />
+               <Header maxDepth={this.props.maxDepth} />
                <Body directory={this.props.directory} />
                <Footer />
            </div>

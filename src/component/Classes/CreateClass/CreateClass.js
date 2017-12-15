@@ -1,33 +1,24 @@
 /* */
 import styles from './CreateClass.scss'
 import client from '../../../redux/base.js'
-
+import { withRouter } from 'react-router'
+import { uiActions } from '../../../redux/actions'
 
 /* */
 import { connect } from 'react-redux'
 import autobind from 'core-decorators/lib/autobind'
-import { Alert,ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
+import {ButtonGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter ,Input,FormGroup, Form } from 'reactstrap'
 import React from 'react'
-/*
-body = {
-		nickname: 작성자
-		title:
-		content:
-		language:
-		status: 1 - 학생, 2 - 튜터
-		time: [
-			{ day: ‘월’, startTime: 8, endTime:17 }
-			……..
-		]
-}
-*/
+
 const mapStateToProps = (state) => ({
+    isLogged: state.userReducer.isLogged,
     nickname: state.userReducer.nickname,
     email: state.userReducer.email,
     tutor: state.userReducer.tutor,
     id : state.userReducer.id
 })
 
+@withRouter
 @connect(mapStateToProps)
 class CreateClass extends React.Component {
 
@@ -77,7 +68,7 @@ class CreateClass extends React.Component {
                 {day:'일', startTime:0, endTime:0}
             ]
         }
-        this.setState({body:_body}, ()=>{console.log('init',this.state)})
+        this.setState({body:_body})
     }
     @autobind
     _returnTime(day , index){
@@ -119,6 +110,11 @@ class CreateClass extends React.Component {
     }
     @autobind
     _toggle(){
+        if(!this.props.isLogged){
+            window.alert('먼저 로그인 하세요');
+            this.props.dispatch(uiActions.openSignModal())
+            return
+        }
         this.setState({
             modal: !this.state.modal
         })
@@ -129,7 +125,15 @@ class CreateClass extends React.Component {
             alert: !this.state.alert
         })
     }
-
+    @autobind
+    handleTutorButtonClick() {
+        if(!this.props.isLogged){
+            window.alert('먼저 로그인 하세요.')
+            this.props.dispatch(uiActions.openSignModal())
+            return
+        }
+        this.props.history.push('/RegisterTutor')
+    }
 
     @autobind
     _handleTitleChange(e){
@@ -165,7 +169,7 @@ class CreateClass extends React.Component {
         let day = []
         let _body = { ...this.state.body }
         for(let i=0; i < 7; i++){
-            if(_body.time[i].startTime != 0 || _body.time[i].endTime != 0){
+            if(_body.time[i].startTime !== 0 || _body.time[i].endTime !== 0){
                 day.push(_body.time[i])
             }
         }
@@ -175,9 +179,13 @@ class CreateClass extends React.Component {
             () => {
                 client.post('api/board',
                     this.state.body
-                ).then(res =>{console.log(res.data)})
-                    .catch(error =>{console.log(error)})
-                window.location.reload()
+                ).then(res =>{
+                    window.alert('클래스 생성을 완료했습니다.')
+                    window.location.reload()
+                }).catch(error =>{
+                    console.log(error)
+                    window.alert('클래스 생성 실패')
+                })
             })
     }
 
@@ -187,8 +195,8 @@ class CreateClass extends React.Component {
                 <div>
                     <h1 className={styles.head}>CoCo 강의 검색</h1>
                     <div className={styles.introBtnWrapper}>
-                        <Button size='lg' color="secondary" className={styles.introBtn} onClick = {()=>window.location.href = 'https://cocotutor.ml/#/RegisterTutor'}>튜터 등록</Button>
-                        <Button size='lg' color="secondary" className={styles.introBtn} onClick = {this._toggle}>클래스 생성</Button>
+                        <Button size='lg' color="secondary" className={styles.introBtn} onClick={this.handleTutorButtonClick}>튜터 등록</Button>
+                        <Button size='lg' color="secondary" className={styles.introBtn} onClick={this._toggle}>클래스 생성</Button>
                     </div>
                 </div>
                 <Modal size='lg' isOpen={this.state.modal} toggle={this._toggle} className={this.props.className}>

@@ -7,35 +7,31 @@ import Immutable from 'immutable'
 import styles from './EditorBox.scss'
 import TextEditor from '../TextEditor'
 
-const dummyTab = Immutable.List(['jane','chan'])
-
 class EditorBox extends React.Component {
     constructor() {
         super()
-        this.state = {
-            name: Math.random().toString(36).substring(7),
-        }
         this._refs = {}
     }
 
-    componentDidMount() {
-
+    componentDidUpdate(prevProps) {
+        if (prevProps.tabList.size !== this.props.tabList.size) {
+        }
     }
 
-    handleTabClick(name) {
-        this.setState({ name })
-    }
 
+    handleTabClick(tab) {
+        this.props.handleTabClick(tab.fileName)
+    }
 
     renderTab() {
         return (
-            <div className={styles.tab}>
+            <div ref={e => this._refs.tab = e} className={styles.tab}>
                 {this.props.tabList.map(tab => (
-                    <div key={`${tab.index}${tab.title}`} className={styles.item}>
+                    <div key={tab.fileName} ref={e => this._refs[tab.fileName] = e} className={styles.item}>
                         <div
-                            className={classNames({ [styles.selected]: tab.title === this.state.name }, styles.file)}
-                            onClick={() => this.handleTabClick(tab.title)}>
-                            {tab.title}
+                            className={classNames({ [styles.selected]: tab.fileName === this.props.currentFileName }, styles.file)}
+                            onClick={() => this.handleTabClick(tab)}>
+                            {tab.fileName.split('/').pop()}
                         </div>
                         <span className={styles.cancel} onClick={() => this.props.handleCancelClick(tab)}>x</span>
                     </div>
@@ -47,7 +43,10 @@ class EditorBox extends React.Component {
         return (
             <div className={styles.wrapper}>
                 {this.renderTab()}
-                <TextEditor name={this.state.name}  classNum={this.props.classNum}/>
+                <TextEditor
+                    isTabEmpty={!this.props.tabList.size}
+                    currentFileName={this.props.currentFileName}
+                    classNum={this.props.classNum} />
             </div>
         )
     }

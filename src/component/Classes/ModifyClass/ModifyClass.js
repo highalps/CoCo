@@ -39,20 +39,8 @@ class ModifyClass extends React.Component {
             },
             alert: false
         }
-}
-    componentWillMount(){
-        // let days = ['월', '화', '수', '목', '금', '토', '일']
-        // let _temp = this.props.time
-        // let _body = {...this.state.body}
-        // for(let i = 0; i < _temp.length; i++){
-        //     let ind = days.indexOF(_temp.day)
-        //     _body.time[ind].startTime = _temp[i].startTime
-        //     _body.time[ind].endTime = _temp[i].endTime
-        // }
-        // this.setState({
-        //     body:_body
-        // })
     }
+
     @autobind
     _renderIfTutor(){
         if(this.props.tutor === 1){
@@ -151,14 +139,19 @@ class ModifyClass extends React.Component {
             () => {
                 client.put('api/board/'+this.props.classData.num,
                     this.state.body
-                ).then(res =>{console.log(res.data)})
-                    .catch(error =>{console.log(error)})
+                ).then(res =>{
+                    window.alert('수정을 완료했습니다.')
+                    window.location.reload()
+                    console.log(res.data)
+                }).catch(error =>{
+                    console.log(error)
+                    window.alert('수정 실패')
+                })
                 this._toggle()
-                window.location.reload()
             })
     }
+
     render() {
-        const classData = this.props.classData
         return (
             <Modal size='lg' isOpen={this.props.isModalOpen} toggle={this._toggle} className={this.props.className}>
                 <ModalHeader toggle={this._toggle} className={styles.modalTitle}>클래스 수정!</ModalHeader>
@@ -171,12 +164,12 @@ class ModifyClass extends React.Component {
 
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>제목</label>
-                            <Input type="text" name = "job" onChange = {(e) => this._handleTitleChange(e)} placeholder = {classData.title}/>
+                            <Input type="text" onChange = {(e) => this._handleTitleChange(e)} value = {this.state.body.title}/>
                         </div>
 
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 소개</label>
-                            <Input className={styles.area} type="textarea" name = "job" onChange = {(e) => this._handleContentChange(e)} placeholder = {this.props.content}/>
+                            <Input className={styles.area} type="textarea" onChange = {(e) => this._handleContentChange(e)} value= {this.state.body.content}/>
                         </div>
                         <div className={styles.labelWrapper}>
                             <label className={styles.labelDisplay}>수업 가능 시간</label>

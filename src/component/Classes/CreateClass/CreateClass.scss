@@ -1,6 +1,6 @@
 .wrapper{
   width:100%;
-  background-image: url("https://appendto.com/wp-content/uploads/2016/04/StockSnap_TXSMCUMSQL.jpg");
+  background-image: url('../../../styles/background/classBG.jpg');
   background-size: 100% 100%;
   padding-top: 9%;
   padding-bottom: 9%;
@@ -53,14 +53,13 @@
   margin-left: 10%;
 }
 .area{
+  white-space: pre-line;
   height: 300px;
 }
 .modalTitle{
-
-  background: #0575E6;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #021B79, #0575E6);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #021B79, #0575E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-color: blue;
   color:white;
+  opacity: 0.8;
 }
 
 .statusBtn{

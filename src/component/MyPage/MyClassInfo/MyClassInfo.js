@@ -25,9 +25,12 @@ class MyClassInfo  extends React.Component {
             client.put('api/chat/request/'+num)
             .then(res =>{
                 console.log(res)
+                window.alert('수락을 완료했습니다.')
                 window.location.reload()
-            })
-            .catch(error =>{console.log(error)
+
+            }).catch(error =>{
+                console.log(error)
+                window.alert('수락 실패')
             })
         }
     }
@@ -62,7 +65,6 @@ class MyClassInfo  extends React.Component {
                 <th>{data.title}</th>
                 <td>{data.language}</td>
                 <td>{data.date.substring(0, 10)}</td>
-                <td><Button>수정</Button></td>
                 <td><Button onClick={this._delete(data.num)}>삭제</Button></td>
             </tr>
         )
@@ -74,9 +76,11 @@ class MyClassInfo  extends React.Component {
             client.delete('api/chat/'+chatNum)
                 .then(res =>{
                     console.log(res)
+                    window.alert('신청을 거절했습니다.')
                     window.location.reload()
-                })
-                .catch(error =>{console.log(error)
+                }).catch(error =>{
+                    console.log(error)
+                    window.alert('거절 실패')
                 })
         }
     }
@@ -86,9 +90,11 @@ class MyClassInfo  extends React.Component {
             client.delete('api/board/'+num)
                 .then(res =>{
                     console.log(res)
+                    window.alert('클래스를 삭제 했습니다.')
                     window.location.reload()
-                })
-                .catch(error =>{console.log(error)
+                }).catch(error =>{
+                    console.log(error)
+                    window.alert('클래스 삭제 실패')
                 })
         }
     }
@@ -140,7 +146,6 @@ class MyClassInfo  extends React.Component {
                                         <th>제목</th>
                                         <th>언어</th>
                                         <th>생성날짜</th>
-                                        <th>수정</th>
                                         <th>삭제</th>
                                     </tr>
                                     </thead>
@@ -162,7 +167,6 @@ class MyClassInfo  extends React.Component {
                                         <th>취소</th>
                                     </tr>
                                     </thead>
-
                                     <tbody>
                                     {this.props.getApplicant.map((data, index)=>{return this._renderApplicantList(data, index)})}
                                     </tbody>

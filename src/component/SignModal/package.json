@@ -1,0 +1,6 @@
+{
+  "name": "SignModal",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./SignModal.js"
+}

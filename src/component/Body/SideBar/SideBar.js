@@ -15,22 +15,26 @@ class SideBar extends React.Component {
     render() {
         return (
            <div className={styles.wrapper}>
-               <div className={styles.tab}>
-                    탭
-               </div>
                <Directory
-                   handleDoubleClick={this.props.handleDoubleClick}
-                   directory={this.props.directory} />
+                   directory={this.props.directory}
+                   currentFileName={this.props.currentFileName}
+                   handleDelete={this.props.handleDelete}
+                   handleRename={this.props.handleRename}
+                   handleDoubleClick={this.props.handleDoubleClick} />
            </div>
         )
     }
 }
 
 SideBar.propTypes = {
+    handleDelete: propTypes.func,
+    handleRename: propTypes.func,
     handleDoubleClick: propTypes.func,
 }
 
 SideBar.defaultProps = {
+    handleDelete: () => {},
+    handleRename: () => {},
     handleDoubleClick: () => {},
 }
 

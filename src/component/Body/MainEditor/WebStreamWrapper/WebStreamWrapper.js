@@ -3,18 +3,19 @@ import React from 'react'
 import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
 import io from 'socket.io-client'
-import Detectrtc from 'detectrtc'
 import { withRouter } from 'react-router'
 
 /* */
 import styles from './WebStreamWrapper.scss'
 
+const DetectRTC = require('detectrtc')
+
 /*
-    학생과 튜터 webRTC 연결이 맺어지는 과정
-     1. 첫번째 유저가 handleClickButton => getUserMedia 함수 실행 (isSuccessGetMedia: true) => 카메라 On
-     2. 두번째 유저가 들어오면 isPossibleJoin: true,
-        createPeerConnection() => isConnectionSuccess: true
-        createOffer() => socket 서버를 통한 SDP 연결
+ 학생과 튜터 webRTC 연결이 맺어지는 과정
+ 1. 첫번째 유저가 handleClickButton => getUserMedia 함수 실행 (isSuccessGetMedia: true) => 카메라 On
+ 2. 두번째 유저가 들어오면 isPossibleJoin: true,
+ createPeerConnection() => isConnectionSuccess: true
+ createOffer() => socket 서버를 통한 SDP 연결
 
  */
 
@@ -275,48 +276,43 @@ class WebStreamWrapper extends React.Component {
     @autobind
     handleClickButton(isOffer) {
         return () => {
-            if (this.hasWebcam && this.hasMic) {
-                window.navigator.getUserMedia({
-                    audio: true,
-                    video: {
-                        mandatory: {
-                            // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
-                            // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
-                            maxWidth: 1280,
-                            maxHeight: 720,
-                            minWidth: 1280,
-                            minHeight: 720,
-                            maxFrameRate: 24,
-                            minFrameRate: 18,
-                            maxAspectRatio: 1.778,
-                            minAspectRatio: 1.777
-                        },
-                        optional: [
-                            {googNoiseReduction: true}, // Likely removes the noise in the captured video stream at the expense of computational effort.
-                            {facingMode: "user"}        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
-                        ]
+            window.navigator.getUserMedia({
+                audio: true,
+                video: {
+                    mandatory: {
+                        // 720p와 360p 해상도 최소 최대를 잡게되면 캡쳐 영역이 가깝게 잡히는 이슈가 있다.
+                        // 1920 * 1080 | 1280 * 720 | 858 * 480 | 640 * 360 | 480 * 272 | 320 * 180
+                        maxWidth: 1280,
+                        maxHeight: 720,
+                        minWidth: 1280,
+                        minHeight: 720,
+                        maxFrameRate: 24,
+                        minFrameRate: 18,
+                        maxAspectRatio: 1.778,
+                        minAspectRatio: 1.777
                     },
-                }, (stream) => {
-                    this.localStream = stream
-                    this.setState({isSuccessGetMedia: true})
-                    const el = this._refs['local-video']
-                    if (el) {
-                        el.srcObject = this.localStream
-                    }
+                    optional: [
+                        {googNoiseReduction: true}, // Likely removes the noise in the captured video stream at the expense of computational effort.
+                        {facingMode: "user"}        // Select the front/user facing camera or the rear/environment facing camera if available (on Phone)
+                    ]
+                },
+            }, (stream) => {
+                this.localStream = stream
+                this.setState({isSuccessGetMedia: true})
+                const el = this._refs['local-video']
+                if (el) {
+                    el.srcObject = this.localStream
+                }
 
-                    if (isOffer) {
-                        console.log("나는 오퍼다")
-                        this.createPeerConnection()
-                        this.createOffer()
-                    }
+                if (isOffer) {
+                    console.log("나는 오퍼다")
+                    this.createPeerConnection()
+                    this.createOffer()
+                }
 
-                }, () => {
-                    this.setState({isErrorGetMedia: true})
-                })
-            }
-            else {
-                window.alert("웹캠과 마이크가 필요합니다")
-            }
+            }, () => {
+                this.setState({isErrorGetMedia: true})
+            })
         }
     }
 
@@ -354,15 +350,14 @@ class WebStreamWrapper extends React.Component {
         this.localStream.getAudioTracks()[0].enabled = !stopAudio
     }
 
-    red() {
-        // DetectRTC.isWebRTCSupported
-    }
-
-    renderJoinComponent() {
+    renderWaitComponent() {
         const isOffer = this.state.isPossibleJoin
         if (!this.state.isSuccessGetMedia) {
             return (
                 <div className={styles.join}>
+                    <span className={styles.waitDescription}>
+                        { this.state.isPossibleJoin ? '상대방이 대기 중입니다' : '상대방을 기다리는 중입니다' }
+                    </span>
                     <div className={styles.camera} onClick={this.handleClickButton(isOffer)}>
                         <i className="fa fa-video-camera" />
                     </div>
@@ -402,31 +397,34 @@ class WebStreamWrapper extends React.Component {
         )
     }
 
+    renderOption() {
+        if (this.state.isSuccessGetMedia || this.state.isConnectionSuccess) {
+            return (
+                <div className={styles.optionWrapper}>
+                    <div className={styles.buttons}>
+                        {this.renderVideoIcon()}
+                        {this.renderMicIcon()}
+                    </div>
+                </div>
+            )
+        }
+    }
+
     render() {
         return (
             <div className={styles.wrapper}>
-                {this.renderJoinComponent()}
-                <section id="room-list" />
+                {this.renderWaitComponent()}
                 <section ref={e => this._refs.videoWrapper = e} className={styles.videoWrapper}>
-                    <div className={styles.optionWrapper}>
-                        {
-                            this.state.isSuccessGetMedia || this.state.isConnectionSuccess
-                                ? (
-                                    <div className={styles.buttons}>
-                                        {this.renderVideoIcon()}
-                                        {this.renderMicIcon()}
-                                    </div>
-                                )
-                                : null
-                        }
-                    </div>
+                    {this.renderOption()}
+                    <div className={classNames(styles.cover, "fa fa-user", { [styles.hidden]: this.state.isSuccessGetMedia })} />
+                    <div className={classNames(styles.cover, "fa fa-user", { [styles.hidden]: this.state.isSuccessGetMedia })} />
                     <video
                         ref={e => this._refs["local-video"] = e}
-                        className={classNames(styles["local-video"], { [styles.isVisible]: !this.state.isSuccessGetMedia })}
+                        className={classNames(styles["local-video"], { [styles.hidden]: !this.state.isSuccessGetMedia })}
                         muted="muted" autoPlay="true" title="720p" />
                     <video
                         ref={e => this._refs["remote-video"] = e}
-                        className={classNames(styles["remote-video"], { [styles.isVisible]: !this.state.isConnectionSuccess  })}
+                        className={classNames(styles["remote-video"], { [styles.hidden]: !this.state.isConnectionSuccess  })}
                         autoPlay="true" />
                 </section>
             </div>

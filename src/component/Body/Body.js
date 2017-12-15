@@ -14,7 +14,25 @@ class Body extends React.Component {
         super()
         this._refs = {}
         this.state = {
-            tabList: immutable.List()
+            tabList: immutable.List(),
+            currentFileName: '',
+        }
+    }
+
+    @autobind
+    handleDelete(key) {
+        console.log('delete', key, this.state.tabList.toJS())
+        this.handleCancelClick({ fileName: key })
+    }
+
+    @autobind
+    handleRename(key, newKey) {
+        console.log(this.state.currentFileName, newKey)
+        const index = this.state.tabList.findIndex(tab => tab.fileName === key)
+        if (index !== -1) {
+            const updateTab = this.state.tabList.update(index, tab => ({...tab, fileName: newKey }))
+            const fileName = this.state.currentFileName === key ? newKey : this.state.currentFileName
+            this.setState({ tabList: updateTab, currentFileName: fileName })
         }
     }
 
@@ -22,10 +40,16 @@ class Body extends React.Component {
     handleDoubleClick(file) {
         return (event) => {
             if (file.node.type !== 'directory') {
-                if (this.state.tabList.findIndex(tab => tab.title === file.node.title) === -1) {
+                const fileName = file.node.key
+                if (this.state.tabList.findIndex(tab => tab.fileName === fileName) === -1) {
                     this.setState({
-                        tabList: this.state.tabList.push({ index: file.treeIndex, title: file.node.title })
+                        tabList: this.state.tabList.push({
+                            index: file.treeIndex, fileName: fileName,
+                        }),
+                        currentFileName: fileName,
                     })
+                } else {
+                    this.setState({ currentFileName: fileName })
                 }
             }
             event.preventDefault()
@@ -34,10 +58,27 @@ class Body extends React.Component {
 
     @autobind
     handleCancelClick(tab) {
-        const index = this.state.tabList.findIndex(t => t.title === tab.title)
-        if (index !== -1) {
-            this.setState({ tabList: this.state.tabList.delete(index) })
+        const targetIndex = this.state.tabList.findIndex(t => t.fileName === tab.fileName) // x를 누른 파일 위치
+        if (targetIndex !== -1) {
+            const curIndex = this.state.tabList.findIndex(t => t.fileName === this.state.currentFileName) // 보고 있는 위치
+            const fIndex = targetIndex === curIndex ? curIndex -1 : curIndex
+            const nextIndex = (() => {
+                if (fIndex === -1) {
+                    if (this.state.tabList.size >= 2)return 1
+                    return -1
+                }
+                return fIndex
+            })()
+            this.setState({
+                tabList: this.state.tabList.delete(targetIndex),
+                currentFileName: nextIndex === -1 ? '' : this.state.tabList.get(nextIndex).fileName,
+            })
         }
+    }
+
+    @autobind
+    handleTabClick(currentFileName) {
+        this.setState({ currentFileName })
     }
 
     render() {
@@ -45,10 +86,15 @@ class Body extends React.Component {
             <div className={styles.wrapper}>
               <SideBar
                   directory={this.props.directory}
+                  currentFileName={this.state.currentFileName}
+                  handleDelete={this.handleDelete}
+                  handleRename={this.handleRename}
                   handleDoubleClick={this.handleDoubleClick} />
               <MainEditor
                   tabList={this.state.tabList}
-                  handleCancelClick={this.handleCancelClick} />
+                  currentFileName={this.state.currentFileName}
+                  handleCancelClick={this.handleCancelClick}
+                  handleTabClick={this.handleTabClick} />
             </div>
         )
     }

@@ -7,6 +7,7 @@ import shareDB from 'sharedb/lib/client'
 import shareDBCodeMirror from 'sharedb-codemirror'
 import CodeMirror from 'codemirror'
 import io from 'socket.io-client'
+import classNames from 'classnames'
 
 /* */
 import styles from './TextEditor.scss'
@@ -33,7 +34,7 @@ class TextEditor extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.name !== nextProps.name) {
+        if (this.props.currentFileName !== nextProps.currentFileName) {
             this.connect(nextProps)
         }
     }
@@ -47,8 +48,8 @@ class TextEditor extends React.Component {
     connect(props) {
         this.setState({ isLoading: false })
         const classNum = this.props.match.params.classId
-        const fileName = classNum + '/' + props.name
-        const doc = this.shareConnection.get('files', fileName)
+        const fileName = props.currentFileName
+        const doc = this.shareConnection.get(classNum, fileName)
         shareDBCodeMirror.attachDocToCodeMirror(doc, this.codeMirror, {
             key: 'content',
             verbose: false
@@ -58,6 +59,7 @@ class TextEditor extends React.Component {
     render() {
         return (
             <div className={styles.wrapper}>
+                <div className={classNames(styles.blackBoard, { [styles.hidden]: !this.props.isTabEmpty} )} />
                 <textarea
                     className={styles.textArea}
                     ref={e => this._refs.textArea = e} />
@@ -67,11 +69,13 @@ class TextEditor extends React.Component {
 }
 
 TextEditor.propTypes = {
-    name: PropTypes.string,
+    currentFileName: PropTypes.string,
+    isTabEmpty: PropTypes.bool,
 }
 
 TextEditor.defaultProps = {
-    name: '',
+    currentFileName: '',
+    isTabEmpty: false,
 }
 
 export default TextEditor

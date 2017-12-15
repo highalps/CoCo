@@ -5,18 +5,22 @@ import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import autobind from 'core-decorators/lib/autobind'
 import classNames from 'classnames'
+import { withRouter } from 'react-router'
 
 /* */
 import styles from './ChatMessage.scss'
 import { chatActions, uiActions } from '../../redux/actions'
+import client from '../../redux/base.js'
 
 const mapStateToProps = (state) => ({
+    classNum:state.chatReducer.classNum,
+    isWriter: state.chatReducer.isWriter,
     nickname: state.userReducer.nickname,
     status:state.chatReducer.status,
     chat: state.chatReducer.chat,
     chatId: state.chatReducer.currentChatId,
 })
-
+@withRouter
 @connect(mapStateToProps)
 class ChatMessage extends React.Component {
 
@@ -79,18 +83,32 @@ class ChatMessage extends React.Component {
     handleOnChange(event) {
         this.setState({ message: event.target.value })
     }
-
+    @autobind
+    handleClickParticipate() {
+        this.props.history.push(`/editor/${this.props.classNum}`)
+    }
+    @autobind
+    accept(){
+        console.log('accept')
+        return () => {
+            client.put('api/chat/request/'+this.props.chatId)
+                .then(res =>{
+                    console.log('accept', res)
+                    this.props.dispatch(chatActions.updateStatus(3))
+                })
+                .catch(error =>{console.log(error)
+                })
+        }
+    }
     @autobind
     ifMatchingCompleted() {
         console.log("ismatched", this.props.status)
-        if(this.props.status === 3) {
-            return (
-                <div className={styles.chatTitle}>참여</div>
-            )
+        if(this.props.isWriter === true){
+            return this.props.status === 3? <div className={styles.chatTitle} onClick={this.handleClickParticipate}>참여하기</div>:<div className={styles.chatTitle} onClick={this.accept()}>수락</div>
         }
-        return (
-            <div className={styles.chatTitle}>수락</div>
-        )
+        else if(this.props.isWriter === false){
+            return this.props.status === 3? <div className={styles.chatTitle} onClick={this.handleClickParticipate}>참여하기</div>:''
+        }
     }
 
     @autobind

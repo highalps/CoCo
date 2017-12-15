@@ -1,6 +1,6 @@
 {
-  "name": "Footer",
+  "name": "Modal",
   "version": "0.0.0",
   "private": true,
-  "main": "./Footer.js"
+  "main": "./Modal.js"
 }

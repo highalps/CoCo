@@ -43,6 +43,17 @@ const mapStateToProps = (state) => ({
     id : state.userReducer.id
 })
 
+const userImg = {
+    student:'https://image.flaticon.com/icons/svg/201/201811.svg',
+    tutor:"https://lh3.googleusercontent.com/ZKnXr2EsaS94RngP88WCdGhDgM2rITbMkKm-U2mgD15R_fnmbyg6tY8Bu1IjdhZdqsIS=w300-rw"
+}
+const classImg = {
+    c:"http://cfile21.uf.tistory.com/image/996BDB3359D3170C07DCA4",
+    java:"https://fossbytes.com/wp-content/uploads/2017/09/Why-is-Java-the-best-programming-Language.png",
+    python:"http://dashh.in/wp-content/uploads/2017/03/the-python-programming-language-explained.gif",
+    cpp:"https://udemy-images.udemy.com/course/750x422/890364_d184_2.jpg"
+}
+
 @connect(mapStateToProps)
 class  ColComponent extends React.Component {
 
@@ -50,6 +61,8 @@ class  ColComponent extends React.Component {
     constructor(props){
         super(props)
         this.state = {
+            classImg:'',
+            userImg:'',
             dropdownOpen:false,
             modalModify: false,
             modalClass: false,
@@ -74,6 +87,19 @@ class  ColComponent extends React.Component {
             }
         }
     }
+    componentWillMount(){
+        switch(this.props.colData.language){
+            case 'c':this.setState({classImg:classImg.c});break
+            case 'java':this.setState({classImg:classImg.java});break
+            case 'python':this.setState({classImg:classImg.python});break
+            case 'c++':this.setState({classImg:classImg.cpp});break
+        }
+        switch(this.props.colData.status){
+            case 1:this.setState({userImg:userImg.student});break
+            case 2:this.setState({userImg:userImg.tutor});break
+        }
+
+    }
     @autobind
     _initBody(){
         let _body = {
@@ -97,9 +123,20 @@ class  ColComponent extends React.Component {
                 </span>
             )
         }
-        return(
-            <Button color="primary" onClick={this._toggleMatch}>{this.props.colData.status === 1? '튜터신청':'수강신청'}</Button>
-        )
+        if(this.props.tutor === 0){
+            if(this.props.colData.status === 1){
+                return
+            }
+            return(
+                <Button color="primary" onClick={this._toggleMatch}>{this.props.colData.status === 1? '튜터신청':'수강신청'}</Button>
+            )
+        }
+        if(this.props.tutor === 1){
+            return(
+                <Button color="primary" onClick={this._toggleMatch}>{this.props.colData.status === 1? '튜터신청':'수강신청'}</Button>
+            )
+        }
+
     }
     @autobind
     _handleDay(day){
@@ -119,13 +156,14 @@ class  ColComponent extends React.Component {
     }
     @autobind
     _matching(){
+
         let _body = {...this.state.body}
         _body.time = _body.day + '' + _body.time
         delete _body.day
         console.log('_body', _body)
         console.log('body',this.state.body)
         client.post('api/board/request',_body).then(res => {
-            console.log('완료')
+            window.alert('매칭 신청을 완료했습니다.')
             this._toggleMatch()
             this._toggleClass()
             this._initBody()
@@ -158,7 +196,7 @@ class  ColComponent extends React.Component {
     }
     @autobind
     _getTutorData(){
-        client.get('api/user/getTutor/'+this.props.colData.nickname).then(res => {
+        client.get('api/user/tutor/nickname/'+this.props.colData.nickname).then(res => {
             console.log('tutorinfo', res.data.tutor)
             this.setState({
                 tutorInfo:res.data.tutor
@@ -202,18 +240,32 @@ class  ColComponent extends React.Component {
     _toggleModify() {
         this.setState({ modalModify: !this.state.modalModify })
     }
+    @autobind
+    renderModifyComponent(){
+        return(
+            <ModifyClass
+                isModalOpen={this.state.modalModify}
+                classData={this.props.colData}
+                onToggle={this._toggleModify}
+                time = {this.state.classInfo.time}
+                content = {this.state.classInfo.content}
+            />
+        )
+    }
+
     render() {
         const colData = this.props.colData
         return (
             <div className={styles.cardWrapper}>
                 <Card>
+                    <img className={styles.classImg}  onClick={this._getClassData} src={this.state.classImg}/>
+                    <img className={styles.userImg}  onClick={this._getClassData} src={this.state.userImg}/>
                     <div className={styles.classTitle} onClick={this._getClassData}>{colData.title}</div>
                     <div className={styles.classNickName} onClick={this._getTutorData}>
                         {colData.nickname}
                     </div>
                     <div className={styles.classLanguage}>Language | {colData.language}</div>
                 </Card>
-
                 <Modal isOpen={this.state.modalClass} toggle={this._toggleClass}>
                     <ModalHeader toggle={this._toggleClass} className = {styles.modalHeader}>{colData.title}</ModalHeader>
                     <ModalBody className={styles.modalBodyStyle}>
@@ -225,7 +277,7 @@ class  ColComponent extends React.Component {
                             <div className={styles.content}>{this.state.classInfo.content}</div><hr/>
                         </div>
                         <div className={styles.classBox}>
-                            <h4 className={styles.labels}>수업 가능 시간</h4><br/><br/>
+                            <h4 className={styles.labels}>수업 가능 시간</h4><br/>
                             <div className={styles.timeHeaderWrapper}>
                                 <div className={styles.timeHeader}>요일</div>
                                 <div className={styles.timeHeader}>시작</div>
@@ -287,13 +339,7 @@ class  ColComponent extends React.Component {
                     isModalOpen={this.state.modalUser}
                     tutorData={this.state.tutorInfo}
                     onToggle={this._toggleUser}/>
-                <ModifyClass
-                    isModalOpen={this.state.modalModify}
-                    classData={colData}
-                    onToggle={this._toggleModify}
-                    time = {this.state.classInfo.time}
-                    content = {this.state.classInfo.content}
-                />
+                {this.state.modalModify === true? this.renderModifyComponent():''}
                 <DeleteClass
                     isModalOpen={this.state.modalDelete}
                     classData={colData.num}
